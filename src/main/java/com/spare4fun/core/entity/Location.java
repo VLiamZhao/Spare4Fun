@@ -5,12 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
 @Table(name = "location")
 
-public class Location {
+public class Location implements Serializable {
+
+    private static final long serialVersionUID = -2455760938054L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
