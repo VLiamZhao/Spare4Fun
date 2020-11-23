@@ -7,6 +7,12 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/** Represents table of location.
+ * @author Yuhe Gu
+ * @author www.spare4fun.com
+ * @version 1.0
+ * @since 1.0
+ */
 
 @Entity
 @Table(name = "location")
