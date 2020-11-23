@@ -22,15 +22,13 @@ public class Appointment implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     @Setter
-    private int appointmentId;
+    private int id;
 
-    @Getter
-    @Setter
-    private int offerId;
+    //@OneToOne
+    //private Offer id;
 
-    @Getter
-    @Setter
-    private int itemId;
+    //@OneToOne
+    //private Item id;
 
     //@ManyToOne
     //private User sellerId;
