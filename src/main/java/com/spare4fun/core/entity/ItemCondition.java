@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @since 1.0
  */
 @Entity
-@Table(name = "item_Condition")
+@Table(name = "item_condition")
 public class ItemCondition implements Serializable {
     private static final long serialVersionUID = 0L;
 
