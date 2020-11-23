@@ -23,9 +23,12 @@ public class Authorities implements Serializable {
     @Setter
     private int id;
 
+    /*
     @Getter
     @Setter
-    private String email;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private User user;
+    */
 
     @Getter
     @Setter
