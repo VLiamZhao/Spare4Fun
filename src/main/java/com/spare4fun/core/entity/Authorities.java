@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "authorities")
 public class Authorities implements Serializable {
-    private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 678910L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
