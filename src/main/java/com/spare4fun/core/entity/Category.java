@@ -1,4 +1,5 @@
-package flag_camp_2020_t3.com.spare4fun.model;
+package com.spare4fun.core.entity;
+//use wrong package
 
 import lombok.Getter;
 import lombok.Setter;

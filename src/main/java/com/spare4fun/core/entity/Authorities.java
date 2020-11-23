@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "authorities")
 public class Authorities implements Serializable {
-    private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 5453453534357612158L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,9 +25,12 @@ public class Authorities implements Serializable {
 
     @Getter
     @Setter
-    private String email;
+    private String authroities;
 
     @Getter
     @Setter
-    private String authroities;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private User user;
+
+
 }

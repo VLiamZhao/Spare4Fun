@@ -27,14 +27,14 @@ public class Location implements Serializable {
     @Setter
     private int id;
 
-    @Column(name = "line_one")
     @Getter
     @Setter
+    @Column(name = "line_one")
     private String line1;
 
-    @Column(name = "line_two")
     @Getter
     @Setter
+    @Column(name = "line_two")
     private String line2;
 
     @Getter
@@ -53,7 +53,10 @@ public class Location implements Serializable {
     @Setter
     private String country;
 
-
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "defaultLocation")
+    private UserInfo userInfo;
 
 
 }

@@ -13,9 +13,9 @@ import java.io.Serializable;
  * @since 1.0
  */
 @Entity
-@Table(name = "item_Condition")
+@Table(name = "item_condition")
 public class ItemCondition implements Serializable {
-    private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 5164567L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
