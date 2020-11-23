@@ -5,7 +5,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
+/** Represents an user.
+ * @author Jin Zhang
+ * @author www.spare4fun.com
+ * @version 1.0
+ * @since 1.0
+ */
 @Entity
 @Table(name = "item")
 public class Item {
@@ -75,6 +80,5 @@ public class Item {
 
     //@OneToOne
     //private ItemCondition condition;
-    }
-
 }
+
