@@ -36,8 +36,15 @@ public class User implements Serializable {
     @Setter
     private boolean enabled;
 
-    //@Getter
-    //@Setter
-    //@OneToOne(mappedBy = "userInfo")
-    //private UserInfo userInfo;
+    /*
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "user_info", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private UserInfo userInfo;
+    */
+
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "authorities", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Authorities authorities;
 }
