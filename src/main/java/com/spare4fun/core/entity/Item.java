@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /** Represents an user.
  * @author Jin Zhang
@@ -13,7 +14,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "item")
-public class Item {
+public class Item implements Serializable {
+    private static final long serialVersionUID = 0L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
