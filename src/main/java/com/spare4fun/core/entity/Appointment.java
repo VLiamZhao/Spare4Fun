@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.xml.stream.Location;
 import java.io.Serializable;
 
 /** Represents an user.
@@ -24,22 +23,22 @@ public class Appointment implements Serializable {
     @Setter
     private int id;
 
-    //@OneToOne
-    //private Offer id;
+    //@OneToOne(cascade = CascadeType.ALL)
+    //private Offer offer;
 
-    //@OneToOne
-    //private Item id;
+    //@OneToOne(cascade = CascadeType.ALL)
+    //private Item item;
 
-    //@ManyToOne
-    //private User sellerId;
+    // @ManyToOne(cascade = CascadeType.ALL)
+    // private User seller;
 
-    //@ManyToOne
-    //private User buyerId;
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //private User buyer;
 
-   // @ManyToOne
+   // @ManyToOne(cascade = CascadeType.ALL)
    // private Location location;
 
-    //@ManyToOne
+    //@ManyToOne(cascade = CascadeType.ALL)
     //private TimeSlot timeSlot;
 
     @Getter
@@ -49,4 +48,7 @@ public class Appointment implements Serializable {
     @Getter
     @Setter
     private boolean canceled;
+
+    //@OneToMany(cascade = CascadeType.ALL)
+    //private List<TimeSlot> availTime;
 }
