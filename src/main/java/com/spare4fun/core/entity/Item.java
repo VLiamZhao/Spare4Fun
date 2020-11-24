@@ -31,11 +31,17 @@ public class Item implements Serializable {
     @Setter
     private String description;
 
-    //@ManyToOne
-    // private User seller;
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    private User seller;
 
-    //@ManyToOne
-    // private Location location;
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
 
     @Getter
     @Setter
@@ -76,12 +82,16 @@ public class Item implements Serializable {
     @Setter
     private boolean enabled;
 
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 
-    //@OneToOne
-    //private Category category;
-
-
-    //@OneToOne
-    //private ItemCondition condition;
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "condition_id", referencedColumnName = "id")
+    private ItemCondition condition;
 }
 
