@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /** Represents table of item conditions.
  * @author Xinrong Zhao
@@ -26,4 +27,9 @@ public class ItemCondition implements Serializable {
     @Getter
     @Setter
     private String label;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "condition")
+    private List<Item> items;
 }

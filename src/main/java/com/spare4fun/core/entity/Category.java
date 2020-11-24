@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /** Represents a category
  * @author Qiuyu(Joanna) Deng
@@ -20,15 +21,17 @@ public class Category implements Serializable {
     private static final long serialVersionUID = 23432L;
 
     @Id
-    @Column(name="category_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     @Setter
     private int id;
 
-    @Column(name="category")
     @Getter
     @Setter
-    String category;
+    private String category;
 
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "category")
+    private List<Item> items;
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /** Represents table of location.
  * @author Yuhe Gu
@@ -58,5 +59,13 @@ public class Location implements Serializable {
     @OneToOne(mappedBy = "defaultLocation")
     private UserInfo userInfo;
 
+    @Getter
+    @Setter
+    @ManyToMany(mappedBy = "locations", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    private List<UserInfo> userInfos;
 
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "location")
+    private List<Item> items;
 }

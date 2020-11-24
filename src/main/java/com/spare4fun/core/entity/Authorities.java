@@ -30,6 +30,7 @@ public class Authorities implements Serializable {
     @Getter
     @Setter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
 
