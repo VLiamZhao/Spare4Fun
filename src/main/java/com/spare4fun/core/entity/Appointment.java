@@ -63,13 +63,15 @@ public class Appointment implements Serializable {
     @Setter
     private boolean canceled;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    private Set<TimeSlot> availTime;
+    @OneToOne
+    @JoinColumn(name = "confirmed_time", referencedColumnName = "id")
+    private TimeSlot confirmedTime;
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "appointment")
-    private List<TimeSlot> timeSlot;
+    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(name = "avail_time", nullable = false)
+    private List<TimeSlot> availTime;
 
     @Getter
     @Setter
