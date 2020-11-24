@@ -48,41 +48,34 @@ public class Item implements Serializable {
     @Column(name = "hide_location")
     private boolean hideLocation;
 
-
     @Getter
     @Setter
     private int quantity;
-
 
     @Getter
     @Setter
     @Column(name = "quantity_on_hold")
     private int quantityOnHold;
 
-
     @Getter
     @Setter
     @Column(name = "quantity_sold")
     private int quantitySold;
-
 
     @Getter
     @Setter
     @Column(name = "listing_price")
     private int listingPrice;
 
-
     @Getter
     @Setter
     @Column(name = "fixed_price")
     private boolean fixedPrice;
 
-
     @Getter
     @Setter
     @Column(name = "availability_time")
     private String availabilityTime;
-
 
     @Getter
     @Setter
@@ -99,5 +92,17 @@ public class Item implements Serializable {
     @ManyToOne
     @JoinColumn(name = "condition_id", referencedColumnName = "id")
     private ItemCondition condition;
+
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "saved_items_cart_id", referencedColumnName = "id")
+    private SavedItemsCart savedItemsCart;
+
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "item")
+    private Offer offer;
+
 }
 

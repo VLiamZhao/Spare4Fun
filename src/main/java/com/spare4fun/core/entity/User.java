@@ -52,4 +52,19 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "seller")
     private List<Item> items;
 
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "user")
+    private SavedItemsCart savedItemsCart;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "seller")
+    private List<Offer> sellerOffer;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "buyer")
+    private List<Offer> buyerOffer;
+
 }
