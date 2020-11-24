@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.DecimalMin;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "payment_order")
@@ -26,49 +27,49 @@ public class PaymentOrder implements Serializable {
 
     @OneToOne
     // unidirectional mapping
-    @JoinColumn(name="offer_id", nullable=false)
+    @JoinColumn(name="offer_id" , referencedColumnName = "id", nullable=false)
     @Getter
     @Setter
     private Offer offer;
 
     @ManyToOne
-    @JoinColumn(name="item_id", nullable=false)
+    @JoinColumn(name="item_id", referencedColumnName = "id", nullable=false)
     @Getter
     @Setter
     private Item item;
 
     @ManyToOne
-    @JoinColumn(name="seller_id", nullable=false)
+    @JoinColumn(name="seller_id", referencedColumnName = "id", nullable=false)
     @Getter
     @Setter
     private User seller;
 
     @ManyToOne
-    @JoinColumn(name="buyer_id", nullable=false)
+    @JoinColumn(name="buyer_id", referencedColumnName = "id", nullable=false)
     @Getter
     @Setter
     private User buyer;
 
     @Getter
     @Setter
-    @Column(name = "init_time")
+    @Column(name = "init_time", nullable = false)
     private String initTime;
 
     @Getter
     @Setter
-    @Column(name = "expire_time")
+    @Column(name = "expire_time", nullable = false)
     private String expireTime;
 
     @Getter
     @Setter
-    @Column(name = "final_price")
-    @Min(0.01)
-    private float finalPrice;
+    @Column(name = "final_price", nullable = false)
+    @DecimalMin(value = "1")
+    private int finalPrice;
 
     @Getter
     @Setter
-    @Column(name = "final_quantity")
-    @Min(1)
+    @Column(name = "final_quantity", nullable = false)
+    @DecimalMin(value = "1")
     private int finalQuantity;
 
     @Getter
