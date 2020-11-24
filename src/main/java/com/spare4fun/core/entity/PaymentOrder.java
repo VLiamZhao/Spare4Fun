@@ -7,6 +7,13 @@ import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import java.io.Serializable;
 
+/** Represents paymentOrder.
+ * @see <a href="https://docs.google.com/document/d/1qWrp03iASz7vVdmsn8NqVpqJNkYVVl7UkUPhOUgOHDs/edit?usp=sharing">Database Doc</a>
+ * @author Xinrong Zhao
+ * @author www.spare4fun.com
+ * @version 1.0
+ * @since 1.0
+ */
 @Entity
 @Table(name = "payment_order")
 public class PaymentOrder implements Serializable {
