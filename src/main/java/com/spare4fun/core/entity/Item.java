@@ -21,7 +21,7 @@ public class Item implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     @Setter
-    private int itemId;
+    private int itemid;
 
     @Getter
     @Setter
@@ -45,7 +45,7 @@ public class Item implements Serializable {
 
     @Getter
     @Setter
-    private boolean hideLocation;
+    private boolean hide_location;
 
 
     @Getter
@@ -55,27 +55,27 @@ public class Item implements Serializable {
 
     @Getter
     @Setter
-    private int quantityOnHold;
+    private int quantity_on_hold;
 
 
     @Getter
     @Setter
-    private int quantitySold;
+    private int quantity_sold;
 
 
     @Getter
     @Setter
-    private int listingPrice;
+    private int listing_price;
 
 
     @Getter
     @Setter
-    private boolean fixedPrice;
+    private boolean fixed_price;
 
 
     @Getter
     @Setter
-    private String availabilityTime;
+    private String availability_time;
 
 
     @Getter
