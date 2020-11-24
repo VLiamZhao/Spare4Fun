@@ -1,9 +1,5 @@
 package com.spare4fun.core.entity;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/entity-user
 import lombok.Getter;
 import lombok.Setter;
 
