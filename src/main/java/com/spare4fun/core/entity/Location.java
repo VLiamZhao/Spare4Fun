@@ -68,4 +68,10 @@ public class Location implements Serializable {
     @Setter
     @OneToMany(mappedBy = "location")
     private List<Item> items;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "location")
+    private List<Appointment> appointments;
+
 }

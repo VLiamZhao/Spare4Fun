@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 /** Represents an user.
  * @author Jin Zhang
@@ -23,29 +25,35 @@ public class Appointment implements Serializable {
     @Setter
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "offer_id")
+    @Getter
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "offer_id", referencedColumnName = "id")
     private Offer offer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "item"_id)
+    @Getter
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private User seller;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "buyer_id", referencedColumnName = "id")
     private User buyer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id")
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "time_slot_id")
-    private TimeSlot timeSlot;
 
     @Getter
     @Setter
@@ -55,6 +63,11 @@ public class Appointment implements Serializable {
     @Setter
     private boolean canceled;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<TimeSlot> availTime;
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    private Set<TimeSlot> availTime;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "appointment")
+    private List<TimeSlot> timeSlot;
 }

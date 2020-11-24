@@ -104,5 +104,9 @@ public class Item implements Serializable {
     @OneToOne(mappedBy = "item")
     private Offer offer;
 
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "item")
+    private Appointment appointment;
 }
 
