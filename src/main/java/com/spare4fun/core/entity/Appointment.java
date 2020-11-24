@@ -23,23 +23,29 @@ public class Appointment implements Serializable {
     @Setter
     private int id;
 
-    //@OneToOne(cascade = CascadeType.ALL)
-    //private Offer offer;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "offer_id")
+    private Offer offer;
 
-    //@OneToOne(cascade = CascadeType.ALL)
-    //private Item item;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "item"_id)
+    private Item item;
 
-    // @ManyToOne(cascade = CascadeType.ALL)
-    // private User seller;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User seller;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //private User buyer;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User buyer;
 
-   // @ManyToOne(cascade = CascadeType.ALL)
-   // private Location location;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_id")
+    private Location location;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //private TimeSlot timeSlot;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "time_slot_id")
+    private TimeSlot timeSlot;
 
     @Getter
     @Setter
@@ -49,6 +55,6 @@ public class Appointment implements Serializable {
     @Setter
     private boolean canceled;
 
-    //@OneToMany(cascade = CascadeType.ALL)
-    //private List<TimeSlot> availTime;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<TimeSlot> availTime;
 }
