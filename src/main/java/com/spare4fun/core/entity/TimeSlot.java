@@ -33,9 +33,11 @@ public class TimeSlot implements Serializable {
 
     @Getter
     @Setter
+    @Column(name="start_time")
     private String startTime;
 
     @Getter
     @Setter
+    @Column(name="end_time")
     private String endTime;
 }
