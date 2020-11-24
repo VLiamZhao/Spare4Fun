@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Entity
 @Table(name="user")
 public class User implements Serializable {
-    private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 1617181920L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,15 +36,18 @@ public class User implements Serializable {
     @Setter
     private boolean enabled;
 
-    /*
     @Getter
     @Setter
-    @OneToOne(mappedBy = "user_info", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user")
     private UserInfo userInfo;
-    */
 
     @Getter
     @Setter
-    @OneToOne(mappedBy = "authorities", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "authorities")
     private Authorities authorities;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "seller")
+    private List<Item> items;
 }
