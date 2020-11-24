@@ -18,36 +18,36 @@ public class PaymentOrder implements Serializable {
     @Setter
     private int id;
 
-    @OneToOne
-    // unidrectional mapping
-    @JoinColumn(name="appointment_id", nullable=false)
     @Getter
     @Setter
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // unidrectional mapping
+    @JoinColumn(name="appointment_id", referencedColumnName = "id", nullable=false)
     private Appointment appointment;
 
-    @OneToOne
+    @Getter
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     // unidirectional mapping
     @JoinColumn(name="offer_id" , referencedColumnName = "id", nullable=false)
-    @Getter
-    @Setter
     private Offer offer;
 
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name="item_id", referencedColumnName = "id", nullable=false)
-    @Getter
-    @Setter
     private Item item;
 
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name="seller_id", referencedColumnName = "id", nullable=false)
-    @Getter
-    @Setter
     private User seller;
 
-    @ManyToOne
-    @JoinColumn(name="buyer_id", referencedColumnName = "id", nullable=false)
     @Getter
     @Setter
+    @ManyToOne
+    @JoinColumn(name="buyer_id", referencedColumnName = "id", nullable=false)
     private User buyer;
 
     @Getter

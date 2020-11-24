@@ -77,5 +77,13 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "buyer")
     private List<Appointment> buyerAppointment;
 
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "seller")
+    private List<PaymentOrder> sellerPaymentOrder;
 
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "buyer")
+    private List<PaymentOrder> buyerPaymentOrder;
 }

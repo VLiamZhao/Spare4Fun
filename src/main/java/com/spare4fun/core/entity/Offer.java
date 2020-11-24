@@ -64,4 +64,9 @@ public class Offer implements Serializable {
     @Setter
     @OneToOne(mappedBy = "offer")
     private Appointment appointment;
+
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "offer")
+    private PaymentOrder paymentOrder;
 }

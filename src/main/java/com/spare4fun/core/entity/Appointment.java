@@ -70,4 +70,9 @@ public class Appointment implements Serializable {
     @Setter
     @OneToMany(mappedBy = "appointment")
     private List<TimeSlot> timeSlot;
+
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "appointment")
+    private PaymentOrder paymentOrder;
 }

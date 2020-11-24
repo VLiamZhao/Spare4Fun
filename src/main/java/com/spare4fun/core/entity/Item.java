@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.*;
 
 /** Represents an user.
  * @author Jin Zhang
@@ -108,5 +109,10 @@ public class Item implements Serializable {
     @Setter
     @OneToOne(mappedBy = "item")
     private Appointment appointment;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "item")
+    private List<PaymentOrder> paymentOrders;
 }
 
