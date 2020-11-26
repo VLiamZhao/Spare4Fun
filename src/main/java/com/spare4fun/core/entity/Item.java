@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.*;
 
@@ -32,9 +31,6 @@ public class Item implements Serializable {
     @Getter
     @Setter
     private String description;
-
-    @Transient
-    private BufferedImage image;
 
     @Getter
     @Setter
