@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /** Represents table of location.
  * @author Yuhe Gu
@@ -28,8 +29,8 @@ public class Offer implements Serializable {
 
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
     private Item item;
 
     @Getter
