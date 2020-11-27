@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class ItemDaoImpl implements ItemDao {
     @Autowired
     private SessionFactory sessionFactory;
-
+    //Please ignore this method. This is only for temporary test
     public Item saveItem(Item item) {
         Session session = null;
         try {

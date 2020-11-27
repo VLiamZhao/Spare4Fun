@@ -10,6 +10,7 @@ public class ItemService {
     @Autowired
     ItemDao itemDao;
 
+    //Please ignore this method. This is only for temporary test
     public Item saveItem(Item item){
         return itemDao.saveItem(item);
     }
