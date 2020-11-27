@@ -35,8 +35,8 @@ public class Appointment implements Serializable {
 
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
     private Item item;
 
     @Getter

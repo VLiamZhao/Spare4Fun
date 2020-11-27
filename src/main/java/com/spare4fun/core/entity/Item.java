@@ -104,13 +104,13 @@ public class Item implements Serializable {
 
     @Getter
     @Setter
-    @OneToOne(mappedBy = "item")
-    private Offer offer;
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<Offer> offers;
 
     @Getter
     @Setter
-    @OneToOne(mappedBy = "item")
-    private Appointment appointment;
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<Appointment> appointments;
 
     @Getter
     @Setter
