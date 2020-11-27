@@ -1,5 +1,6 @@
 package com.spare4fun.core.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "authorities")
+@Builder
 public class Authorities implements Serializable {
     private static final long serialVersionUID = 5453453534357612158L;
 

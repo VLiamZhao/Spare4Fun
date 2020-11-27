@@ -5,6 +5,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.FetchType;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +19,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="user_info")
+@Builder
 public class UserInfo implements Serializable {
     private static final long serialVersionUID = 0L;
 

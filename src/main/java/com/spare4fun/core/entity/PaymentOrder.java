@@ -1,5 +1,6 @@
 package com.spare4fun.core.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "payment_order")
+@Builder
 public class PaymentOrder implements Serializable {
     private static final long serialVersionUID = 1617181920L;
 

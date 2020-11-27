@@ -1,6 +1,7 @@
 package com.spare4fun.core.entity;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "location")
-
+@Builder
 public class Location implements Serializable {
 
     private static final long serialVersionUID = -2455760938054L;
