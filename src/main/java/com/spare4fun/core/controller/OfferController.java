@@ -4,6 +4,7 @@ import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.entity.Item;
 import com.spare4fun.core.entity.Offer;
 import com.spare4fun.core.entity.User;
+import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -22,12 +23,14 @@ public class OfferController {
     @Autowired
     OfferService offerService;
 
+    @Autowired
+    ItemService itemService;
+
     @PostMapping("/creation")
     public ResponseEntity<String> saveOffer(@RequestBody OfferDto offerDto){
         // Test dummy data
         Item item = new Item();
-        User buyer = new User();
-        User seller = new User();
+        itemService.saveItem(item);
 
 //        Item item = ItemDao.getItemById(offerDto.getItemId());
 //        User seller = UserDao.getUserById(offerDto.getBuyerId());
@@ -37,7 +40,7 @@ public class OfferController {
         offer.setEnabled(true);
         offer.setQuantity(offerDto.getQuantity());
         offer.setPrice(offerDto.getPrice());
-        offer.setSeller(seller);
+//        offer.setSeller(seller);
 //        User curUser = null;
 //        try {
 //            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
