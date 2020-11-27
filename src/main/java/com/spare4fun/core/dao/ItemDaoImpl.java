@@ -1,26 +1,24 @@
 package com.spare4fun.core.dao;
 
-import com.spare4fun.core.entity.Offer;
+import com.spare4fun.core.entity.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OfferDaoImpl implements OfferDao {
+public class ItemDaoImpl implements ItemDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public Offer saveOffer(Offer offer) {
+    public Item saveItem(Item item) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(offer);
+            session.save(item);
             session.getTransaction().commit();
-            return offer;
+            return item;
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
