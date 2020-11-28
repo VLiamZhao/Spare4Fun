@@ -21,7 +21,7 @@ public interface UserDao {
      * @throws
      *    DuplicateUserException - if duplicate user is found
      */
-    void addUser(User user) throws Exception;
+    void addUser(User user) throws DuplicateUserException;
 
     /**
      * delete a user from DB
@@ -30,5 +30,5 @@ public interface UserDao {
      * @throws
      *    UsernameNotFoundException - if no user is found
      */
-    void deleteUserByUsername(String username) throws Exception;
+    void deleteUserByUsername(String username) throws UsernameNotFoundException;
 }
