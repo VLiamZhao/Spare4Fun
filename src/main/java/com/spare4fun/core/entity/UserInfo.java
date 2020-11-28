@@ -6,9 +6,7 @@ import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.FetchType;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /** Represents an userInfo.
  * @author Haitao Gu
@@ -20,6 +18,8 @@ import lombok.Setter;
 @Entity
 @Table(name="user_info")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserInfo implements Serializable {
     private static final long serialVersionUID = 0L;
 

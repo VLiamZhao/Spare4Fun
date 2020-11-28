@@ -1,8 +1,6 @@
 package com.spare4fun.core.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "item_condition")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemCondition implements Serializable {
     private static final long serialVersionUID = 5164567L;
 
