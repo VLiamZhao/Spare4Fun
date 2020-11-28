@@ -1,6 +1,6 @@
 package com.spare4fun.core.test.dao;
 
-import com.spare4fun.core.dao.UserDaoImpl;
+import com.spare4fun.core.dao.UserDao;
 import com.spare4fun.core.entity.Role;
 import com.spare4fun.core.entity.User;
 import com.spare4fun.core.exception.DuplicateUserException;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +22,7 @@ public class UserDaoImplTest {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserDaoImpl userDaoImpl;
+    private UserDao userDao;
 
     @BeforeEach
     public void setup() {
@@ -31,7 +30,7 @@ public class UserDaoImplTest {
                 .stream()
                 .forEach(user -> {
                     try {
-                        userDaoImpl.addUser(user);
+                        userDao.addUser(user);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -44,7 +43,7 @@ public class UserDaoImplTest {
                 .stream()
                 .forEach(user -> {
                     try {
-                        userDaoImpl.deleteUserByUsername(user.getUsername());
+                        userDao.deleteUserByUsername(user.getUsername());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -82,7 +81,7 @@ public class UserDaoImplTest {
                 .forEach(
                         user -> {
                             assertThrows(DuplicateUserException.class, () -> {
-                                userDaoImpl.addUser(user);
+                                userDao.addUser(user);
                             });
                         }
                 );
@@ -92,12 +91,12 @@ public class UserDaoImplTest {
     public void testDeleteUser() {
         // cannot add duplicate user with same username
         assertThrows(UsernameNotFoundException.class, () -> {
-            userDaoImpl.deleteUserByUsername("dummy0");
+            userDao.deleteUserByUsername("dummy0");
         });
     }
 
     @Test
     public void contextLoad() {
-        assertThat(userDaoImpl).isNotNull();
+        assertThat(userDao).isNotNull();
     }
 }
