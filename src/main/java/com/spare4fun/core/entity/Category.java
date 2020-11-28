@@ -1,8 +1,7 @@
 package com.spare4fun.core.entity;
 //use wrong package
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +16,9 @@ import java.util.List;
 
 @Entity
 @Table(name="category")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category implements Serializable {
     private static final long serialVersionUID = 23432L;
 
