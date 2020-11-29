@@ -26,7 +26,6 @@ public class UserDaoImpl implements UserDao {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            session.beginTransaction();
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
             Root<User> root = criteriaQuery.from(User.class);
@@ -36,13 +35,10 @@ public class UserDaoImpl implements UserDao {
             user = session
                     .createQuery(criteriaQuery)
                     .getSingleResult();
-            session.getTransaction().commit();
         } catch (NoResultException e) {
-            session.getTransaction().rollback();
             return Optional.empty();
         } catch (Exception e) {
             e.printStackTrace();
-            session.getTransaction().rollback();
             throw e;
         } finally {
             if (session != null) {
