@@ -1,7 +1,6 @@
 package com.spare4fun.core.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
@@ -16,6 +15,9 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "payment_order")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentOrder implements Serializable {
     private static final long serialVersionUID = 1617181920L;
 
