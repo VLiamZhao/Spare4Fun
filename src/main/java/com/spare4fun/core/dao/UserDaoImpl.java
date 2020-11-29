@@ -48,7 +48,9 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return Optional.ofNullable(user);
-    };
+    }
+
+    ;
 
     @Override
     public void addUser(User user) throws DuplicateUserException {
@@ -63,7 +65,7 @@ public class UserDaoImpl implements UserDao {
             session.beginTransaction();
             session.save(user);
             session.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (session != null) {
@@ -74,7 +76,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUserByUsername(String username) throws UsernameNotFoundException {
-         selectUserByUsername(username)
+        selectUserByUsername(username)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User " + username + " does not exist")
                 );
@@ -89,7 +91,7 @@ public class UserDaoImpl implements UserDao {
             criteriaQuery.where(builder.equal(root.get("email"), username));
             session.createQuery(criteriaQuery).executeUpdate();
             session.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (session != null) {
