@@ -18,10 +18,8 @@ public class OfferService {
     }
 
 
-    //*****
-    //Yuhe
-    public List<Offer> getAllOffers() {
-        return offerDao.getAllOffers();
+    public List<Offer> getAllOffers(String username) {
+        return offerDao.getAllOffers(username);
     }
 
     public Offer getOfferById(int offerId) {

@@ -2,6 +2,7 @@ package com.spare4fun.core.dao;
 
 import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.entity.Offer;
+import com.spare4fun.core.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +40,12 @@ public class OfferDaoImpl implements OfferDao {
         return null;
     }
 
-    //******
-    //Yuhe
-    public List<Offer> getAllOffers() {
+    public List<Offer> getAllOffers(String username) {
         List<Offer> offers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
-            offers = session.createCriteria(Offer.class).list();  ////how to transit the data
+            session.beginTransaction();
+
+            offers = session.createCriteria(Offer.class).list();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,12 +68,12 @@ public class OfferDaoImpl implements OfferDao {
         try {
             session = sessionFactory.openSession();
             Offer offer = session.get(Offer.class, offerId);
-            //List<Offer> offers =
 
             session.beginTransaction();
             session.delete(offer);
             session.getTransaction().commit();
-        } catch (Exception e){
+        }
+        catch (Exception e){
             e.printStackTrace();
             session.getTransaction().rollback();
         } finally {
