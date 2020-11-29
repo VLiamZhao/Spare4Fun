@@ -10,10 +10,10 @@ public interface OfferDao {
     /**
      * Get all offers by username
      * @author Yuhe Gu
-     * @param username
+     * @param userId
      * @return
      */
-    List<Offer> getAllOffers(String username);
+    List<Offer> getAllOffers(int userId);
 
     /**
      * Get an offer by offerId
