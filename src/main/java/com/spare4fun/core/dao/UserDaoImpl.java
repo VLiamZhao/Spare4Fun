@@ -38,9 +38,11 @@ public class UserDaoImpl implements UserDao {
                     .getSingleResult();
             session.getTransaction().commit();
         } catch (NoResultException e) {
+            session.getTransaction().rollback();
             return Optional.empty();
         } catch (Exception e) {
             e.printStackTrace();
+            session.getTransaction().rollback();
             throw e;
         } finally {
             if (session != null) {
@@ -65,6 +67,7 @@ public class UserDaoImpl implements UserDao {
             session.getTransaction().commit();
         } catch(Exception e) {
             e.printStackTrace();
+            session.getTransaction().rollback();
         } finally {
             if (session != null) {
                 session.close();
@@ -91,6 +94,7 @@ public class UserDaoImpl implements UserDao {
             session.getTransaction().commit();
         } catch(Exception e) {
             e.printStackTrace();
+            session.getTransaction().rollback();
         } finally {
             if (session != null) {
                 session.close();
