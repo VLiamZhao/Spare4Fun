@@ -6,6 +6,7 @@ import lombok.*;
  * A general format of user
  * @author Xinrong Zhao
  */
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
