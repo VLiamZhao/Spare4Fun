@@ -1,6 +1,7 @@
 package com.spare4fun.core.service;
 
 import com.spare4fun.core.dao.OfferDao;
+import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.entity.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,11 @@ public class OfferService {
     //*****
     //Yuhe
     public List<Offer> getAllOffers() {
-        return offerDao.getAllOffersByUsername(String username);
+        return offerDao.getAllOffers();
+    }
+
+    public Offer getOfferById(int offerId) {
+        return offerDao.getOfferById(offerId);
     }
 
     public void deleteOffer(int offerId) {

@@ -1,5 +1,6 @@
 package com.spare4fun.core.dao;
 
+import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.entity.Offer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,13 +36,12 @@ public class OfferDaoImpl implements OfferDao {
         return null;
     }
 
-
     //******
     //Yuhe
-    public List<Offer> getAllOffersByUsername(String username) {
+    public List<Offer> getAllOffers() {
         List<Offer> offers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
-            offers = session.createCriteria(Offer.class).list();
+            offers = session.createCriteria(Offer.class).list();  ////how to transit the data
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,12 +49,24 @@ public class OfferDaoImpl implements OfferDao {
         return offers;
     }
 
+    public Offer getOfferById(int offerId) {
+        Offer offer = null;
+        try (Session session = sessionFactory.openSession()) {
+            offer = session.get(Offer.class, offerId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return offer;
+    }
+
     public void deleteOffer(int offerId) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            session.beginTransaction();
             Offer offer = session.get(Offer.class, offerId);
+            //List<Offer> offers =
+
+            session.beginTransaction();
             session.delete(offer);
             session.getTransaction().commit();
         } catch (Exception e){

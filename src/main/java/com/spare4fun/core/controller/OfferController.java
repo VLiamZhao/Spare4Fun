@@ -64,39 +64,32 @@ public class OfferController {
     //Yuhe
     @GetMapping("/getAllOffersById")
     @ResponseBody
-    public List<OfferDto> getAllOffersByUsername(@RequestBody OfferDto offerDto){
+    public List<OfferDto> getAllOffers(){
 
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = loggedInUser.getName();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
         List<Offer> res = offerService.getAllOffers();
         List<OfferDto> resOffers = new ArrayList<>();
         for (Offer offer : res) {
-            resOffers.add(/* TODO new offer dto here */ null);
+            //resOffers.add(/* TODO new offer dto here */ null);
+            //resOffers.add(offer);
         }
         return resOffers;
     }
 
     @GetMapping("/getOfferById/{offerId}")
     @ResponseBody
+//    public OfferDto getOfferById(@PathVariable(value = "offerId") int offerId) {
     public Offer getOfferById(@PathVariable(value = "offerId") int offerId) {
 
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = loggedInUser.getName();
-
-        return offerService.getOffer.....
+        return offerService.getOfferById(offerId);
     }
 
-
-
-
-
-
     @PostMapping("/deleteOffer/{offerId}")
-    public String deleteOffer(@PathVariable(value = "offerId") int offerId) {
-        //Authtication authentication = SecurityContextHolder.getContext();
-        //
-        Offer offer = offerService.getAllOffersByUsername(username);
+    public ResponseEntity<String> deleteOffer(@PathVariable(value = "offerId") int offerId){
+
         offerService.deleteOffer(offerId);
-        return "redirect:/getAllOffers";
+        return new ResponseEntity<String>("The offer has been successfully deleted!", HttpStatus.OK);
     }
 }
