@@ -3,19 +3,23 @@ package com.spare4fun.core.dto;
 import lombok.*;
 
 /**
- * A general format of user
+ * A general format of message
  * @author Xinrong Zhao
  */
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
-    @Getter
-    @Setter
-    private String username;
+public class MessageDto {
+    public enum Status {
+        FAIL,
+        SUCCESS
+    }
 
     @Getter
     @Setter
-    private String password;
+    private Status status;
+
+    @Getter
+    @Setter
+    private String message;
 }
