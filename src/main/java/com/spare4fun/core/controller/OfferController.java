@@ -62,7 +62,7 @@ public class OfferController {
 
     //********
     //Yuhe
-    @GetMapping("/getAllOffersById")
+    @GetMapping("/getAllOffers")
     @ResponseBody
     public List<OfferDto> getAllOffers(){
 

@@ -8,9 +8,13 @@ import java.util.List;
 public interface OfferDao {
     Offer saveOffer(Offer Offer);
 
-    //******
-    //Yuhe
-    List<Offer> getAllOffers();
+    /**
+     * Get all offers by username
+     * @author Yuhe Gu
+     * @param username
+     * @return
+     */
+    List<Offer> getAllOffers(String username);
 
     /**
      *
