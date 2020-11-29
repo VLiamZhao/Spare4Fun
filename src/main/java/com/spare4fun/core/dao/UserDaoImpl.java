@@ -26,7 +26,6 @@ public class UserDaoImpl implements UserDao {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            session.beginTransaction();
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
             Root<User> root = criteriaQuery.from(User.class);
@@ -36,7 +35,6 @@ public class UserDaoImpl implements UserDao {
             user = session
                     .createQuery(criteriaQuery)
                     .getSingleResult();
-            session.getTransaction().commit();
         } catch (NoResultException e) {
             return Optional.empty();
         } catch (Exception e) {
@@ -65,6 +63,7 @@ public class UserDaoImpl implements UserDao {
             session.getTransaction().commit();
         } catch(Exception e) {
             e.printStackTrace();
+            session.getTransaction().rollback();
         } finally {
             if (session != null) {
                 session.close();
@@ -91,6 +90,7 @@ public class UserDaoImpl implements UserDao {
             session.getTransaction().commit();
         } catch(Exception e) {
             e.printStackTrace();
+            session.getTransaction().rollback();
         } finally {
             if (session != null) {
                 session.close();
