@@ -3,18 +3,15 @@ package com.spare4fun.core.controller;
 import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.entity.Item;
 import com.spare4fun.core.entity.Offer;
-import com.spare4fun.core.entity.User;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +19,7 @@ import java.util.List;
 @RequestMapping("/offer")
 public class OfferController {
     @Autowired
-    OfferService offerService;
+    private OfferService offerService;
 
     @Autowired
     ItemService itemService;
