@@ -5,8 +5,10 @@ import com.spare4fun.core.entity.Item;
 import com.spare4fun.core.entity.Offer;
 import com.spare4fun.core.entity.Role;
 import com.spare4fun.core.entity.User;
+import com.spare4fun.core.exception.DuplicateUserException;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.OfferService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,15 +29,60 @@ public class OfferServiceTest {
     @Autowired
     ItemService itemService;
 
-    private Offer offer;
+    // test add dummy offer
+    private Offer dummyOffer;
+    private Item dummyItem;
+
+    // test get
     private Item item;
+    private User seller;
+    private User buyer;
+    private Offer offer;
+    private Offer savedOffer;
 
     @Before
-    public void setUp(){
-        item = new Item();
-        offer = new Offer();
+    public void setUp() throws DuplicateUserException {
+//        seller = User
+//                .builder()
+//                .email("dummy0")
+//                .role(Role.ADMIN)
+//                .enabled(true)
+//                .build();
+//
+//        buyer = User
+//                .builder()
+//                .email("dummy1")
+//                .role(Role.USER)
+//                .enabled(true)
+//                .build();
+
+        item = Item
+                .builder()
+                .seller(seller)
+                .build();
         itemService.saveItem(item);
-        offer.setItem(item);
+
+        offer = Offer
+                .builder()
+                .item(item)
+                .buyer(buyer)
+                .seller(seller)
+                .message("123")
+                .build();
+        savedOffer = offerService.saveOffer(offer);
+
+        dummyItem = Item.builder().build();
+        dummyItem.setSeller(seller);
+
+        dummyOffer = Offer.builder().build();
+        dummyOffer.setItem(item);
+    }
+
+    @After
+    public void clean() {
+        itemService.deleteItem(item.getId());
+        offerService.deleteOffer(offer.getId());
+        offerService.deleteOffer(savedOffer.getId());
     }
 
     @Test

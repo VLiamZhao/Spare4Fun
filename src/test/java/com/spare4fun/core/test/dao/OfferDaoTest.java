@@ -41,6 +41,7 @@ public class OfferDaoTest {
 
     // test add dummy offer
     private Offer dummyOffer;
+    private Item dummyItem;
 
     // test get
     private Item item;
@@ -82,6 +83,9 @@ public class OfferDaoTest {
                 .build();
         savedOffer = offerDao.saveOffer(offer);
 
+        dummyItem = Item.builder().build();
+        dummyItem.setSeller(seller);
+
         dummyOffer = Offer.builder().build();
         dummyOffer.setItem(item);
     }
@@ -93,7 +97,6 @@ public class OfferDaoTest {
         itemDao.deleteItem(item.getId());
         offerDao.deleteOffer(offer.getId());
         offerDao.deleteOffer(savedOffer.getId());
-        offerDao.deleteOffer(dummyOffer.getId());
     }
 
     @Test
