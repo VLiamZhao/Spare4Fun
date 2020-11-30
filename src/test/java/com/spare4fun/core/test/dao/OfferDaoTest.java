@@ -41,14 +41,13 @@ public class OfferDaoTest {
 
     // test add dummy offer
     private Offer dummyOffer;
-    private Item dummyItem;
+//    private Item dummyItem;
 
     // test get
     private Item item;
     private User seller;
     private User buyer;
     private Offer offer;
-    private Offer savedOffer;
 
     @Before
     public void setUp() throws DuplicateUserException {
@@ -81,30 +80,29 @@ public class OfferDaoTest {
                 .seller(seller)
                 .message("123")
                 .build();
-        savedOffer = offerDao.saveOffer(offer);
+        offerDao.saveOffer(offer);
 
-        dummyItem = Item.builder().build();
-        dummyItem.setSeller(seller);
-
-        dummyOffer = Offer.builder().build();
-        dummyOffer.setItem(item);
+        dummyOffer = Offer
+                .builder()
+                .build();
+        offerDao.saveOffer(dummyOffer);
     }
 
     @After
     public void clean() {
+        if (offerDao.getOfferById(dummyOffer.getId()) != null) {
+            offerDao.deleteOffer(dummyOffer.getId());
+        }
+        offerDao.deleteOffer(offer.getId());
+        itemDao.deleteItem(item.getId());
         userDao.deleteUserByUsername(seller.getUsername());
         userDao.deleteUserByUsername(buyer.getUsername());
-        itemDao.deleteItem(item.getId());
-        offerDao.deleteOffer(offer.getId());
-        offerDao.deleteOffer(savedOffer.getId());
     }
 
     @Test
     public void saveOfferTest(){
-        Offer o1 = offerDao.saveOffer(dummyOffer);
-        Assert.assertNotNull(o1);
-        Assert.assertNotEquals(0, o1.getId());
-        dummyOffer = o1;
+        Assert.assertNotNull(dummyOffer);
+        Assert.assertNotEquals(0, dummyOffer.getId());
     }
 
     @Test
