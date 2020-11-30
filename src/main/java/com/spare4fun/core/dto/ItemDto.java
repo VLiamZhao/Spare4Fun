@@ -6,6 +6,7 @@ import lombok.*;
  * A general format of item
  * @author Jin Zhang
  */
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,9 +41,25 @@ public class ItemDto {
 
     @Getter
     @Setter
-    private int fixedPrice;
+    private boolean fixedPrice;
 
     @Getter
     @Setter
     private int quantity;
+
+    @Getter
+    @Setter
+    private int quantityOnHold;
+
+    @Getter
+    @Setter
+    private int quantitySold;
+
+    @Getter
+    @Setter
+    private LocationDto location;
+
+    @Getter
+    @Setter
+    private boolean hideLocation;
 }

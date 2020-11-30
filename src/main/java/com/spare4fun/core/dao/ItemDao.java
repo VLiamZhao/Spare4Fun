@@ -1,7 +1,7 @@
 package com.spare4fun.core.dao;
 
 import com.spare4fun.core.entity.Item;
-import com.spare4fun.core.exception.DuplicateUserException;
+import com.spare4fun.core.exception.ItemNotFoundException;
 
 public interface ItemDao {
 
@@ -10,7 +10,11 @@ public interface ItemDao {
      * @author Jin Zhang
      * @param item
      */
-    void addItem(Item item);
 
+    Item createItem(Item item);
 
+    // deleteItem , boolean, throw exception
+    boolean deleteItem(Item item) throws ItemNotFoundException;
+
+    Item getItemById(int itemId);
 }

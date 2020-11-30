@@ -2,6 +2,7 @@ package com.spare4fun.core.service;
 
 import com.spare4fun.core.dao.ItemDao;
 import com.spare4fun.core.dao.ItemDaoImpl;
+import com.spare4fun.core.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,4 +14,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ItemService {
     @Autowired
-    private ItemDaoImpl itemDaoImpl;}
+    private ItemDaoImpl itemDaoImpl;
+
+    public Item getItemById(int itemId) {
+        return ItemDao.getItemById(itemId);
+    }
+
+    private Item deleteItem(Item item) {
+
+    }
+}
