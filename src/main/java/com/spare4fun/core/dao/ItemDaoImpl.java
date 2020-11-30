@@ -1,6 +1,7 @@
 package com.spare4fun.core.dao;
 
 import com.spare4fun.core.entity.Item;
+import com.spare4fun.core.entity.Offer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,24 @@ public class ItemDaoImpl implements ItemDao {
             }
         }
         return null;
+    }
+
+    public void deleteItem(int itemId) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            Item item = session.get(Item.class, itemId);
+            session.beginTransaction();
+            session.delete(item);
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 }
