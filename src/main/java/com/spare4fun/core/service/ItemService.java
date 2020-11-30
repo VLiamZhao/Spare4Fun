@@ -16,11 +16,15 @@ public class ItemService {
     @Autowired
     private ItemDaoImpl itemDaoImpl;
 
+    @Override
     public Item getItemById(int itemId) {
-        return ItemDao.getItemById(itemId);
+        return ItemDaoImpl
+                .createItem(Item)
+                
+
     }
 
     private Item deleteItem(Item item) {
-
+        return
     }
 }

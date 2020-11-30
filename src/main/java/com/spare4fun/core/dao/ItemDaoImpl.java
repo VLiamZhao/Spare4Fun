@@ -11,6 +11,7 @@ public class ItemDaoImpl implements ItemDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public Item createItem(Item item) {
         Session session = null;
         try {
