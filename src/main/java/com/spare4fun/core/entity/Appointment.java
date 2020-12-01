@@ -30,7 +30,7 @@ public class Appointment implements Serializable {
     @Getter
     @Setter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "offer_id", referencedColumnName = "id")
+    @JoinColumn(name = "offer_id", referencedColumnName = "id", nullable = false)
     private Offer offer;
 
     @Getter
@@ -42,19 +42,19 @@ public class Appointment implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false)
     private User seller;
 
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "buyer_id", referencedColumnName = "id")
+    @JoinColumn(name = "buyer_id", referencedColumnName = "id", nullable = false)
     private User buyer;
 
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
     private Location location;
 
     @Getter
@@ -65,6 +65,8 @@ public class Appointment implements Serializable {
     @Setter
     private boolean canceled;
 
+    @Getter
+    @Setter
     @OneToOne
     @JoinColumn(name = "confirmed_time", referencedColumnName = "id")
     private TimeSlot confirmedTime;

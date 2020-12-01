@@ -37,13 +37,13 @@ public class Offer implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false)
     private User seller;
 
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "buyer_id", referencedColumnName = "id")
+    @JoinColumn(name = "buyer_id", referencedColumnName = "id", nullable = false)
     private User buyer;
 
     @Getter
