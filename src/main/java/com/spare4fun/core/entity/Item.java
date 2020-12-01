@@ -37,13 +37,13 @@ public class Item implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false)
     private User seller;
 
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
     private Location location;
 
     @Getter
@@ -99,7 +99,7 @@ public class Item implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "saved_items_cart_id", referencedColumnName = "id")
+    @JoinColumn(name = "saved_items_cart_id", referencedColumnName = "id", nullable = false)
     private SavedItemsCart savedItemsCart;
 
     @Getter
