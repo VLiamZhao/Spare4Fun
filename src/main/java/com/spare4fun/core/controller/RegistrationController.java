@@ -30,7 +30,7 @@ public class RegistrationController {
         } catch (DuplicateUserException e) {
             return MessageDto
                     .builder()
-                    .status(MessageDto.Status.FAIL)
+                    .status(MessageDto.Status.FAILURE)
                     .message(e.getMessage())
                     .build();
         }

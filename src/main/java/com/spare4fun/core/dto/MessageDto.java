@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class MessageDto {
     public enum Status {
-        FAIL,
+        FAILURE,
         SUCCESS
     }
 
