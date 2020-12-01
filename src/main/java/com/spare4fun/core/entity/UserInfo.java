@@ -3,7 +3,7 @@ package com.spare4fun.core.entity;
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.FetchType;
 
 import lombok.*;
@@ -61,7 +61,7 @@ public class UserInfo implements Serializable {
     @JoinTable(name = "user_info_locations",
             joinColumns = {@JoinColumn(name = "user_info_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "location_id", referencedColumnName = "id")})
-    private Set<Location> locations;
+    private List<Location> locations;
 
 
 
