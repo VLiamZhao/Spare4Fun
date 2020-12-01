@@ -6,5 +6,5 @@ public interface ItemDao {
     //Please ignore this method. This is only for temporary test
     Item saveItem(Item item);
 
-    void deleteItem(int itemId);
+    Item deleteItem(int itemId);
 }
