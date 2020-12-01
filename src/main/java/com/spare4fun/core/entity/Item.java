@@ -1,7 +1,6 @@
 package com.spare4fun.core.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +14,9 @@ import java.util.*;
  */
 @Entity
 @Table(name = "item")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Item implements Serializable {
     private static final long serialVersionUID = 0L;
 
