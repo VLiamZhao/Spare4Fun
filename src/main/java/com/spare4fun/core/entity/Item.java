@@ -98,9 +98,8 @@ public class Item implements Serializable {
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "saved_items_cart_id", referencedColumnName = "id", nullable = false)
-    private SavedItemsCart savedItemsCart;
+    @ManyToMany(mappedBy = "savedItems", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    private List<User> savedUsers;
 
     @Getter
     @Setter
