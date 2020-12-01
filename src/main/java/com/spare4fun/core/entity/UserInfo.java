@@ -32,7 +32,7 @@ public class UserInfo implements Serializable {
     @Getter
     @Setter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
     @Column(name = "first_name")
@@ -52,7 +52,7 @@ public class UserInfo implements Serializable {
     @Getter
     @Setter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "defaultlocation_id", referencedColumnName = "id")
+    @JoinColumn(name = "defaultlocation_id", referencedColumnName = "id", nullable = false)
     private Location defaultLocation;
 
     @Getter
