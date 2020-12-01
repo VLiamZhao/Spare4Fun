@@ -58,7 +58,7 @@ public class OfferServiceTest {
         buyer = User
                 .builder()
                 .email("dummy1")
-                .email("000")
+                .password("000")
                 .role(Role.USER)
                 .enabled(true)
                 .build();
