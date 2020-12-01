@@ -1,7 +1,6 @@
 package com.spare4fun.core.dao;
 
 import com.spare4fun.core.entity.Item;
-import com.spare4fun.core.entity.Offer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

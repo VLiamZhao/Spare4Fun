@@ -2,6 +2,7 @@ package com.spare4fun.core.test.service;
 
 import com.spare4fun.core.CoreApplication;
 import com.spare4fun.core.entity.Item;
+import com.spare4fun.core.entity.Location;
 import com.spare4fun.core.entity.Offer;
 import com.spare4fun.core.entity.User;
 import com.spare4fun.core.exception.DuplicateUserException;
@@ -31,6 +32,7 @@ public class OfferServiceTest {
     private Offer dummyOffer;
 
     // test get
+    private Location location;
     private Item item;
     private User seller;
     private User buyer;
@@ -41,6 +43,7 @@ public class OfferServiceTest {
         item = Item
                 .builder()
                 .seller(seller)
+                .location(location)
                 .build();
         itemService.saveItem(item);
 
