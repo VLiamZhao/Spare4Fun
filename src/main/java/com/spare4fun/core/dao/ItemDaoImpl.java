@@ -30,7 +30,17 @@ public class ItemDaoImpl implements ItemDao {
         return null;
     }
 
-    public Item deleteItem(int itemId) {
+    public Item getItemById(int itemId) {
+        Item item = null;
+        try (Session session = sessionFactory.openSession()) {
+            item = session.get(Item.class, itemId);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    public void deleteItem(int itemId) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -46,6 +56,6 @@ public class ItemDaoImpl implements ItemDao {
                 session.close();
             }
         }
-        return null;
     }
+
 }
