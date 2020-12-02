@@ -52,7 +52,7 @@ public class User implements UserDetails, Serializable {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
     private List<Item> items;
 
     @Getter
