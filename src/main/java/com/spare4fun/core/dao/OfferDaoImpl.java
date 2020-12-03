@@ -44,7 +44,7 @@ public class OfferDaoImpl implements OfferDao {
         return null;
     }
 
-    public List<Offer> getAllOffers(int userId) {
+    public List<Offer> getAllOffersBuyer(int userId) {
         List<Offer> offers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -53,7 +53,29 @@ public class OfferDaoImpl implements OfferDao {
             Root<Offer> root = criteriaQuery.from(Offer.class);
             criteriaQuery
                     .select(root)
-                    .where(builder.equal(root.get("id"), userId));
+                    .where(builder.equal(root.get("buyer"), userId));
+            offers = session
+                    .createQuery(criteriaQuery)
+                    .getResultList();
+            session.getTransaction().commit();
+        } catch (NoResultException e) {
+            return Collections.emptyList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return offers;
+    }
+
+    public List<Offer> getAllOffersSeller(int userId) {
+        List<Offer> offers = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Offer> criteriaQuery = builder.createQuery(Offer.class);
+            Root<Offer> root = criteriaQuery.from(Offer.class);
+            criteriaQuery
+                    .select(root)
+                    .where(builder.equal(root.get("seller"), userId));
             offers = session
                     .createQuery(criteriaQuery)
                     .getResultList();
@@ -70,6 +92,8 @@ public class OfferDaoImpl implements OfferDao {
         Offer offer = null;
         try (Session session = sessionFactory.openSession()) {
             offer = session.get(Offer.class, offerId);
+        }catch (NoResultException e) {
+            return null;
         }catch (Exception e) {
             e.printStackTrace();
         }

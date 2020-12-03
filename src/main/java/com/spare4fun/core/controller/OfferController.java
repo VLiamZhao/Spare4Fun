@@ -59,14 +59,35 @@ public class OfferController {
 
     //********
     //Yuhe
-    @GetMapping("/getAllOffers")
+    @GetMapping("/buyer/getAllOffers")
     @ResponseBody
-    public List<OfferDto> getAllOffers(){
+    public List<OfferDto> getAllOffersBuyer(){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        List<Offer> offers = offerService.getAllOffers(username);
+        List<Offer> offers = offerService.getAllOffersBuyer(username);
+        List<OfferDto> offerDtos = new ArrayList<>();
+
+        for (Offer offer : offers) {
+            offerDtos.add(
+                    OfferDto
+                            .builder()
+                            .buyerId(offer.getBuyer().getId())
+                            .build()
+            );
+        }
+        return offerDtos;
+    }
+
+    @GetMapping("/seller/getAllOffers")
+    @ResponseBody
+    public List<OfferDto> getAllOffersSeller(){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        List<Offer> offers = offerService.getAllOffersSeller(username);
         List<OfferDto> offerDtos = new ArrayList<>();
 
         for (Offer offer : offers) {

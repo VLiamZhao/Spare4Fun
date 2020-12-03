@@ -116,8 +116,14 @@ public class OfferDaoTest {
     }
 
     @Test
-    public void getAllOffersTest(){
-        List<Offer> offers = offerDao.getAllOffers(buyer.getId());
+    public void getAllOffersBuyerTest(){
+        List<Offer> offers = offerDao.getAllOffersBuyer(buyer.getId());
+        Assert.assertNotNull(offers);
+    }
+
+    @Test
+    public void getAllOffersSellerTest(){
+        List<Offer> offers = offerDao.getAllOffersBuyer(seller.getId());
         Assert.assertNotNull(offers);
     }
 
