@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/seller")
-public class SellerController {
+@RequestMapping("/item")
+public class ItemController {
     @Autowired
     private UserService userService;
 
@@ -31,7 +31,7 @@ public class SellerController {
     @Autowired
     private TypeMap<Location, LocationDto> locationDtoMapper;
 
-    @GetMapping("/getAllItems")
+    @GetMapping("/seller/getAllItems")
     @ResponseBody
     public List<ItemDto> getAllItems() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

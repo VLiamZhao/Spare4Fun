@@ -1,6 +1,5 @@
 package com.spare4fun.core.test.controller;
 
-import com.spare4fun.core.controller.SellerController;
 import com.spare4fun.core.dao.UserDao;
 import com.spare4fun.core.entity.Item;
 import com.spare4fun.core.entity.Location;
@@ -24,11 +23,10 @@ import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SellerControllerTest {
+public class ItemControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
