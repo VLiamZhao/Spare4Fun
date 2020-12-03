@@ -50,7 +50,7 @@ public class OfferService {
         return offerDao.getOfferById(offerId);
     }
 
-    public void deleteOffer(int offerId) {
-        offerDao.deleteOffer(offerId);
+    public void deleteOfferById(int offerId) {
+        offerDao.deleteOfferById(offerId);
     }
 }

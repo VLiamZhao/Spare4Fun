@@ -100,7 +100,7 @@ public class OfferDaoImpl implements OfferDao {
         return offer;
     }
 
-    public void deleteOffer(int offerId) {
+    public void deleteOfferById(int offerId) {
         Session session = null;
         try {
             session = sessionFactory.openSession();

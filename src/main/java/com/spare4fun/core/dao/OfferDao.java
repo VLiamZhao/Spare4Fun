@@ -25,5 +25,5 @@ public interface OfferDao {
     Offer getOfferById(int offerId);
 
 
-    void deleteOffer(int offerId);
+    void deleteOfferById(int offerId);
 }

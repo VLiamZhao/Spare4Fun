@@ -97,10 +97,10 @@ public class OfferDaoTest {
     @After
     public void clean() {
         if (offerDao.getOfferById(dummyOffer.getId()) != null) {
-            offerDao.deleteOffer(dummyOffer.getId());
+            offerDao.deleteOfferById(dummyOffer.getId());
         }
         if (offerDao.getOfferById(offer.getId()) != null) {
-            offerDao.deleteOffer(offer.getId());
+            offerDao.deleteOfferById(offer.getId());
         }
 
         itemDao.deleteItem(item.getId());
@@ -142,7 +142,7 @@ public class OfferDaoTest {
         Assert.assertNotNull(offer);
         Assert.assertNotNull(offerDao.getOfferById(offer.getId()));
         //delete
-        offerDao.deleteOffer(offer.getId());
+        offerDao.deleteOfferById(offer.getId());
         //get
         Assert.assertNull(offerDao.getOfferById(offer.getId()));
     }

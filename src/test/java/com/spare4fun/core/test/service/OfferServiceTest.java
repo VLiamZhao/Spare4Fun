@@ -97,8 +97,8 @@ public class OfferServiceTest {
 
     @After
     public void clean() {
-        offerService.deleteOffer(dummyOffer.getId());
-        offerService.deleteOffer(offer.getId());
+        offerService.deleteOfferById(dummyOffer.getId());
+        offerService.deleteOfferById(offer.getId());
         itemService.deleteItem(item.getId());
         userDao.deleteUserByUsername(seller.getUsername());
         userDao.deleteUserByUsername(buyer.getUsername());

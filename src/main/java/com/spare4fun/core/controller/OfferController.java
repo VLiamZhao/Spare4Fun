@@ -114,8 +114,8 @@ public class OfferController {
     }
 
     @PostMapping("/deleteOffer/{offerId}")
-    public ResponseEntity<String> deleteOffer(@PathVariable(value = "offerId") int offerId){
-        offerService.deleteOffer(offerId);
+    public ResponseEntity<String> deleteOfferById(@PathVariable(value = "offerId") int offerId){
+        offerService.deleteOfferById(offerId);
         return new ResponseEntity<String>("The offer has been successfully deleted!", HttpStatus.OK);
     }
 }
