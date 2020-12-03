@@ -59,14 +59,14 @@ public class RegistrationControllerTest {
         UserDto alice = UserDto
                 .builder()
                 .username("dummy1")
-                .password(passwordEncoder.encode("pass"))
+                .password("pass")
                 .build();
         dummyUsers.add(alice);
 
         UserDto jin = UserDto
                 .builder()
                 .username("dummy2")
-                .password(passwordEncoder.encode("pass"))
+                .password("pass")
                 .build();
         dummyUsers.add(jin);
         return dummyUsers;

@@ -42,8 +42,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .csrf().disable()
                     // TODO: change <url> patten match
                     .authorizeRequests()
+                    .antMatchers("/user/register", "/search**").permitAll()
                     .anyRequest()
-                    .permitAll()
+                    .authenticated()
                 .and()
                 .formLogin()
                     // TODO: change <login>

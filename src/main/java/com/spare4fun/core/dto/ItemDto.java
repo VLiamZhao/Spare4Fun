@@ -1,6 +1,5 @@
 package com.spare4fun.core.dto;
 
-import com.spare4fun.core.entity.Location;
 import lombok.*;
 
 /**
@@ -41,7 +40,7 @@ public class ItemDto {
 
     @Getter
     @Setter
-    private Location location;
+    private LocationDto locationDto;
 
     @Getter
     @Setter
