@@ -1,5 +1,6 @@
 package com.spare4fun.core.dto;
 
+import com.spare4fun.core.entity.Location;
 import lombok.*;
 
 /**
@@ -12,11 +13,7 @@ import lombok.*;
 public class ItemDto {
     @Getter
     @Setter
-    private int itemId;
-
-    @Getter
-    @Setter
-    private String name;
+    private Integer itemId;
 
     @Getter
     @Setter
@@ -28,25 +25,45 @@ public class ItemDto {
 
     @Getter
     @Setter
-    private int categoryId;
+    private Integer sellerId;
 
     @Getter
     @Setter
-    private int sellerId;
+    private String sellerName;
 
     @Getter
     @Setter
-    private int locationId;
+    private Integer locationId;
 
     @Getter
     @Setter
-    private int listingPrice;
+    private Boolean hideLocation;
 
     @Getter
     @Setter
-    private int fixedPrice;
+    private Location location;
 
     @Getter
     @Setter
-    private int quantity;
+    private Integer quantity;
+
+    @Getter
+    @Setter
+    private Integer listingPrice;
+
+    @Getter
+    @Setter
+    private Boolean fixedPrice;
+
+    @Getter
+    @Setter
+    private String availabilityTime;
+
+    @Getter
+    @Setter
+    private String category;
+
+    @Getter
+    @Setter
+    private String condition;
 }
