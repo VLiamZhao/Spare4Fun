@@ -13,7 +13,9 @@ public interface OfferDao {
      * @param userId
      * @return
      */
-    List<Offer> getAllOffers(int userId);
+    List<Offer> getAllOffersBuyer(int userId);
+
+    List<Offer> getAllOffersSeller(int userId);
 
     /**
      * Get an offer by offerId
@@ -23,5 +25,5 @@ public interface OfferDao {
     Offer getOfferById(int offerId);
 
 
-    void deleteOffer(int offerId);
+    void deleteOfferById(int offerId);
 }

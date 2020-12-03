@@ -26,21 +26,31 @@ public class OfferService {
     }
 
 
-    public List<Offer> getAllOffers(String username) {
+    public List<Offer> getAllOffersBuyer(String username) {
         User user = null;
         try {
             user = userDao.selectUserByUsername(username).get();
         } catch (NoSuchElementException e) {
             return Collections.emptyList();
         }
-        return offerDao.getAllOffers(user.getId());
+        return offerDao.getAllOffersBuyer(user.getId());
+    }
+
+    public List<Offer> getAllOffersSeller(String username) {
+        User user = null;
+        try {
+            user = userDao.selectUserByUsername(username).get();
+        } catch (NoSuchElementException e) {
+            return Collections.emptyList();
+        }
+        return offerDao.getAllOffersBuyer(user.getId());
     }
 
     public Offer getOfferById(int offerId) {
         return offerDao.getOfferById(offerId);
     }
 
-    public void deleteOffer(int offerId) {
-        offerDao.deleteOffer(offerId);
+    public void deleteOfferById(int offerId) {
+        offerDao.deleteOfferById(offerId);
     }
 }
