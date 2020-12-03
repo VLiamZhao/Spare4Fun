@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
+
 @Repository
 public class ItemDaoImpl implements ItemDao {
     @Autowired
@@ -38,6 +40,8 @@ public class ItemDaoImpl implements ItemDao {
             Item item = session.get(Item.class, itemId);
             session.delete(item);
             session.getTransaction().commit();
+        } catch (NoResultException e) {
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
