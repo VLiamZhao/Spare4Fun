@@ -22,7 +22,7 @@ public class ItemController {
         return new ResponseEntity<String>("The item has been successfully placed!", HttpStatus.OK);
     }
 
-    @GetMapping("/getItemById/{itemId}")
+    @GetMapping("/{itemId}")
     @ResponseBody
     public ItemDto getItemById(@PathVariable(value = "itemId") int itemId) {
 

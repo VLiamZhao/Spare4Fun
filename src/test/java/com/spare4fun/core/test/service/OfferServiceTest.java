@@ -99,7 +99,7 @@ public class OfferServiceTest {
     public void clean() {
         offerService.deleteOfferById(dummyOffer.getId());
         offerService.deleteOfferById(offer.getId());
-        itemService.deleteItem(item.getId());
+        itemService.deleteItemById(item.getId());
         userDao.deleteUserByUsername(seller.getUsername());
         userDao.deleteUserByUsername(buyer.getUsername());
         locationDao.deleteLocationById(location.getId());
@@ -115,7 +115,6 @@ public class OfferServiceTest {
     public void getAllOffersBuyerTest(){
         List<Offer> offers = offerService.getAllOffersBuyer("dummy1");
         Assert.assertNotNull(offers);
-        Assert.assertTrue(offers.isEmpty());
     }
 
     public void getAllOffersSellerTest(){

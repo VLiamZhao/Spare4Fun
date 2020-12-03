@@ -75,9 +75,9 @@ public class SellerControllerTest {
     @AfterEach
     private void clean() {
         items.keySet().forEach(itemId -> {
-            itemService.deleteItem(itemId);
+            itemService.deleteItemById(itemId);
         });
-        locationService.deleteLocation(location.getId());
+        locationService.deleteLocationById(location.getId());
         userDao.deleteUserByUsername(seller.getUsername());
     }
 
