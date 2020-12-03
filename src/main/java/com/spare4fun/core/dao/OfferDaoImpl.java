@@ -70,6 +70,8 @@ public class OfferDaoImpl implements OfferDao {
         Offer offer = null;
         try (Session session = sessionFactory.openSession()) {
             offer = session.get(Offer.class, offerId);
+        }catch (NoResultException e) {
+            return null;
         }catch (Exception e) {
             e.printStackTrace();
         }
