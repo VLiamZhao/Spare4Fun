@@ -2,15 +2,18 @@ package com.spare4fun.core.dto;
 
 import lombok.*;
 
+/**
+ * A general format of location
+ * @author Xinrong Zhao
+ */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class LocationDto {
-    // TODO: if hideLocation
-    //         only give zip code
+    @Getter
+    @Setter
+    private Integer id;
 
-
-    // same as location
     @Getter
     @Setter
     private String line1;
@@ -34,5 +37,4 @@ public class LocationDto {
     @Getter
     @Setter
     private String country;
-
 }

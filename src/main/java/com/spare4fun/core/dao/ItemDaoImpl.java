@@ -10,15 +10,15 @@ import org.springframework.stereotype.Repository;
 public class ItemDaoImpl implements ItemDao {
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Override
-    public Item createItem(Item item) {
+    //Please ignore this method. This is only for temporary test
+    public Item saveItem(Item item) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(item);
             session.getTransaction().commit();
+            return item;
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();

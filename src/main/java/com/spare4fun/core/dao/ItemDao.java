@@ -1,20 +1,12 @@
 package com.spare4fun.core.dao;
 
 import com.spare4fun.core.entity.Item;
-import com.spare4fun.core.exception.ItemNotFoundException;
 
 public interface ItemDao {
+    //Please ignore this method. This is only for temporary test
+    Item saveItem(Item item);
 
-    /**
-     * save a new item to DB
-     * @author Jin Zhang
-     * @param item
-     */
-
-    Item createItem(Item item);
-
-    // deleteItem , boolean, throw exception
-    boolean deleteItem(Item item) throws ItemNotFoundException;
+    Item deleteItem(int itemId);
 
     Item getItemById(int itemId);
 }

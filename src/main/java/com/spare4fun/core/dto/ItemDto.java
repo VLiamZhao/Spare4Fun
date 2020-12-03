@@ -6,18 +6,13 @@ import lombok.*;
  * A general format of item
  * @author Jin Zhang
  */
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDto {
     @Getter
     @Setter
-    private int itemId;
-
-    @Getter
-    @Setter
-    private String name;
+    private Integer itemId;
 
     @Getter
     @Setter
@@ -29,37 +24,45 @@ public class ItemDto {
 
     @Getter
     @Setter
-    private int categoryId;
+    private Integer sellerId;
 
     @Getter
     @Setter
-    private int sellerId;
+    private String sellerName;
 
     @Getter
     @Setter
-    private int listingPrice;
+    private Integer locationId;
 
     @Getter
     @Setter
-    private boolean fixedPrice;
+    private Boolean hideLocation;
 
     @Getter
     @Setter
-    private int quantity;
+    private LocationDto locationDto;
 
     @Getter
     @Setter
-    private int quantityOnHold;
+    private Integer quantity;
 
     @Getter
     @Setter
-    private int quantitySold;
+    private Integer listingPrice;
 
     @Getter
     @Setter
-    private LocationDto location;
+    private Boolean fixedPrice;
 
     @Getter
     @Setter
-    private boolean hideLocation;
+    private String availabilityTime;
+
+    @Getter
+    @Setter
+    private String category;
+
+    @Getter
+    @Setter
+    private String condition;
 }
