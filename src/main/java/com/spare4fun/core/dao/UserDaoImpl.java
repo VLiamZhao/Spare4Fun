@@ -26,7 +26,6 @@ public class UserDaoImpl implements UserDao {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            session.beginTransaction();
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
             Root<User> root = criteriaQuery.from(User.class);
@@ -36,7 +35,6 @@ public class UserDaoImpl implements UserDao {
             user = session
                     .createQuery(criteriaQuery)
                     .getSingleResult();
-            session.getTransaction().commit();
         } catch (NoResultException e) {
             return Optional.empty();
         } catch (Exception e) {
@@ -48,7 +46,9 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return Optional.ofNullable(user);
-    };
+    }
+
+    ;
 
     @Override
     public void addUser(User user) throws DuplicateUserException {
@@ -63,8 +63,9 @@ public class UserDaoImpl implements UserDao {
             session.beginTransaction();
             session.save(user);
             session.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            session.getTransaction().rollback();
         } finally {
             if (session != null) {
                 session.close();
@@ -74,7 +75,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUserByUsername(String username) throws UsernameNotFoundException {
-         selectUserByUsername(username)
+        selectUserByUsername(username)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User " + username + " does not exist")
                 );
@@ -89,8 +90,9 @@ public class UserDaoImpl implements UserDao {
             criteriaQuery.where(builder.equal(root.get("email"), username));
             session.createQuery(criteriaQuery).executeUpdate();
             session.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            session.getTransaction().rollback();
         } finally {
             if (session != null) {
                 session.close();

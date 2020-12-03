@@ -1,12 +1,13 @@
 package com.spare4fun.core.test.service;
 
 import com.spare4fun.core.CoreApplication;
-import com.spare4fun.core.entity.Item;
-import com.spare4fun.core.entity.Offer;
-import com.spare4fun.core.entity.User;
+import com.spare4fun.core.dao.LocationDao;
+import com.spare4fun.core.dao.UserDao;
+import com.spare4fun.core.entity.*;
 import com.spare4fun.core.exception.DuplicateUserException;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.OfferService;
+import com.spare4fun.core.service.UserService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,10 +28,17 @@ public class OfferServiceTest {
     @Autowired
     ItemService itemService;
 
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private LocationDao locationDao;
+
     // test add dummy offer
     private Offer dummyOffer;
 
     // test get
+    private Location location;
     private Item item;
     private User seller;
     private User buyer;
@@ -38,9 +46,33 @@ public class OfferServiceTest {
 
     @Before
     public void setUp() throws DuplicateUserException {
+        seller = User
+                .builder()
+                .email("dummy0")
+                .password("000")
+                .role(Role.ADMIN)
+                .enabled(true)
+                .build();
+        userDao.addUser(seller);
+
+        buyer = User
+                .builder()
+                .email("dummy1")
+                .password("000")
+                .role(Role.USER)
+                .enabled(true)
+                .build();
+        userDao.addUser(buyer);
+
+        location = Location
+                .builder()
+                .build();
+        locationDao.saveLocation(location);
+
         item = Item
                 .builder()
                 .seller(seller)
+                .location(location)
                 .build();
         itemService.saveItem(item);
 
@@ -57,6 +89,8 @@ public class OfferServiceTest {
         dummyOffer = Offer
                 .builder()
                 .item(item)
+                .buyer(buyer)
+                .seller(seller)
                 .build();
         offerService.saveOffer(dummyOffer);
     }
@@ -66,6 +100,9 @@ public class OfferServiceTest {
         offerService.deleteOffer(dummyOffer.getId());
         offerService.deleteOffer(offer.getId());
         itemService.deleteItem(item.getId());
+        userDao.deleteUserByUsername(seller.getUsername());
+        userDao.deleteUserByUsername(buyer.getUsername());
+        locationDao.deleteLocation(location.getId());
     }
 
     @Test

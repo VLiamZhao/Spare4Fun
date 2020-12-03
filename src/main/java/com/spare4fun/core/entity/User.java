@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /** Represents an user.
  * @author Xinrong Zhao
@@ -32,10 +33,12 @@ public class User implements UserDetails, Serializable {
 
     @Getter
     @Setter
+    @Column(nullable = false)
     private String email;
 
     @Getter
     @Setter
+    @Column(nullable = false)
     private String password;
 
     @Getter
@@ -54,8 +57,11 @@ public class User implements UserDetails, Serializable {
 
     @Getter
     @Setter
-    @OneToOne(mappedBy = "user")
-    private SavedItemsCart savedItemsCart;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_saved_items",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "item_id", referencedColumnName = "id")})
+    private List<Item> savedItems;
 
     @Getter
     @Setter

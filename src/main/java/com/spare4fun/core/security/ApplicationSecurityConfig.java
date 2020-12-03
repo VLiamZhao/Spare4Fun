@@ -8,9 +8,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -45,11 +47,22 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     // TODO: change <login>
+                    .loginPage("/user/login")
+                    .permitAll()
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .defaultSuccessUrl("/success")
+                    .failureUrl("/fail")
+                    // failure handler?
+                    //.failureHandler(authenticationFailureHandler())
                 .and()
                 .rememberMe()
                 .and()
-                .logout();
+                .logout()
                     // TODO: change <logout>
+                    .logoutUrl("/user/logout");
+                    // .logoutSuccessUrl("/login")
+                    // .deleteCookies("JSESSIONID");
     }
 
     @Override
