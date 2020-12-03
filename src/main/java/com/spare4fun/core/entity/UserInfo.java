@@ -3,7 +3,7 @@ package com.spare4fun.core.entity;
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.FetchType;
 
 import lombok.*;
@@ -32,7 +32,7 @@ public class UserInfo implements Serializable {
     @Getter
     @Setter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
     @Column(name = "first_name")
@@ -52,7 +52,7 @@ public class UserInfo implements Serializable {
     @Getter
     @Setter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "defaultlocation_id", referencedColumnName = "id")
+    @JoinColumn(name = "defaultlocation_id", referencedColumnName = "id", nullable = false)
     private Location defaultLocation;
 
     @Getter
@@ -61,7 +61,7 @@ public class UserInfo implements Serializable {
     @JoinTable(name = "user_info_locations",
             joinColumns = {@JoinColumn(name = "user_info_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "location_id", referencedColumnName = "id")})
-    private Set<Location> locations;
+    private List<Location> locations;
 
 
 

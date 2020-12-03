@@ -34,7 +34,7 @@ public class TimeSlot implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name="appointment_id", nullable=false, referencedColumnName = "id")
+    @JoinColumn(name="appointment_id", referencedColumnName = "id", nullable=false)
     // Define appointment as foreign key for appointment_id
     private Appointment appointment;
 
