@@ -99,10 +99,10 @@ public class OfferServiceTest {
     public void clean() {
         offerService.deleteOffer(dummyOffer.getId());
         offerService.deleteOffer(offer.getId());
-        itemService.deleteItem(item.getId());
+        itemService.deleteItemById(item.getId());
         userDao.deleteUserByUsername(seller.getUsername());
         userDao.deleteUserByUsername(buyer.getUsername());
-        locationDao.deleteLocation(location.getId());
+        locationDao.deleteLocationById(location.getId());
     }
 
     @Test

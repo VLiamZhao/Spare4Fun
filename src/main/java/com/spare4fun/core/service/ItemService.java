@@ -19,8 +19,8 @@ public class ItemService {
         return itemDao.getItemById(itemId);
     }
 
-    public void deleteItem(int itemId) {
+    public void deleteItemById(int itemId) {
 
-        itemDao.deleteItem(itemId);
+        itemDao.deleteItemById(itemId);
     }
 }

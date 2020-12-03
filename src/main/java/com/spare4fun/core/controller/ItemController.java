@@ -36,8 +36,8 @@ public class ItemController {
     }
 
     @PostMapping("/deleteItem/{itemId}")
-    public ResponseEntity<String> deleteItem(@PathVariable(value = "itemId") int itemId){
-        itemService.deleteItem(itemId);
+    public ResponseEntity<String> deleteItemById(@PathVariable(value = "itemId") int itemId){
+        itemService.deleteItemById(itemId);
         return new ResponseEntity<String>("The item has been successfully deleted!", HttpStatus.OK);
     }
 }

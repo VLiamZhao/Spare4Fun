@@ -40,7 +40,7 @@ public class ItemDaoImpl implements ItemDao {
         return item;
     }
 
-    public void deleteItem(int itemId) {
+    public void deleteItemById(int itemId) {
         Session session = null;
         try {
             session = sessionFactory.openSession();

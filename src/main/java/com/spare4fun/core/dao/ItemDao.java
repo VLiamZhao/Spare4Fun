@@ -8,5 +8,5 @@ public interface ItemDao {
 
     Item getItemById(int itemId);
 
-    void deleteItem(int itemId);
+    void deleteItemById(int itemId);
 }

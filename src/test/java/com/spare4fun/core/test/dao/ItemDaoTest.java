@@ -66,14 +66,14 @@ public class ItemDaoTest {
     @After
     public void clean() {
         if (itemDao.getItemById(dummyItem.getId()) != null) {
-            itemDao.deleteItem(dummyItem.getId());
+            itemDao.deleteItemById(dummyItem.getId());
         }
         if (itemDao.getItemById(item.getId()) != null) {
-            itemDao.deleteItem(item.getId());
+            itemDao.deleteItemById(item.getId());
         }
 
         userDao.deleteUserByUsername(seller.getUsername());
-        locationDao.deleteLocation(location.getId());
+        locationDao.deleteLocationById(location.getId());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ItemDaoTest {
         Assert.assertNotNull(item);
         Assert.assertNotEquals(0, item.getId());
         //delete
-        itemDao.deleteItem(item.getId());
+        itemDao.deleteItemById(item.getId());
         //get id
         Assert.assertNull(itemDao.getItemById(item.getId()));
     }
