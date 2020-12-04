@@ -97,16 +97,16 @@ public class OfferDaoTest {
     @After
     public void clean() {
         if (offerDao.getOfferById(dummyOffer.getId()) != null) {
-            offerDao.deleteOffer(dummyOffer.getId());
+            offerDao.deleteOfferById(dummyOffer.getId());
         }
         if (offerDao.getOfferById(offer.getId()) != null) {
-            offerDao.deleteOffer(offer.getId());
+            offerDao.deleteOfferById(offer.getId());
         }
 
-        itemDao.deleteItem(item.getId());
+        itemDao.deleteItemById(item.getId());
         userDao.deleteUserByUsername(seller.getUsername());
         userDao.deleteUserByUsername(buyer.getUsername());
-        locationDao.deleteLocation(location.getId());
+        locationDao.deleteLocationById(location.getId());
     }
 
     @Test
@@ -116,8 +116,14 @@ public class OfferDaoTest {
     }
 
     @Test
-    public void getAllOffersTest(){
-        List<Offer> offers = offerDao.getAllOffers(buyer.getId());
+    public void getAllOffersBuyerTest(){
+        List<Offer> offers = offerDao.getAllOffersBuyer(buyer.getId());
+        Assert.assertNotNull(offers);
+    }
+
+    @Test
+    public void getAllOffersSellerTest(){
+        List<Offer> offers = offerDao.getAllOffersBuyer(seller.getId());
         Assert.assertNotNull(offers);
     }
 
@@ -136,7 +142,7 @@ public class OfferDaoTest {
         Assert.assertNotNull(offer);
         Assert.assertNotNull(offerDao.getOfferById(offer.getId()));
         //delete
-        offerDao.deleteOffer(offer.getId());
+        offerDao.deleteOfferById(offer.getId());
         //get
         Assert.assertNull(offerDao.getOfferById(offer.getId()));
     }

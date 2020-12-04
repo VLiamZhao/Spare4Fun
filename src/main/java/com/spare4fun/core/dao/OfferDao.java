@@ -13,17 +13,17 @@ public interface OfferDao {
      * @param userId
      * @return
      */
-    List<Offer> getAllOffers(int userId);
+    List<Offer> getAllOffersBuyer(int userId);
+
+    List<Offer> getAllOffersSeller(int userId);
 
     /**
      * Get an offer by offerId
      * @param offerId
-     * @return null iff offer doesn't exist ---- design 1
-     * @throws java.util.NoSuchElementException iff no offer exist ---- design 2
-     * @return Optional.empty() iff offer doesn't exist -------- design 3
+     * @return null iff offer doesn't exist
      */
     Offer getOfferById(int offerId);
 
 
-    void deleteOffer(int offerId);
+    void deleteOfferById(int offerId);
 }
