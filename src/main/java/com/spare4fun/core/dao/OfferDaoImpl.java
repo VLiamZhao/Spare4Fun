@@ -69,7 +69,7 @@ public class OfferDaoImpl implements OfferDao {
     }
 
     @Override
-    public List<Offer> getAllOffersSeller(int userId) {
+    public List<Offer> getAllOffersSeller(int userId, int itemId) {
         List<Offer> offers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -78,7 +78,8 @@ public class OfferDaoImpl implements OfferDao {
             Root<Offer> root = criteriaQuery.from(Offer.class);
             criteriaQuery
                     .select(root)
-                    .where(builder.equal(root.get("seller"), userId));
+                    .where(builder.equal(root.get("seller"), userId))
+                    .where(builder.equal(root.get("item"), itemId));
             offers = session
                     .createQuery(criteriaQuery)
                     .getResultList();

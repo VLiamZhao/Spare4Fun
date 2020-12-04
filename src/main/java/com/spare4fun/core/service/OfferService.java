@@ -36,6 +36,8 @@ public class OfferService {
         return offerDao.getAllOffersBuyer(user.getId());
     }
 
+    // TODO: change this method for corresponding OfferDao::getAllOffersSeller
+    /*
     public List<Offer> getAllOffersSeller(String username) {
         User user = null;
         try {
@@ -45,6 +47,7 @@ public class OfferService {
         }
         return offerDao.getAllOffersSeller(user.getId());
     }
+    */
 
     public Offer getOfferById(int offerId) {
         return offerDao.getOfferById(offerId);

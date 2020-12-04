@@ -25,9 +25,10 @@ public interface OfferDao {
      * Get all offers for user with userId as seller
      * @author Yuhe Gu
      * @param userId
+     * @param itemId
      * @return list of offers under this user as seller
      */
-    List<Offer> getAllOffersSeller(int userId);
+    List<Offer> getAllOffersSeller(int userId, int itemId);
 
     /**
      * Get an offer by offerId
