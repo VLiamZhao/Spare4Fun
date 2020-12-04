@@ -123,17 +123,15 @@ public class OfferDaoTest {
 
     @Test
     public void getAllOffersSellerTest(){
-        List<Offer> offers = offerDao.getAllOffersBuyer(seller.getId());
+        List<Offer> offers = offerDao.getAllOffersSeller(seller.getId());
         Assert.assertNotNull(offers);
     }
 
     @Test
     public void getOfferByIdTest(){
-        //cannot get offers with non-existed offerId
         Offer offerTest = offerDao.getOfferById(offer.getId());
         Assert.assertNotNull(offerTest);
         Assert.assertEquals(offerTest.getMessage(), "123");
-
     }
 
     @Test

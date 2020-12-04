@@ -43,7 +43,7 @@ public class OfferService {
         } catch (NoSuchElementException e) {
             return Collections.emptyList();
         }
-        return offerDao.getAllOffersBuyer(user.getId());
+        return offerDao.getAllOffersSeller(user.getId());
     }
 
     public Offer getOfferById(int offerId) {
