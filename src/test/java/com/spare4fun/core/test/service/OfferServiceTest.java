@@ -99,10 +99,10 @@ public class OfferServiceTest {
     public void clean() {
         offerService.deleteOfferById(dummyOffer.getId());
         offerService.deleteOfferById(offer.getId());
-        itemService.deleteItem(item.getId());
+        itemService.deleteItemById(item.getId());
         userDao.deleteUserByUsername(seller.getUsername());
         userDao.deleteUserByUsername(buyer.getUsername());
-        locationDao.deleteLocation(location.getId());
+        locationDao.deleteLocationById(location.getId());
     }
 
     @Test
@@ -115,13 +115,13 @@ public class OfferServiceTest {
     public void getAllOffersBuyerTest(){
         List<Offer> offers = offerService.getAllOffersBuyer("dummy1");
         Assert.assertNotNull(offers);
-        Assert.assertTrue(offers.isEmpty());
+        Assert.assertFalse(offers.isEmpty());
     }
 
+    @Test
     public void getAllOffersSellerTest(){
         List<Offer> offers = offerService.getAllOffersSeller("dummy0");
         Assert.assertNotNull(offers);
-        Assert.assertTrue(offers.isEmpty());
+        Assert.assertFalse(offers.isEmpty());
     }
-
 }

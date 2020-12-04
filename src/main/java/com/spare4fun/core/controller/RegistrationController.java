@@ -9,11 +9,15 @@ import org.modelmapper.TypeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RegistrationController {
     private Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
@@ -24,6 +28,7 @@ public class RegistrationController {
     @PostMapping("/user/register")
     @ResponseBody
     public MessageDto register(@RequestBody UserDto userDto) {
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = userMapper.map(userDto);
         try {
             userService.addUser(user);
