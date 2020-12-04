@@ -33,11 +33,7 @@ public class UserDaoTest {
         users
                 .stream()
                 .forEach(user -> {
-                    try {
-                        userDao.saveUser(user);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    userDao.saveUser(user);
                 });
     }
 
@@ -46,11 +42,7 @@ public class UserDaoTest {
         users
                 .stream()
                 .forEach(user -> {
-                    try {
-                        userDao.deleteUserById(user.getId());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    userDao.deleteUserById(user.getId());
                 });
     }
 
@@ -103,14 +95,10 @@ public class UserDaoTest {
                 .role(Role.USER)
                 .enabled(true)
                 .build();
-        try {
-            userDao.saveUser(yuhe);
-            assertThat(userDao.getUserById(yuhe.getId())).isNotNull();
-            userDao.deleteUserById(yuhe.getId());
-            assertThat(userDao.getUserById(yuhe.getId())).isNull();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        userDao.saveUser(yuhe);
+        assertThat(userDao.getUserById(yuhe.getId())).isNotNull();
+        userDao.deleteUserById(yuhe.getId());
+        assertThat(userDao.getUserById(yuhe.getId())).isNull();
     }
 
     @Test

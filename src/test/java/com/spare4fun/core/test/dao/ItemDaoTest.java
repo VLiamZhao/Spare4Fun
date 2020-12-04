@@ -47,11 +47,7 @@ public class ItemDaoTest {
                 .email("dummy1")
                 .password("pass")
                 .build();
-        try {
-            userDao.saveUser(seller);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        userDao.saveUser(seller);
 
         items = dummyItems();
         items.forEach(item -> {

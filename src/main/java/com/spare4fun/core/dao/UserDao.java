@@ -24,14 +24,14 @@ public interface UserDao {
      * @throws
      *  DuplicateUserException - iff user with same username / email already exist
      */
-    User saveUser(User user) throws DuplicateUserException;
+    User saveUser(User user);
 
     /**
      * delete user from the user table
+     * do nothing if user is not found
      * @param userId
-     * @throws UsernameNotFoundException
      */
-    void deleteUserById(int userId) throws UsernameNotFoundException;
+    void deleteUserById(int userId);
 
     /**
      * select User with userId from user table

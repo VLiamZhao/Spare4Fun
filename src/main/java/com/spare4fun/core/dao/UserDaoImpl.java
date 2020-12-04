@@ -54,7 +54,7 @@ public class UserDaoImpl implements UserDao {
     ;
 
     @Override
-    public User saveUser(User user) throws DuplicateUserException {
+    public User saveUser(User user) {
         Optional<User> dup = selectUserByUsername(user.getUsername());
         if (dup.isPresent()) {
             throw new DuplicateUserException("User " + user.getUsername() + " already exist");
