@@ -7,6 +7,7 @@ import java.util.List;
 public interface OfferDao {
     /**
      * save a new offer to offer table
+     * TODO check no duplicate (user, item) pair
      * @param Offer
      * @return Offer that is saved to table
      */
