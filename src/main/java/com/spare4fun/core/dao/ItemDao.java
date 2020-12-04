@@ -7,4 +7,6 @@ public interface ItemDao {
     Item saveItem(Item item);
 
     Item deleteItem(int itemId);
+
+    Item getItemById(int itemId);
 }
