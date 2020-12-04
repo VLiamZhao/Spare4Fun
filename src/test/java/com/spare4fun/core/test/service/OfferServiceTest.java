@@ -115,13 +115,13 @@ public class OfferServiceTest {
     public void getAllOffersBuyerTest(){
         List<Offer> offers = offerService.getAllOffersBuyer("dummy1");
         Assert.assertNotNull(offers);
-        Assert.assertTrue(offers.isEmpty());
+        Assert.assertFalse(offers.isEmpty());
     }
 
+    @Test
     public void getAllOffersSellerTest(){
         List<Offer> offers = offerService.getAllOffersSeller("dummy0");
         Assert.assertNotNull(offers);
-        Assert.assertTrue(offers.isEmpty());
+        Assert.assertFalse(offers.isEmpty());
     }
-
 }

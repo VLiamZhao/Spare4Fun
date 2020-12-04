@@ -25,6 +25,7 @@ public class OfferDaoImpl implements OfferDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public Offer saveOffer(Offer offer) {
         Session session = null;
         try {
@@ -44,6 +45,7 @@ public class OfferDaoImpl implements OfferDao {
         return null;
     }
 
+    @Override
     public List<Offer> getAllOffersBuyer(int userId) {
         List<Offer> offers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
@@ -66,6 +68,7 @@ public class OfferDaoImpl implements OfferDao {
         return offers;
     }
 
+    @Override
     public List<Offer> getAllOffersSeller(int userId) {
         List<Offer> offers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
@@ -88,6 +91,7 @@ public class OfferDaoImpl implements OfferDao {
         return offers;
     }
 
+    @Override
     public Offer getOfferById(int offerId) {
         Offer offer = null;
         try (Session session = sessionFactory.openSession()) {
@@ -100,6 +104,7 @@ public class OfferDaoImpl implements OfferDao {
         return offer;
     }
 
+    @Override
     public void deleteOfferById(int offerId) {
         Session session = null;
         try {
