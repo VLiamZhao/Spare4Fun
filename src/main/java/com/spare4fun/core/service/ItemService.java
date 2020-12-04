@@ -15,8 +15,12 @@ public class ItemService {
         return itemDao.saveItem(item);
     }
 
-    public Item deleteItem(int itemId) {
+    public Item getItemById(int itemId) {
+        return itemDao.getItemById(itemId);
+    }
 
-        return itemDao.deleteItem(itemId);
+    public void deleteItemById(int itemId) {
+
+        itemDao.deleteItemById(itemId);
     }
 }

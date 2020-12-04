@@ -103,7 +103,7 @@ public class OfferDaoTest {
             offerDao.deleteOfferById(offer.getId());
         }
 
-        itemDao.deleteItem(item.getId());
+        itemDao.deleteItemById(item.getId());
         userDao.deleteUserById(seller.getId());
         userDao.deleteUserById(buyer.getId());
         locationDao.deleteLocationById(location.getId());

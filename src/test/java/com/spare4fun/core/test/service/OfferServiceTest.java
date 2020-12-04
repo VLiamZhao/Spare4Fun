@@ -99,7 +99,7 @@ public class OfferServiceTest {
     public void clean() {
         offerService.deleteOfferById(dummyOffer.getId());
         offerService.deleteOfferById(offer.getId());
-        itemService.deleteItem(item.getId());
+        itemService.deleteItemById(item.getId());
         userDao.deleteUserById(seller.getId());
         userDao.deleteUserById(buyer.getId());
         locationDao.deleteLocationById(location.getId());
