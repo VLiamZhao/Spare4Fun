@@ -54,7 +54,7 @@ public class ItemControllerTest {
                 .password(passwordEncoder.encode("pass"))
                 .build();
         try {
-            userDao.addUser(seller);
+            userDao.saveUser(seller);
         } catch (DuplicateUserException e) {
             e.printStackTrace();
         }
@@ -73,10 +73,10 @@ public class ItemControllerTest {
     @AfterEach
     private void clean() {
         items.keySet().forEach(itemId -> {
-            itemService.deleteItem(itemId);
+            itemService.deleteItemById(itemId);
         });
         locationService.deleteLocation(location.getId());
-        userDao.deleteUserByUsername(seller.getUsername());
+        userDao.deleteUserById(seller.getId());
     }
 
     private List<Item> setDummyItems() {

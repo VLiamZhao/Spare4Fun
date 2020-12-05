@@ -14,7 +14,7 @@ public class LocationService {
         return locationDao.saveLocation(location);
     }
 
-    public Location deleteLocation(int locationId) {
-        return locationDao.deleteLocation(locationId);
+    public void deleteLocation(int locationId) {
+        locationDao.deleteLocationById(locationId);
     }
 }
