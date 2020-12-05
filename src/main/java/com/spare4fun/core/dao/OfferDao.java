@@ -7,7 +7,8 @@ import java.util.List;
 public interface OfferDao {
     /**
      * save a new offer to offer table
-     * TODO check no duplicate (user, item) pair
+     * TODO 1: check no duplicate (user, item) pair
+     * TODO 2: check seller != buyer
      * @param Offer
      * @return Offer that is saved to table
      */
@@ -22,7 +23,7 @@ public interface OfferDao {
     List<Offer> getAllOffersBuyer(int userId);
 
     /**
-     * Get all offers for user with userId as seller
+     * Get all offers of item with itemId for user with userId as seller
      * @author Yuhe Gu
      * @param userId
      * @param itemId

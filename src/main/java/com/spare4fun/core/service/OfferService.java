@@ -21,6 +21,14 @@ public class OfferService {
     @Autowired
     private UserDao userDao;
 
+    /**
+     * TODO 1: need to check item.quantity >= offer.quantity
+     * TODO 2: need to modify item.quantity -= offer.quantity
+     * TODO 3: need to modify item.quantity_on_hold += offer.quantity
+     * TODO 4: corner cases - offer.price > 0 & offer.quantity > 0
+     * @param offer
+     * @return
+     */
     public Offer saveOffer(Offer offer){
         return offerDao.saveOffer(offer);
     }
