@@ -86,14 +86,14 @@ public class OfferController {
 
     //********
     //Yuhe
-    @GetMapping("/getAllOffers")
+    @GetMapping("/buyer/getAllOffers")
     @ResponseBody
-    public List<OfferDto> getAllOffers(){
+    public List<OfferDto> getAllOffersBuyer(){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        List<Offer> offers = offerService.getAllOffers(username);
+        List<Offer> offers = offerService.getAllOffersBuyer(username);
         List<OfferDto> offerDtos = new ArrayList<>();
 
         for (Offer offer : offers) {
@@ -107,7 +107,28 @@ public class OfferController {
         return offerDtos;
     }
 
-    @GetMapping("/getOfferById/{offerId}")
+//    @GetMapping("/seller/getAllOffers")
+//    @ResponseBody
+//    public List<OfferDto> getAllOffersSeller(){
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+//
+//        List<Offer> offers = offerService.getAllOffersSeller(username);
+//        List<OfferDto> offerDtos = new ArrayList<>();
+//
+//        for (Offer offer : offers) {
+//            offerDtos.add(
+//                    OfferDto
+//                            .builder()
+//                            .buyerId(offer.getBuyer().getId())
+//                            .build()
+//            );
+//        }
+//        return offerDtos;
+//    }
+
+    @GetMapping("/{offerId}")
     @ResponseBody
     public OfferDto getOfferById(@PathVariable(value = "offerId") int offerId) {
 
@@ -120,8 +141,8 @@ public class OfferController {
     }
 
     @PostMapping("/deleteOffer/{offerId}")
-    public ResponseEntity<String> deleteOffer(@PathVariable(value = "offerId") int offerId){
-        offerService.deleteOffer(offerId);
+    public ResponseEntity<String> deleteOfferById(@PathVariable(value = "offerId") int offerId){
+        offerService.deleteOfferById(offerId);
         return new ResponseEntity<String>("The offer has been successfully deleted!", HttpStatus.OK);
     }
 }

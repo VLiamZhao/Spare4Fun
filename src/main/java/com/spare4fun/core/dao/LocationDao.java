@@ -6,5 +6,5 @@ public interface LocationDao {
     //Please ignore this method. This is only for temporary test
     Location saveLocation(Location location);
 
-    Location deleteLocation(int locationId);
+    Location deleteLocationById(int locationId);
 }

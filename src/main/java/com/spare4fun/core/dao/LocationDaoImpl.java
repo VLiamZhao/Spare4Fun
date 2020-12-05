@@ -31,7 +31,7 @@ public class LocationDaoImpl implements LocationDao {
         }
 
         //Please ignore this method. This is only for temporary test
-        public Location deleteLocation(int locationId) {
+        public Location deleteLocationById(int locationId) {
             Session session = null;
             try {
                 session = sessionFactory.openSession();

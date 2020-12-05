@@ -1,11 +1,12 @@
 package com.spare4fun.core.dao;
 
 import com.spare4fun.core.entity.Item;
-import com.spare4fun.core.entity.Offer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.NoResultException;
 
 @Repository
 public class ItemDaoImpl implements ItemDao {
@@ -31,7 +32,17 @@ public class ItemDaoImpl implements ItemDao {
         return null;
     }
 
-    public Item deleteItem(int itemId) {
+    public Item getItemById(int itemId) {
+        Item item = null;
+        try (Session session = sessionFactory.openSession()) {
+            item = session.get(Item.class, itemId);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    public void deleteItemById(int itemId) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -47,18 +58,6 @@ public class ItemDaoImpl implements ItemDao {
                 session.close();
             }
         }
-        return null;
-    }
-
-    @Override
-    public Item getItemById(int itemId) {
-        Item item = null;
-        try (Session session = sessionFactory.openSession()) {
-            item = session.get(Item.class, itemId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return item;
     }
 
 }
