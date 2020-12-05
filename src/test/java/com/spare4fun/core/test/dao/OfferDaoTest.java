@@ -123,7 +123,7 @@ public class OfferDaoTest {
 
     @Test
     public void getAllOffersSellerTest(){
-        List<Offer> offers = offerDao.getAllOffersSeller(seller.getId());
+        List<Offer> offers = offerDao.getAllOffersSeller(seller.getId(), item.getId());
         Assert.assertNotNull(offers);
     }
 

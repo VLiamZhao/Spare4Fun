@@ -112,7 +112,7 @@ public class TimeSlotDaoTest {
             timeSlotDao.deleteTimeSlotById(timeSlot.getId());
         });
         appointmentDao.deleteAppointmentById(appointment.getId());
-        offerDao.deleteOfferById(offer.getId());
+        // offerDao.deleteOfferById(offer.getId());
         itemDao.deleteItemById(item.getId());
         userDao.deleteUserById(seller.getId());
         userDao.deleteUserById(buyer.getId());
