@@ -21,17 +21,17 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public void addUser(User user) throws DuplicateUserException {
+    public void saveUser(User user) throws DuplicateUserException {
         user.setRole(Role.USER);
         user.setEnabled(true);
-        userDao.addUser(user);
+        userDao.saveUser(user);
     }
 
     public Optional<User> loadUserByUsername(String username) {
         return userDao.selectUserByUsername(username);
     }
 
-    public void deleteUser(String username) throws UsernameNotFoundException {
-        userDao.deleteUserByUsername(username);
+    public void deleteUserById(int userId){
+        userDao.deleteUserById(userId);
     }
 }

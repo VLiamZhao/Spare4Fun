@@ -25,6 +25,7 @@ public class OfferDaoImpl implements OfferDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public Offer saveOffer(Offer offer) {
         Session session = null;
         try {
@@ -44,7 +45,8 @@ public class OfferDaoImpl implements OfferDao {
         return null;
     }
 
-    public List<Offer> getAllOffers(int userId) {
+    @Override
+    public List<Offer> getAllOffersBuyer(int userId) {
         List<Offer> offers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -53,7 +55,7 @@ public class OfferDaoImpl implements OfferDao {
             Root<Offer> root = criteriaQuery.from(Offer.class);
             criteriaQuery
                     .select(root)
-                    .where(builder.equal(root.get("id"), userId));
+                    .where(builder.equal(root.get("buyer"), userId));
             offers = session
                     .createQuery(criteriaQuery)
                     .getResultList();
@@ -66,17 +68,47 @@ public class OfferDaoImpl implements OfferDao {
         return offers;
     }
 
+    @Override
+    public List<Offer> getAllOffersSeller(int userId, int itemId) {
+        List<Offer> offers = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Offer> criteriaQuery = builder.createQuery(Offer.class);
+            Root<Offer> root = criteriaQuery.from(Offer.class);
+            criteriaQuery
+                    .select(root)
+                    .where(builder.and(
+                            builder.equal(root.get("seller"), userId),
+                            builder.equal(root.get("item"), itemId)
+                    ));
+            offers = session
+                    .createQuery(criteriaQuery)
+                    .getResultList();
+            session.getTransaction().commit();
+        } catch (NoResultException e) {
+            return Collections.emptyList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return offers;
+    }
+
+    @Override
     public Offer getOfferById(int offerId) {
         Offer offer = null;
         try (Session session = sessionFactory.openSession()) {
             offer = session.get(Offer.class, offerId);
+        }catch (NoResultException e) {
+            return null;
         }catch (Exception e) {
             e.printStackTrace();
         }
         return offer;
     }
 
-    public void deleteOffer(int offerId) {
+    @Override
+    public void deleteOfferById(int offerId) {
         Session session = null;
         try {
             session = sessionFactory.openSession();

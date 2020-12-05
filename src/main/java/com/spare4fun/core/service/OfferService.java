@@ -21,26 +21,47 @@ public class OfferService {
     @Autowired
     private UserDao userDao;
 
+    /**
+     * TODO 1: need to check item.quantity >= offer.quantity
+     * TODO 2: need to modify item.quantity -= offer.quantity
+     * TODO 3: need to modify item.quantity_on_hold += offer.quantity
+     * TODO 4: corner cases - offer.price > 0 & offer.quantity > 0
+     * @param offer
+     * @return
+     */
     public Offer saveOffer(Offer offer){
         return offerDao.saveOffer(offer);
     }
 
 
-    public List<Offer> getAllOffers(String username) {
+    public List<Offer> getAllOffersBuyer(String username) {
         User user = null;
         try {
             user = userDao.selectUserByUsername(username).get();
         } catch (NoSuchElementException e) {
             return Collections.emptyList();
         }
-        return offerDao.getAllOffers(user.getId());
+        return offerDao.getAllOffersBuyer(user.getId());
     }
+
+    // TODO: change this method for corresponding OfferDao::getAllOffersSeller
+    /*
+    public List<Offer> getAllOffersSeller(String username) {
+        User user = null;
+        try {
+            user = userDao.selectUserByUsername(username).get();
+        } catch (NoSuchElementException e) {
+            return Collections.emptyList();
+        }
+        return offerDao.getAllOffersSeller(user.getId());
+    }
+    */
 
     public Offer getOfferById(int offerId) {
         return offerDao.getOfferById(offerId);
     }
 
-    public void deleteOffer(int offerId) {
-        offerDao.deleteOffer(offerId);
+    public void deleteOfferById(int offerId) {
+        offerDao.deleteOfferById(offerId);
     }
 }

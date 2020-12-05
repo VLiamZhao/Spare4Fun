@@ -31,7 +31,7 @@ public class RegistrationController {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = userMapper.map(userDto);
         try {
-            userService.addUser(user);
+            userService.saveUser(user);
         } catch (DuplicateUserException e) {
             return MessageDto
                     .builder()
