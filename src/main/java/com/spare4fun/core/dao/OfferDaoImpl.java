@@ -78,8 +78,10 @@ public class OfferDaoImpl implements OfferDao {
             Root<Offer> root = criteriaQuery.from(Offer.class);
             criteriaQuery
                     .select(root)
-                    .where(builder.equal(root.get("seller"), userId))
-                    .where(builder.equal(root.get("item"), itemId));
+                    .where(builder.and(
+                            builder.equal(root.get("seller"), userId),
+                            builder.equal(root.get("item"), itemId)
+                    ));
             offers = session
                     .createQuery(criteriaQuery)
                     .getResultList();
