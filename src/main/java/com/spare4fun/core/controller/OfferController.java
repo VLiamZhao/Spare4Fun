@@ -101,7 +101,7 @@ public class OfferController {
 //        return offerDtos;
 //    }
 
-    @GetMapping("/{offerId}")
+    @GetMapping("/getOfferById/{offerId}")
     @ResponseBody
     public OfferDto getOfferById(@PathVariable(value = "offerId") int offerId) {
 

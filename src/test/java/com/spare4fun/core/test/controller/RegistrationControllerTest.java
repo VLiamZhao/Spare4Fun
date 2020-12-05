@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,10 +34,14 @@ public class RegistrationControllerTest {
     @Autowired
     private UserService userService;
 
+    private List<UserDto> users;
+
     @BeforeEach
     private void setup() {
         // cannot add duplicate user with same username
-        dummyUsers()
+        users = dummyUsers();
+
+        users
                 .stream()
                 .forEach(userDto -> {
                     MessageDto messageDto = registerationController.register(userDto);
@@ -46,15 +52,16 @@ public class RegistrationControllerTest {
 
     @AfterEach
     private void clean() {
-        dummyUsers()
+        users
                 .stream()
                 .forEach( userDto -> {
-                    userService.deleteUser(userDto.getUsername());
+                    User user = userService.loadUserByUsername(userDto.getUsername()).get();
+                    userService.deleteUserById(user.getId());
                 });
     }
 
-    private Set<UserDto> dummyUsers() {
-        Set<UserDto> dummyUsers = new HashSet<>();
+    private List<UserDto> dummyUsers() {
+        List<UserDto> dummyUsers = new ArrayList<>();
 
         UserDto alice = UserDto
                 .builder()
@@ -81,7 +88,7 @@ public class RegistrationControllerTest {
 
     @Test
     public void correctInfo() {
-        dummyUsers()
+        users
                 .stream()
                 .forEach( userDto -> {
                     User user = userService.loadUserByUsername(userDto.getUsername()).orElse(null);

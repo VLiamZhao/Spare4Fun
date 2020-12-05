@@ -25,6 +25,7 @@ public class OfferDaoImpl implements OfferDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public Offer saveOffer(Offer offer) {
         Session session = null;
         try {
@@ -44,6 +45,7 @@ public class OfferDaoImpl implements OfferDao {
         return null;
     }
 
+    @Override
     public List<Offer> getAllOffersBuyer(int userId) {
         List<Offer> offers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
@@ -66,7 +68,8 @@ public class OfferDaoImpl implements OfferDao {
         return offers;
     }
 
-    public List<Offer> getAllOffersSeller(int userId) {
+    @Override
+    public List<Offer> getAllOffersSeller(int userId, int itemId) {
         List<Offer> offers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -75,7 +78,10 @@ public class OfferDaoImpl implements OfferDao {
             Root<Offer> root = criteriaQuery.from(Offer.class);
             criteriaQuery
                     .select(root)
-                    .where(builder.equal(root.get("seller"), userId));
+                    .where(builder.and(
+                            builder.equal(root.get("seller"), userId),
+                            builder.equal(root.get("item"), itemId)
+                    ));
             offers = session
                     .createQuery(criteriaQuery)
                     .getResultList();
@@ -88,6 +94,7 @@ public class OfferDaoImpl implements OfferDao {
         return offers;
     }
 
+    @Override
     public Offer getOfferById(int offerId) {
         Offer offer = null;
         try (Session session = sessionFactory.openSession()) {
@@ -100,6 +107,7 @@ public class OfferDaoImpl implements OfferDao {
         return offer;
     }
 
+    @Override
     public void deleteOfferById(int offerId) {
         Session session = null;
         try {
