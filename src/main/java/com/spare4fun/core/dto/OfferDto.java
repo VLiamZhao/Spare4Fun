@@ -14,7 +14,5 @@ public class OfferDto {
     private int quantity;
     private String message;
     private int itemId;
-    private int buyerId;
-
-    private int sellerId;
+    private String sellerName;
 }
