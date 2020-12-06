@@ -76,7 +76,7 @@ public class ItemControllerTest {
             itemService.deleteItemById(itemId);
         });
         locationService.deleteLocationById(location.getId());
-        userDao.deleteUserByUsername(seller.getUsername());
+        userDao.deleteUserById(seller.getId());
     }
 
     private List<Item> setDummyItems() {
