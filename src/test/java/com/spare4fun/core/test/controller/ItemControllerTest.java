@@ -54,7 +54,7 @@ public class ItemControllerTest {
                 .password(passwordEncoder.encode("pass"))
                 .build();
         try {
-            userDao.addUser(seller);
+            userDao.saveUser(seller);
         } catch (DuplicateUserException e) {
             e.printStackTrace();
         }
