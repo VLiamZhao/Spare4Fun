@@ -74,7 +74,7 @@ public class Appointment implements Serializable {
     @Getter
     @Setter
     @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(name = "avail_time", nullable = false)
+    @Column(name = "avail_time")
     private List<TimeSlot> availTime;
 
     @Getter

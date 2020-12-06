@@ -1,101 +1,126 @@
 package com.spare4fun.core.test.dao;
 
-import com.spare4fun.core.CoreApplication;
 import com.spare4fun.core.dao.ItemDao;
 import com.spare4fun.core.dao.LocationDao;
 import com.spare4fun.core.dao.UserDao;
-import com.spare4fun.core.entity.*;
-import com.spare4fun.core.exception.DuplicateUserException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.spare4fun.core.entity.Item;
+import com.spare4fun.core.entity.Location;
+import com.spare4fun.core.entity.User;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = CoreApplication.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
 public class ItemDaoTest {
+    @Autowired
+    private ItemDao itemDao;
 
     @Autowired
-    ItemDao itemDao;
+    private LocationDao locationDao;
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
-    @Autowired
-    LocationDao locationDao;
-
-    private Item dummyItem;
-    private Item item;
     private Location location;
     private User seller;
+    private List<Item> items;
 
-    @Before
-    public void setUp() throws DuplicateUserException {
-        seller = User
-                .builder()
-                .email("dummy0")
-                .password("000")
-                .build();
-        userDao.addUser(seller);
-
+    @BeforeEach
+    public void setup() {
         location = Location
                 .builder()
+                .line1("1")
+                .city("A")
+                .state("WA")
                 .build();
         locationDao.saveLocation(location);
 
-        item = Item
+        seller = User
+                .builder()
+                .email("dummy1")
+                .password("pass")
+                .build();
+        userDao.saveUser(seller);
+
+        items = dummyItems();
+        items.forEach(item -> {
+            itemDao.saveItem(item);
+        });
+    }
+
+    @AfterEach
+    public void clean() {
+        items.forEach(item -> {
+            itemDao.deleteItemById(item.getId());
+        });
+        locationDao.deleteLocationById(location.getId());
+        userDao.deleteUserById(seller.getId());
+    }
+
+    public List<Item> dummyItems() {
+        List<Item> res = new ArrayList<>();
+
+        res.add(
+                Item
+                        .builder()
+                        .seller(seller)
+                        .location(location)
+                        .title("CLRS")
+                        .build()
+        );
+
+        res.add(
+                Item
+                        .builder()
+                        .seller(seller)
+                        .location(location)
+                        .title("Computer Architecture")
+                        .build()
+        );
+
+        return res;
+    }
+
+    @Test
+    public void testSaveItem() {
+        items.forEach(item -> {
+            assertThat(itemDao.getItemById(item.getId())).isNotNull();
+        });
+    }
+
+    @Test
+    public void testDeleteItem() {
+        Item item = Item
                 .builder()
                 .seller(seller)
                 .location(location)
+                .title("Computer Architecture")
                 .build();
         itemDao.saveItem(item);
-
-        dummyItem = Item
-                .builder()
-                .seller(seller)
-                .location(location)
-                .build();
-        itemDao.saveItem(dummyItem);
-    }
-
-    @After
-    public void clean() {
-        if (itemDao.getItemById(dummyItem.getId()) != null) {
-            itemDao.deleteItemById(dummyItem.getId());
-        }
-        if (itemDao.getItemById(item.getId()) != null) {
-            itemDao.deleteItemById(item.getId());
-        }
-
-        userDao.deleteUserByUsername(seller.getUsername());
-        locationDao.deleteLocationById(location.getId());
-    }
-
-    @Test
-    public void saveItemTest(){
-        Assert.assertNotNull(dummyItem);
-        Assert.assertNotEquals(0, dummyItem.getId());
-    }
-
-    @Test
-    public void getItemByIdTest(){
-        //cannot get items with non-existed itemId
-        Assert.assertNotNull(itemDao.getItemById(item.getId()));
-    }
-
-    @Test
-    public void deleteItemTest() {
-        //cannot delete items with non-existed itemId
-        Assert.assertNotNull(item);
-        Assert.assertNotEquals(0, item.getId());
-        //delete
+        assertThat(itemDao.getItemById(item.getId())).isNotNull();
         itemDao.deleteItemById(item.getId());
-        //get id
-        Assert.assertNull(itemDao.getItemById(item.getId()));
+        assertThat(itemDao.getItemById(item.getId())).isNull();
+    }
+
+    @Test
+    public void testGetItemById() {
+        Item item = itemDao.getItemById(items.get(0).getId());
+        assertThat(item.getId()).isEqualTo(items.get(0).getId());
+        assertThat(item.getTitle()).isEqualTo(items.get(0).getTitle());
+        assertThat(item.getSeller().getId()).isEqualTo(items.get(0).getSeller().getId());
+        assertThat(item.getLocation().getId()).isEqualTo(items.get(0).getLocation().getId());
+    }
+
+    @Test
+    public void testGetAllItems() {
+        List<Item> itemsFromTable = itemDao.getAllItems();
+        assertThat(itemsFromTable.size()).isEqualTo(items.size());
     }
 }
