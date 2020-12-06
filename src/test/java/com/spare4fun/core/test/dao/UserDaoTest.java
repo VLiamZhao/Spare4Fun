@@ -10,10 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
@@ -24,36 +25,31 @@ public class UserDaoTest {
     @Autowired
     private UserDao userDao;
 
+    private List<User> users;
+
     @BeforeEach
     public void setup() {
-        dummyUsers()
+        users = dummyUsers();
+        users
                 .stream()
                 .forEach(user -> {
-                    try {
-                        userDao.addUser(user);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    userDao.saveUser(user);
                 });
     }
 
     @AfterEach
     public void clean() {
-        dummyUsers()
+        users
                 .stream()
                 .forEach(user -> {
-                    try {
-                        userDao.deleteUserByUsername(user.getUsername());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    userDao.deleteUserById(user.getId());
                 });
     }
 
 
 
-    private Set<User> dummyUsers() {
-        Set<User> dummyUsers = new HashSet<>();
+    private List<User> dummyUsers() {
+        List<User> dummyUsers = new ArrayList<>();
 
         User alice = User
                 .builder()
@@ -78,12 +74,12 @@ public class UserDaoTest {
     @Test
     public void testAddUser() {
         // cannot add duplicate user with same username
-        dummyUsers()
+        users
                 .stream()
                 .forEach(
                         user -> {
                             assertThrows(DuplicateUserException.class, () -> {
-                                userDao.addUser(user);
+                                userDao.saveUser(user);
                             });
                         }
                 );
@@ -92,9 +88,29 @@ public class UserDaoTest {
     @Test
     public void testDeleteUser() {
         // cannot add duplicate user with same username
-        assertThrows(UsernameNotFoundException.class, () -> {
-            userDao.deleteUserByUsername("dummy0");
-        });
+        User yuhe = User
+                .builder()
+                .email("dummy3")
+                .password(passwordEncoder.encode("pass"))
+                .role(Role.USER)
+                .enabled(true)
+                .build();
+        userDao.saveUser(yuhe);
+        assertThat(userDao.getUserById(yuhe.getId())).isNotNull();
+        userDao.deleteUserById(yuhe.getId());
+        assertThat(userDao.getUserById(yuhe.getId())).isNull();
+    }
+
+    @Test
+    public void testGetAll() {
+        List<User> usersFromTable = userDao.getAllUsers();
+        Collections.sort(usersFromTable, Comparator.comparing(User::getUsername));
+
+        IntStream.range(0, usersFromTable.size())
+                .forEach(idx -> {
+                    assertThat(usersFromTable.get(idx).getUsername())
+                            .isEqualTo(users.get(idx).getUsername());
+                });
     }
 
     @Test

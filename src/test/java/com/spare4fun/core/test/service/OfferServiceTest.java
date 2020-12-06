@@ -53,7 +53,7 @@ public class OfferServiceTest {
                 .role(Role.ADMIN)
                 .enabled(true)
                 .build();
-        userDao.addUser(seller);
+        userDao.saveUser(seller);
 
         buyer = User
                 .builder()
@@ -62,7 +62,7 @@ public class OfferServiceTest {
                 .role(Role.USER)
                 .enabled(true)
                 .build();
-        userDao.addUser(buyer);
+        userDao.saveUser(buyer);
 
         location = Location
                 .builder()
@@ -100,8 +100,8 @@ public class OfferServiceTest {
         offerService.deleteOfferById(dummyOffer.getId());
         offerService.deleteOfferById(offer.getId());
         itemService.deleteItemById(item.getId());
-        userDao.deleteUserByUsername(seller.getUsername());
-        userDao.deleteUserByUsername(buyer.getUsername());
+        userDao.deleteUserById(seller.getId());
+        userDao.deleteUserById(buyer.getId());
         locationDao.deleteLocationById(location.getId());
     }
 
@@ -115,13 +115,16 @@ public class OfferServiceTest {
     public void getAllOffersBuyerTest(){
         List<Offer> offers = offerService.getAllOffersBuyer("dummy1");
         Assert.assertNotNull(offers);
+        Assert.assertFalse(offers.isEmpty());
     }
 
+    // TODO change this test for OfferDao::getAllOffersSeller
+    /*
+    @Test
     public void getAllOffersSellerTest(){
         List<Offer> offers = offerService.getAllOffersSeller("dummy0");
         Assert.assertNotNull(offers);
-        Assert.assertTrue(offers.isEmpty());
+        Assert.assertFalse(offers.isEmpty());
     }
-
-
+    */
 }

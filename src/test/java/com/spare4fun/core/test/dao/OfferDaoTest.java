@@ -53,7 +53,7 @@ public class OfferDaoTest {
                 .role(Role.ADMIN)
                 .enabled(true)
                 .build();
-        userDao.addUser(seller);
+        userDao.saveUser(seller);
 
         buyer = User
                 .builder()
@@ -62,7 +62,7 @@ public class OfferDaoTest {
                 .role(Role.USER)
                 .enabled(true)
                 .build();
-        userDao.addUser(buyer);
+        userDao.saveUser(buyer);
 
         location = Location
                 .builder()
@@ -104,8 +104,8 @@ public class OfferDaoTest {
         }
 
         itemDao.deleteItemById(item.getId());
-        userDao.deleteUserByUsername(seller.getUsername());
-        userDao.deleteUserByUsername(buyer.getUsername());
+        userDao.deleteUserById(seller.getId());
+        userDao.deleteUserById(buyer.getId());
         locationDao.deleteLocationById(location.getId());
     }
 
@@ -123,7 +123,7 @@ public class OfferDaoTest {
 
     @Test
     public void getAllOffersSellerTest(){
-        List<Offer> offers = offerDao.getAllOffersBuyer(seller.getId());
+        List<Offer> offers = offerDao.getAllOffersSeller(seller.getId(), item.getId());
         Assert.assertNotNull(offers);
     }
 
@@ -133,7 +133,6 @@ public class OfferDaoTest {
         Offer offerTest = offerDao.getOfferById(offer.getId());
         Assert.assertNotNull(offerTest);
         Assert.assertEquals(offerTest.getMessage(), "123");
-
     }
 
     @Test
