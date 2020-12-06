@@ -54,7 +54,7 @@ public class ItemControllerTest {
                 .password(passwordEncoder.encode("pass"))
                 .build();
         try {
-            userDao.addUser(seller);
+            userDao.saveUser(seller);
         } catch (DuplicateUserException e) {
             e.printStackTrace();
         }
@@ -76,7 +76,7 @@ public class ItemControllerTest {
             itemService.deleteItemById(itemId);
         });
         locationService.deleteLocationById(location.getId());
-        userDao.deleteUserByUsername(seller.getUsername());
+        userDao.deleteUserById(seller.getId());
     }
 
     private List<Item> setDummyItems() {
