@@ -100,33 +100,11 @@ public class OfferController {
             offerDtos.add(
                     OfferDto
                             .builder()
-//                            .buyerId(offer.getBuyer().getId())
                             .build()
             );
         }
         return offerDtos;
     }
-
-//    @GetMapping("/seller/getAllOffers")
-//    @ResponseBody
-//    public List<OfferDto> getAllOffersSeller(){
-//
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//
-//        List<Offer> offers = offerService.getAllOffersSeller(username);
-//        List<OfferDto> offerDtos = new ArrayList<>();
-//
-//        for (Offer offer : offers) {
-//            offerDtos.add(
-//                    OfferDto
-//                            .builder()
-//                            .buyerId(offer.getBuyer().getId())
-//                            .build()
-//            );
-//        }
-//        return offerDtos;
-//    }
 
     @GetMapping("/{offerId}")
     @ResponseBody

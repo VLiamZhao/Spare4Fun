@@ -37,35 +37,6 @@ public class ItemController {
     @Autowired
     private TypeMap<Location, LocationDto> locationDtoMapper;
 
-
-    @PostMapping("/creation")
-    public ResponseEntity<String> saveItem(@RequestBody ItemDto ItemDto) {
-
-//        Item item = new Item();
-
-        return new ResponseEntity<String>("The item has been successfully placed!", HttpStatus.OK);
-    }
-
-    @GetMapping("/{itemId}")
-    @ResponseBody
-    public ItemDto getItemById(@PathVariable(value = "itemId") int itemId) {
-
-        Item item = itemService.getItemById(itemId);
-        ItemDto itemDto = ItemDto
-                .builder()
-                .sellerId(item.getSeller().getId())
-                .locationId(item.getLocation().getId())
-                .build();
-        return itemDto;
-    }
-
-    @PostMapping("/deleteItem/{itemId}")
-    public ResponseEntity<String> deleteItemById(@PathVariable(value = "itemId") int itemId) {
-        itemService.deleteItemById(itemId);
-        return new ResponseEntity<String>("The item has been successfully deleted!", HttpStatus.OK);
-    }
-
-
     @GetMapping("/seller/getAllItems")
     @ResponseBody
     public List<ItemDto> getAllItems() {
