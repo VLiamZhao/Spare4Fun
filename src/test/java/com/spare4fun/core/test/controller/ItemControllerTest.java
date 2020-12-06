@@ -75,7 +75,7 @@ public class ItemControllerTest {
         items.keySet().forEach(itemId -> {
             itemService.deleteItemById(itemId);
         });
-        locationService.deleteLocation(location.getId());
+        locationService.deleteLocationById(location.getId());
         userDao.deleteUserById(seller.getId());
     }
 
