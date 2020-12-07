@@ -5,12 +5,12 @@ import com.spare4fun.core.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ItemService {
     @Autowired
     ItemDao itemDao;
-
-    //Please ignore this method. This is only for temporary test
 
     /**
      * TODO 1: check hideLocation default to false
@@ -24,8 +24,14 @@ public class ItemService {
      * @param item
      * @return
      */
+
+
     public Item saveItem(Item item){
         return itemDao.saveItem(item);
+
+        item.getHideLocation(item.setHideLocation(false));
+        item.getFixPrice(item.setFixPrice(false));
+
     }
 
     public Item getItemById(int itemId) {

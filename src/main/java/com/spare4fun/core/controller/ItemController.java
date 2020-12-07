@@ -105,7 +105,12 @@ public class ItemController {
                     Location
                             .builder()
                             .line1(itemDto.getLocationDto().getLine1())
-                            //TODO other location attributes.
+                            //TODO other location attributes
+                            .line2(itemDto.getLocationDto().getLine2())
+                            .city(itemDto.getLocationDto().getCity())
+                            .state(itemDto.getLocationDto().getState())
+                            .zipcode(itemDto.getLocationDto().getZipcode())
+                            .country(itemDto.getLocationDto().getCountry())
                             .build()
             );
         } else {
@@ -115,7 +120,13 @@ public class ItemController {
         Item item = Item
                 .builder()
                 .title(itemDto.getTitle())
-                //TODO other attributes
+                .description(itemDto.getDescription())
+                .quantity(itemDto.getQuantity())
+                .category(itemDto.getCategory())
+                .condition(itemDto.getCondition())
+                .availabilityTime(itemDto.getAvailabilityTime())
+                .listingPrice(itemDto.getListingPrice())
+                .fixPrice(itemDto.getFixedPrice())
                 .location(location)
                 .seller(seller)
                 .build();
@@ -132,7 +143,7 @@ public class ItemController {
             itemDto.setLocationId(location.getId());
             itemDto.setLocationDto(null);
         }
-        
+
         return itemDto;
     }
 }
