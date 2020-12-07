@@ -73,13 +73,13 @@ public class PaymentOrder implements Serializable {
     @Setter
     @Column(name = "final_price", nullable = false)
     @DecimalMin(value = "1")
-    private int finalPrice;
+    private Integer finalPrice;
 
     @Getter
     @Setter
     @Column(name = "final_quantity", nullable = false)
     @DecimalMin(value = "1")
-    private int finalQuantity;
+    private Integer finalQuantity;
 
     @Getter
     @Setter

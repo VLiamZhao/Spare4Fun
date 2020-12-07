@@ -53,27 +53,27 @@ public class Item implements Serializable {
 
     @Getter
     @Setter
-    private int quantity;
+    private Integer quantity;
 
     @Getter
     @Setter
     @Column(name = "quantity_on_hold")
-    private int quantityOnHold;
+    private Integer quantityOnHold;
 
     @Getter
     @Setter
     @Column(name = "quantity_sold")
-    private int quantitySold;
+    private Integer quantitySold;
 
     @Getter
     @Setter
     @Column(name = "listing_price")
-    private int listingPrice;
+    private Integer listingPrice;
 
     @Getter
     @Setter
     @Column(name = "fixed_price")
-    private boolean fixedPrice;
+    private Boolean fixedPrice;
 
     @Getter
     @Setter
