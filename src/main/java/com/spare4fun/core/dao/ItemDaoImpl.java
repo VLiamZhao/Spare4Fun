@@ -1,16 +1,23 @@
 package com.spare4fun.core.dao;
 
 import com.spare4fun.core.entity.Item;
+import com.spare4fun.core.entity.Location;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
 @Repository
 public class ItemDaoImpl implements ItemDao {
     @Autowired
     private SessionFactory sessionFactory;
-    //Please ignore this method. This is only for temporary test
+
+    @Override
     public Item saveItem(Item item) {
         Session session = null;
         try {
@@ -30,7 +37,19 @@ public class ItemDaoImpl implements ItemDao {
         return null;
     }
 
-    public Item deleteItem(int itemId) {
+    @Override
+    public Item getItemById(int itemId) {
+        Item item = null;
+        try (Session session = sessionFactory.openSession()) {
+            item = session.get(Item.class, itemId);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    @Override
+    public void deleteItemById(int itemId) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -46,15 +65,26 @@ public class ItemDaoImpl implements ItemDao {
                 session.close();
             }
         }
-        return null;
     }
 
-    public Item getItemById(int itemId) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(Item.class, itemId);
-        } catch (Exception e) {
+    @Override
+    public List<Item> getAllItems() {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Item> criteriaQuery = builder.createQuery(Item.class);
+            Root<Item> root = criteriaQuery.from(Item.class);
+            criteriaQuery.select(root);
+            return session.createQuery(criteriaQuery).getResultList();
+        } catch(Exception e) {
             e.printStackTrace();
+            throw e;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
-        return null;
     }
+
 }

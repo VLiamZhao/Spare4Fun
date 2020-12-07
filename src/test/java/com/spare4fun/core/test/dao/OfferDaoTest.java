@@ -53,7 +53,7 @@ public class OfferDaoTest {
                 .role(Role.ADMIN)
                 .enabled(true)
                 .build();
-        userDao.addUser(seller);
+        userDao.saveUser(seller);
 
         buyer = User
                 .builder()
@@ -62,7 +62,7 @@ public class OfferDaoTest {
                 .role(Role.USER)
                 .enabled(true)
                 .build();
-        userDao.addUser(buyer);
+        userDao.saveUser(buyer);
 
         location = Location
                 .builder()
@@ -97,16 +97,16 @@ public class OfferDaoTest {
     @After
     public void clean() {
         if (offerDao.getOfferById(dummyOffer.getId()) != null) {
-            offerDao.deleteOffer(dummyOffer.getId());
+            offerDao.deleteOfferById(dummyOffer.getId());
         }
         if (offerDao.getOfferById(offer.getId()) != null) {
-            offerDao.deleteOffer(offer.getId());
+            offerDao.deleteOfferById(offer.getId());
         }
 
-        itemDao.deleteItem(item.getId());
-        userDao.deleteUserByUsername(seller.getUsername());
-        userDao.deleteUserByUsername(buyer.getUsername());
-        locationDao.deleteLocation(location.getId());
+        itemDao.deleteItemById(item.getId());
+        userDao.deleteUserById(seller.getId());
+        userDao.deleteUserById(buyer.getId());
+        locationDao.deleteLocationById(location.getId());
     }
 
     @Test
@@ -116,8 +116,14 @@ public class OfferDaoTest {
     }
 
     @Test
-    public void getAllOffersTest(){
-        List<Offer> offers = offerDao.getAllOffers(buyer.getId());
+    public void getAllOffersBuyerTest(){
+        List<Offer> offers = offerDao.getAllOffersBuyer(buyer.getId());
+        Assert.assertNotNull(offers);
+    }
+
+    @Test
+    public void getAllOffersSellerTest(){
+        List<Offer> offers = offerDao.getAllOffersSeller(seller.getId(), item.getId());
         Assert.assertNotNull(offers);
     }
 
@@ -127,7 +133,6 @@ public class OfferDaoTest {
         Offer offerTest = offerDao.getOfferById(offer.getId());
         Assert.assertNotNull(offerTest);
         Assert.assertEquals(offerTest.getMessage(), "123");
-
     }
 
     @Test
@@ -136,7 +141,7 @@ public class OfferDaoTest {
         Assert.assertNotNull(offer);
         Assert.assertNotNull(offerDao.getOfferById(offer.getId()));
         //delete
-        offerDao.deleteOffer(offer.getId());
+        offerDao.deleteOfferById(offer.getId());
         //get
         Assert.assertNull(offerDao.getOfferById(offer.getId()));
     }
