@@ -6,6 +6,7 @@ import com.spare4fun.core.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import com.spare4fun.core.dto.LocationDto;
 import com.spare4fun.core.entity.Location;
@@ -67,12 +68,71 @@ public class ItemController {
     @PostMapping("/creation")
     @ResponseBody
     public ItemDto createItem(@RequestBody ItemDto itemDto) {
-        // step1: map itemDto -> item
+        /**
+         * {
+         *     title: ...
+         *     sellerId: null
+         *     listing_price: 20
+         *     fixed_price: null????
+         *     quantity: 10
+         *     lcoationId: null
+         *     locationDto: {
+         *         id: null
+         *         line1: "1101 110TH PL SE"
+         *         ...
+         *     }
+         *     description:
+         *     availabilityTime:
+         * }
+         */
+
+        // 1. check/confirm user authentication
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        // 2. map itemDto -> item
         // Item item = Item.builder().title(itemDto.getTitle()).build;
-        // step2: call service to save item
-        // itemService.saveItem(item)
-        // step3: map item -> itemDto & return
-        return null;
-        //return new ResponseEntity<String>("The item has been successfully placed!", HttpStatus.OK);
+        // TODO 1: expect user with username is the seller of this item
+        User seller = userService
+                .loadUserByUsername(username)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("username doesn't exist")
+                );
+
+        Location location = null;
+        if (itemDto.getLocationId() == null) {
+            location = locationServcie.saveLocation(
+                    Location
+                            .builder()
+                            .line1(itemDto.getLocationDto().getLine1())
+                            //TODO other location attributes.
+                            .build()
+            );
+        } else {
+            location = locationService.getLocationById(itemDto.getLocationId());
+        }
+
+        Item item = Item
+                .builder()
+                .title(itemDto.getTitle())
+                //TODO other attributes
+                .location(location)
+                .seller(seller)
+                .build();
+
+        // 3. itemService: call service to save item
+        // business logic is all put into itemService
+        item = itemService.saveItem(item);
+
+        // 4. item
+        // TODO 1: hide lcoation or not
+        // TODO 2: sellerId set to current userId
+        itemDto.setSellerId(seller.getId());
+        if (item.getHideLocation() == true) {
+            itemDto.setLocationId(location.getId());
+            itemDto.setLocationDto(null);
+        }
+        
+        return itemDto;
     }
 }

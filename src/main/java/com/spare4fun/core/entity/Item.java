@@ -74,7 +74,7 @@ public class Item implements Serializable {
     @Getter
     @Setter
     @Column(name = "fixed_price")
-    private Boolean fixedPrice;
+    private Boolean fixPrice;
 
     @Getter
     @Setter
