@@ -73,6 +73,7 @@ public class OfferServiceTest {
                 .builder()
                 .seller(seller)
                 .location(location)
+                .quantity(1000)
                 .build();
         itemService.saveItem(item);
 
@@ -80,6 +81,8 @@ public class OfferServiceTest {
                 .builder()
                 .item(item)
                 .buyer(buyer)
+                .price(300)
+                .quantity(3)
                 .seller(seller)
                 .message("123")
                 .build();
@@ -90,7 +93,10 @@ public class OfferServiceTest {
                 .builder()
                 .item(item)
                 .buyer(buyer)
+                .price(300)
+                .quantity(3)
                 .seller(seller)
+                .message("123")
                 .build();
         offerService.saveOffer(dummyOffer);
     }
@@ -108,7 +114,7 @@ public class OfferServiceTest {
     @Test
     public void saveOfferTest(){
         Assert.assertNotNull(dummyOffer);
-        Assert.assertNotEquals(0, dummyOffer.getId());
+        Assert.assertTrue(dummyOffer.getId() != 0);
     }
 
     @Test

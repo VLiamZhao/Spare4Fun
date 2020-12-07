@@ -87,4 +87,17 @@ public class ItemDaoImpl implements ItemDao {
         }
     }
 
+    @Override
+    public Item updateItem(Item item) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.saveOrUpdate(item);
+            session.getTransaction().commit();
+            return item;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
