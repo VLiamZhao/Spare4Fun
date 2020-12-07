@@ -12,7 +12,6 @@ import java.util.*;
  * @version 1.0
  * @since 1.0
  */
-
 @Entity
 @Table(name = "item")
 @Builder
@@ -54,27 +53,27 @@ public class Item implements Serializable {
 
     @Getter
     @Setter
-    private Integer quantity;
+    private int quantity;
 
     @Getter
     @Setter
     @Column(name = "quantity_on_hold")
-    private Integer quantityOnHold;
+    private int quantityOnHold;
 
     @Getter
     @Setter
     @Column(name = "quantity_sold")
-    private Integer quantitySold;
+    private int quantitySold;
 
     @Getter
     @Setter
     @Column(name = "listing_price")
-    private Integer listingPrice;
+    private int listingPrice;
 
     @Getter
     @Setter
     @Column(name = "fixed_price")
-    private Boolean fixPrice;
+    private boolean fixedPrice;
 
     @Getter
     @Setter
