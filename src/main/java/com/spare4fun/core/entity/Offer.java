@@ -48,11 +48,11 @@ public class Offer implements Serializable {
 
     @Getter
     @Setter
-    private int price;
+    private Integer price;
 
     @Getter
     @Setter
-    private int quantity;
+    private Integer quantity;
 
     @Getter
     @Setter
