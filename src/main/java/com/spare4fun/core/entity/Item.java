@@ -49,7 +49,7 @@ public class Item implements Serializable {
     @Getter
     @Setter
     @Column(name = "hide_location")
-    private boolean hideLocation;
+    private Boolean hideLocation;
 
     @Getter
     @Setter
