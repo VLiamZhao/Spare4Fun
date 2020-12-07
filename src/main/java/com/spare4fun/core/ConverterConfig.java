@@ -5,6 +5,9 @@ import com.spare4fun.core.dto.LocationDto;
 import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.dto.UserDto;
 import com.spare4fun.core.entity.*;
+import com.spare4fun.core.service.ItemService;
+import com.spare4fun.core.service.UserAuthService;
+import com.spare4fun.core.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,12 @@ import org.springframework.context.annotation.Configuration;
 public class ConverterConfig {
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ItemService itemService;
 
     @Bean
     public ModelMapper getModelMapper() {
@@ -32,10 +41,30 @@ public class ConverterConfig {
 
     @Bean
     public TypeMap<OfferDto, Offer> convertOfferDtoToOffer() {
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return modelMapper.typeMap(OfferDto.class, Offer.class).addMappings(mapper -> {
-            mapper.map(src -> src.getMessage(), Offer::setMessage);
-            mapper.map(src -> src.getPrice(), Offer::setPrice);
-            mapper.map(src -> src.getQuantity(), Offer::setQuantity);
+            mapper.map(src -> userService.loadUserByUsername(src.getSellerName()), Offer::setSeller);
+            mapper.map(src -> itemService.getItemById(src.getItemId()), Offer::setItem);
+            mapper.map(OfferDto::getMessage, Offer::setMessage);
+            mapper.map(src -> {
+                return src.getPrice() == null ? 0 : src.getPrice();
+            }, Offer::setPrice);
+            mapper.map(src -> {
+                return src.getQuantity() == null ? 0 : src.getQuantity();
+            }, Offer::setQuantity);
+        });
+    }
+
+    @Bean
+    public TypeMap<Offer, OfferDto> convertOfferToOfferDto() {
+//        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        return modelMapper.typeMap(Offer.class, OfferDto.class).addMappings(mapper -> {
+            mapper.map(src -> src.getItem().getId(), OfferDto::setItemId);
+            mapper.map(src -> src.getId(), OfferDto::setOfferId);
+            mapper.map(Offer::getQuantity, OfferDto::setQuantity);
+            mapper.map(Offer::getPrice, OfferDto::setPrice);
+            mapper.map(src -> src.getSeller().getEmail(), OfferDto::setSellerName);
+            mapper.map(Offer::getMessage, OfferDto::setMessage);
         });
     }
 
