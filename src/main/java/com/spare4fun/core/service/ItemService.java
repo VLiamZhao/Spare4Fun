@@ -2,10 +2,10 @@ package com.spare4fun.core.service;
 
 import com.spare4fun.core.dao.ItemDao;
 import com.spare4fun.core.entity.Item;
+import com.spare4fun.core.exception.InvalidPriceException;
+import com.spare4fun.core.exception.InvalidQuantityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ItemService {
@@ -24,14 +24,14 @@ public class ItemService {
      * @param item
      * @return
      */
-
-
     public Item saveItem(Item item){
+        if (item.getListingPrice() <= 0) {
+            throw new InvalidPriceException("Price is invalid");
+        }
+        if (item.getQuantity() <= 0) {
+            throw new InvalidQuantityException("Quantity is invalid");
+        }
         return itemDao.saveItem(item);
-
-        item.getHideLocation(item.setHideLocation(false));
-        item.getFixPrice(item.setFixPrice(false));
-
     }
 
     public Item getItemById(int itemId) {

@@ -2,6 +2,7 @@ package com.spare4fun.core.controller;
 
 import com.spare4fun.core.dto.ItemDto;
 import com.spare4fun.core.entity.Item;
+import com.spare4fun.core.exception.InvalidActionException;
 import com.spare4fun.core.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -117,16 +118,24 @@ public class ItemController {
             location = locationService.getLocationById(itemDto.getLocationId());
         }
 
+        if (itemDto.getHideLocation() == null) {
+            throw new InvalidActionException("Please set the Hide_Location");
+        }
+
+        if (itemDto.getFixedPrice() == null) {
+            throw new InvalidActionException("Please set a Fixed_Price");
+        }
+
         Item item = Item
                 .builder()
                 .title(itemDto.getTitle())
                 .description(itemDto.getDescription())
                 .quantity(itemDto.getQuantity())
-                .category(itemDto.getCategory())
-                .condition(itemDto.getCondition())
+                //.category(itemDto.getCategory())
+                //.condition(itemDto.getCondition())
                 .availabilityTime(itemDto.getAvailabilityTime())
                 .listingPrice(itemDto.getListingPrice())
-                .fixPrice(itemDto.getFixedPrice())
+                .fixedPrice(itemDto.getFixedPrice())
                 .location(location)
                 .seller(seller)
                 .build();
@@ -139,7 +148,7 @@ public class ItemController {
         // TODO 1: hide lcoation or not
         // TODO 2: sellerId set to current userId
         itemDto.setSellerId(seller.getId());
-        if (item.getHideLocation() == true) {
+        if (item.isHideLocation() == true) {
             itemDto.setLocationId(location.getId());
             itemDto.setLocationDto(null);
         }
