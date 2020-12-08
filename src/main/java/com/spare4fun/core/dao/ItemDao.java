@@ -30,5 +30,11 @@ public interface ItemDao {
      */
     List<Item> getAllItems();
 
+    /**
+     * update an item
+     * @param item
+     *    requires not null field: item.Id
+     * @return item that is updated
+     */
     Item updateItem(Item item);
 }
