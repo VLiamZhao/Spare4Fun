@@ -34,9 +34,6 @@ public class OfferController {
     @Autowired
     ItemService itemService;
 
-    @Autowired
-    private TypeMap<OfferDto, Offer> offerMapper;
-
     //********
     //Can Zhao
     @PostMapping("/creation")
@@ -44,16 +41,19 @@ public class OfferController {
     public OfferDto saveOffer(@RequestBody OfferDto offerDto){
         // get current user (buyer)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String buyerName = authentication.getName();
 
         // create the Offer object we are about to save
-        Offer offer = offerMapper.map(offerDto);
-        Optional<User> currentUserOpt = userService.loadUserByUsername(username);
-        User currentUser = currentUserOpt.orElse(null);
-        Item item = itemService.getItemById(offerDto.getItemId());
-        Optional<User> sellerOpt = userService.loadUserByUsername(offerDto.getSellerName());
-        User seller = sellerOpt.orElse(null);
-        offer.setEnabled(true);
+        Offer offer = Offer
+                .builder()
+                .item(itemService.getItemById(offerDto.getItemId()))
+                .seller(userService.loadUserByUsername(offerDto.getSellerName()).orElse(null))
+                .buyer(userService.loadUserByUsername(buyerName).orElse(null))
+                .price(offerDto.getPrice())
+                .quantity(offerDto.getQuantity())
+                .message(offerDto.getMessage())
+                .enabled(true)
+                .build();
 
         Offer offerToBeSaved = offerService.saveOffer(offer);
         offerDto.setOfferId(offerToBeSaved.getId());

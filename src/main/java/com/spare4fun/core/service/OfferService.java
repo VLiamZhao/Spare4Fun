@@ -49,6 +49,8 @@ public class OfferService {
             throw new RuntimeException("Cannot find the Seller!");
         } else if (offer.getQuantity() > currentItem.getQuantity()) {
             throw new RuntimeException("Item quantity is not sufficient!");
+        } else if (offer.getBuyer().getEmail().equals(offer.getSeller().getEmail())) {
+            throw new RuntimeException("Buyer and seller cannot be the same!");
         }
         int currentItemQuantity = offer.getItem().getQuantity();
         int currentItemQuantityOnHold = offer.getItem().getQuantityOnHold();
