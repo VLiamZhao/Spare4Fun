@@ -118,9 +118,7 @@ public class ItemConditionDaoImpl implements ItemConditionDao {
 
     @Override
     public List<ItemCondition> getAllItemConditions() {
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<ItemCondition> criteriaQuery = builder.createQuery(ItemCondition.class);
             Root<ItemCondition> root = criteriaQuery.from(ItemCondition.class);
@@ -129,10 +127,6 @@ public class ItemConditionDaoImpl implements ItemConditionDao {
         } catch(Exception e) {
             e.printStackTrace();
             throw e;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 

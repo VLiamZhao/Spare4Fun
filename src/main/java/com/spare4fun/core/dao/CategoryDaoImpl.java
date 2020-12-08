@@ -118,9 +118,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public List<Category> getAllCategories() {
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Category> criteriaQuery = builder.createQuery(Category.class);
             Root<Category> root = criteriaQuery.from(Category.class);
@@ -129,10 +127,6 @@ public class CategoryDaoImpl implements CategoryDao {
         } catch(Exception e) {
             e.printStackTrace();
             throw e;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
