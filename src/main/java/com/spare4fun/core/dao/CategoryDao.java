@@ -26,7 +26,7 @@ public interface CategoryDao {
     /**
      * delete the category with name from category table
      * do nothing if category doesn't exist
-     * @param category
+     * @param categoryName
      */
     void deleteCategoryByName(String categoryName);
 
@@ -39,7 +39,7 @@ public interface CategoryDao {
 
     /**
      * get a category by category name
-     * @param category
+     * @param categoryName
      * @return null iff the category doesn't exist
      */
     Category getCategoryByName(String categoryName);
