@@ -29,4 +29,6 @@ public interface ItemDao {
      * @return list of all items from item table
      */
     List<Item> getAllItems();
+
+    Item updateItem(Item item);
 }

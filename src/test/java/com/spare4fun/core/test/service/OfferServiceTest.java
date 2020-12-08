@@ -43,7 +43,10 @@ public class OfferServiceTest {
     private User seller;
     private User buyer;
     private Offer offer;
-
+    private Offer offerSameSellerAndBuyer;
+    private Offer offerWrongPrice;
+    private Offer offerExceededQuantity;
+    private Offer offerNullBuyer;
     @Before
     public void setUp() throws DuplicateUserException {
         seller = User
@@ -73,6 +76,7 @@ public class OfferServiceTest {
                 .builder()
                 .seller(seller)
                 .location(location)
+                .quantity(1000)
                 .build();
         itemService.saveItem(item);
 
@@ -80,19 +84,63 @@ public class OfferServiceTest {
                 .builder()
                 .item(item)
                 .buyer(buyer)
+                .price(300)
+                .quantity(3)
                 .seller(seller)
                 .message("123")
                 .build();
         offerService.saveOffer(offer);
 
-
         dummyOffer = Offer
                 .builder()
                 .item(item)
                 .buyer(buyer)
+                .price(300)
+                .quantity(3)
                 .seller(seller)
+                .message("123")
                 .build();
         offerService.saveOffer(dummyOffer);
+
+        offerSameSellerAndBuyer = Offer
+                .builder()
+                .item(item)
+                .buyer(seller)
+                .price(300)
+                .quantity(3)
+                .seller(seller)
+                .message("123")
+                .build();
+
+        offerWrongPrice = Offer
+                .builder()
+                .item(item)
+                .buyer(buyer)
+                .price(-300)
+                .quantity(3)
+                .seller(seller)
+                .message("123")
+                .build();
+
+        offerExceededQuantity = Offer
+                .builder()
+                .item(item)
+                .buyer(buyer)
+                .price(300)
+                .quantity(99999)
+                .seller(seller)
+                .message("123")
+                .build();
+
+        offerNullBuyer = Offer
+                .builder()
+                .item(item)
+                .buyer(null)
+                .price(300)
+                .quantity(3)
+                .seller(seller)
+                .message("123")
+                .build();
     }
 
     @After
@@ -108,7 +156,7 @@ public class OfferServiceTest {
     @Test
     public void saveOfferTest(){
         Assert.assertNotNull(dummyOffer);
-        Assert.assertNotEquals(0, dummyOffer.getId());
+        Assert.assertTrue(dummyOffer.getId() != 0);
     }
 
     @Test
@@ -116,6 +164,25 @@ public class OfferServiceTest {
         List<Offer> offers = offerService.getAllOffersBuyer("dummy1");
         Assert.assertNotNull(offers);
         Assert.assertFalse(offers.isEmpty());
+    }
+    @Test(expected = RuntimeException.class)
+    public void saveOfferWrongPriceTest(){
+        offerService.saveOffer(offerWrongPrice);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void saveOfferBuyerSameAsSellerTest(){
+        offerService.saveOffer(offerSameSellerAndBuyer);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void saveOfferExceededQuantityTest(){
+        offerService.saveOffer(offerExceededQuantity);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void saveOfferNullBuyerTest(){
+        offerService.saveOffer(offerNullBuyer);
     }
 
     // TODO change this test for OfferDao::getAllOffersSeller
