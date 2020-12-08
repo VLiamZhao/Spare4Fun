@@ -39,34 +39,22 @@ public class ConverterConfig {
         });
     }
 
-    @Bean
-    public TypeMap<OfferDto, Offer> convertOfferDtoToOffer() {
-        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        return modelMapper.typeMap(OfferDto.class, Offer.class).addMappings(mapper -> {
-            mapper.map(src -> userService.loadUserByUsername(src.getSellerName()), Offer::setSeller);
-            mapper.map(src -> itemService.getItemById(src.getItemId()), Offer::setItem);
-            mapper.map(OfferDto::getMessage, Offer::setMessage);
-            mapper.map(src -> {
-                return src.getPrice() == null ? 0 : src.getPrice();
-            }, Offer::setPrice);
-            mapper.map(src -> {
-                return src.getQuantity() == null ? 0 : src.getQuantity();
-            }, Offer::setQuantity);
-        });
-    }
-
-    @Bean
-    public TypeMap<Offer, OfferDto> convertOfferToOfferDto() {
+//    @Bean
+//    public TypeMap<OfferDto, Offer> convertOfferDtoToOffer() {
 //        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        return modelMapper.typeMap(Offer.class, OfferDto.class).addMappings(mapper -> {
-            mapper.map(src -> src.getItem().getId(), OfferDto::setItemId);
-            mapper.map(src -> src.getId(), OfferDto::setOfferId);
-            mapper.map(Offer::getQuantity, OfferDto::setQuantity);
-            mapper.map(Offer::getPrice, OfferDto::setPrice);
-            mapper.map(src -> src.getSeller().getEmail(), OfferDto::setSellerName);
-            mapper.map(Offer::getMessage, OfferDto::setMessage);
-        });
-    }
+//        return modelMapper.typeMap(OfferDto.class, Offer.class).addMappings(mapper -> {
+//            mapper.map(OfferDto::getMessage, Offer::setMessage);
+//        });
+//    }
+//
+//    @Bean
+//    public TypeMap<Offer, OfferDto> convertOfferToOfferDto() {
+////        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//        return modelMapper.typeMap(Offer.class, OfferDto.class).addMappings(mapper -> {
+//            mapper.map(src -> src.getSeller().getEmail(), OfferDto::setSellerName);
+//            mapper.map(Offer::getMessage, OfferDto::setMessage);
+//        });
+//    }
 
     @Bean
     public TypeMap<Item, ItemDto> convertItemToItemDto() {
