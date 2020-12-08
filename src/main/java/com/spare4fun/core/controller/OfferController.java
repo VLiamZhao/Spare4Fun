@@ -41,22 +41,19 @@ public class OfferController {
     public OfferDto saveOffer(@RequestBody OfferDto offerDto){
         // get current user (buyer)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String buyerName = authentication.getName();
 
         // create the Offer object we are about to save
-        Offer offer = new Offer();
-        offer.setQuantity(offerDto.getQuantity());
-        offer.setPrice(offerDto.getPrice());
-        offer.setMessage(offerDto.getMessage());
-
-        Optional<User> currentUserOpt = userService.loadUserByUsername(username);
-        offer.setBuyer(currentUserOpt.orElse(null));
-
-        Optional<User> seller = userService.loadUserByUsername(offerDto.getSellerName());
-        offer.setSeller(seller.orElse(null));
-
-        offer.setItem(itemService.getItemById(offerDto.getItemId()));
-        offer.setEnabled(true);
+        Offer offer = Offer
+                .builder()
+                .item(itemService.getItemById(offerDto.getItemId()))
+                .seller(userService.loadUserByUsername(offerDto.getSellerName()).orElse(null))
+                .buyer(userService.loadUserByUsername(buyerName).orElse(null))
+                .price(offerDto.getPrice())
+                .quantity(offerDto.getQuantity())
+                .message(offerDto.getMessage())
+                .enabled(true)
+                .build();
 
         Offer offerToBeSaved = offerService.saveOffer(offer);
         offerDto.setOfferId(offerToBeSaved.getId());
