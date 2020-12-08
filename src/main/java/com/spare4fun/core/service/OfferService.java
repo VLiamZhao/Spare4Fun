@@ -55,7 +55,7 @@ public class OfferService {
         int currentItemQuantity = offer.getItem().getQuantity();
         int currentItemQuantityOnHold = offer.getItem().getQuantityOnHold();
         currentItem.setQuantity(currentItemQuantity - offer.getQuantity());
-        currentItem.setQuantityOnHold(currentItemQuantityOnHold + currentItemQuantity);
+        currentItem.setQuantityOnHold(currentItemQuantityOnHold + offer.getQuantity());
         itemService.updateItem(offer.getItem());
         return offerDao.saveOffer(offer);
     }
