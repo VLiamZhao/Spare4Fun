@@ -69,9 +69,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List<Item> getAllItems() {
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Item> criteriaQuery = builder.createQuery(Item.class);
             Root<Item> root = criteriaQuery.from(Item.class);
@@ -80,11 +78,20 @@ public class ItemDaoImpl implements ItemDao {
         } catch(Exception e) {
             e.printStackTrace();
             throw e;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
+    }
+
+    @Override
+    public Item updateItem(Item item) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.saveOrUpdate(item);
+            session.getTransaction().commit();
+            return item;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

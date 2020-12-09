@@ -2,15 +2,15 @@ package com.spare4fun.core;
 
 import com.spare4fun.core.dto.ItemDto;
 import com.spare4fun.core.dto.LocationDto;
+import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.dto.UserDto;
-import com.spare4fun.core.entity.Item;
-import com.spare4fun.core.entity.Location;
-import com.spare4fun.core.entity.User;
-import com.spare4fun.core.entity.UserInfo;
+import com.spare4fun.core.entity.*;
+import com.spare4fun.core.service.ItemService;
+import com.spare4fun.core.service.UserAuthService;
+import com.spare4fun.core.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +19,12 @@ import org.springframework.context.annotation.Configuration;
 public class ConverterConfig {
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ItemService itemService;
 
     @Bean
     public ModelMapper getModelMapper() {
@@ -32,6 +38,23 @@ public class ConverterConfig {
             mapper.map(src -> src.getPassword(), User::setPassword);
         });
     }
+
+//    @Bean
+//    public TypeMap<OfferDto, Offer> convertOfferDtoToOffer() {
+//        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//        return modelMapper.typeMap(OfferDto.class, Offer.class).addMappings(mapper -> {
+//            mapper.map(OfferDto::getMessage, Offer::setMessage);
+//        });
+//    }
+//
+//    @Bean
+//    public TypeMap<Offer, OfferDto> convertOfferToOfferDto() {
+////        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//        return modelMapper.typeMap(Offer.class, OfferDto.class).addMappings(mapper -> {
+//            mapper.map(src -> src.getSeller().getEmail(), OfferDto::setSellerName);
+//            mapper.map(Offer::getMessage, OfferDto::setMessage);
+//        });
+//    }
 
     @Bean
     public TypeMap<Item, ItemDto> convertItemToItemDto() {
