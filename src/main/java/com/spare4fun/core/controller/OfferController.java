@@ -1,10 +1,12 @@
 package com.spare4fun.core.controller;
 
+import com.spare4fun.core.dto.ItemDto;
 import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.dto.UserDto;
 import com.spare4fun.core.entity.Item;
 import com.spare4fun.core.entity.Offer;
 import com.spare4fun.core.entity.User;
+import com.spare4fun.core.exception.InvalidUserException;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.OfferService;
 import com.spare4fun.core.service.UserAuthService;
@@ -93,16 +95,23 @@ public class OfferController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        List<Offer> offers = offerService.getAllOffersBuyer(username);
         List<OfferDto> offerDtos = new ArrayList<>();
+        List<Offer> offers = offerService.getAllOffersBuyer(username);
 
         for (Offer offer : offers) {
             offerDtos.add(
                     OfferDto
                             .builder()
+                            .itemId(offer.getItem().getId())
+                            .buyerName(offer.getBuyer().getUsername())
+                            .sellerName(offer.getSeller().getUsername())
+//                            .message(offer.getMessage())
+//                            .price(offer.getPrice())
+//                            .quantity(offer.getQuantity())
                             .build()
             );
         }
+
         return offerDtos;
     }
 
@@ -111,16 +120,36 @@ public class OfferController {
     public OfferDto getOfferById(@PathVariable(value = "offerId") int offerId) {
 
         Offer offer = offerService.getOfferById(offerId);
-        OfferDto offerDto = OfferDto
-                                    .builder()
-//                                    .buyerId(offer.getBuyer().getId())
-                                    .build();
-        return offerDto;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        int currentId = userAuthService.loadUserByUsername(username).get().getId();
+        if (currentId != offer.getSeller().getId() && currentId != offer.getBuyer().getId()) {
+            throw new InvalidUserException("You don't have the authorization to get the offer");
+        }
+        return OfferDto
+                .builder()
+                .itemId(offer.getItem().getId())
+                .buyerName(offer.getBuyer().getUsername())
+                .sellerName(offer.getSeller().getUsername())
+//                            .message(offer.getMessage())
+//                            .price(offer.getPrice())
+//                            .quantity(offer.getQuantity())
+                .build();
     }
 
     @PostMapping("/deleteOffer/{offerId}")
-    public ResponseEntity<String> deleteOfferById(@PathVariable(value = "offerId") int offerId){
+    public void deleteOfferById(@PathVariable(value = "offerId") int offerId){
+
+        Offer offer = offerService.getOfferById(offerId);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        int currentId = userAuthService.loadUserByUsername(username).get().getId();
+        //only buyer can delete the offer
+        if (currentId != offer.getBuyer().getId()) {
+            throw new InvalidUserException("You don't have the authorization to delete the offer");
+        }
         offerService.deleteOfferById(offerId);
-        return new ResponseEntity<String>("The offer has been successfully deleted!", HttpStatus.OK);
     }
 }

@@ -15,4 +15,5 @@ public class OfferDto {
     private String message;
     private int itemId;
     private String sellerName;
+    private String buyerName;
 }
