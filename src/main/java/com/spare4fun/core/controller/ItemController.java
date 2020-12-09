@@ -2,6 +2,7 @@ package com.spare4fun.core.controller;
 
 import com.spare4fun.core.dto.ItemDto;
 import com.spare4fun.core.entity.Item;
+import com.spare4fun.core.exception.InvalidUserException;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,17 +154,39 @@ public class ItemController {
     public ItemDto getItemById(@PathVariable(value = "itemId") int itemId) {
 
         Item item = itemService.getItemById(itemId);
+
         ItemDto itemDto = ItemDto
                 .builder()
+                .itemId(item.getId())
+                .title(item.getTitle())
+                .description(item.getDescription())
                 .sellerId(item.getSeller().getId())
+                .sellerName(item.getSeller().getUsername())
                 .locationId(item.getLocation().getId())
+                .hideLocation(item.isHideLocation())
+                .quantity(item.getQuantity())
+                .listingPrice(item.getListingPrice())
+                .fixedPrice(item.isFixedPrice())
+                .availabilityTime(item.getAvailabilityTime())
+                .category(item.getCategory().getCategory())
+                .condition(item.getCondition().getLabel())
                 .build();
         return itemDto;
     }
 
     @PostMapping("/deleteItem/{itemId}")
-    public ResponseEntity<String> deleteItemById(@PathVariable(value = "itemId") int itemId){
+    public void deleteItemById(@PathVariable(value = "itemId") int itemId){
+
+        Item item = itemService.getItemById(itemId);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        //only seller can delete the item
+        if (username != item.getSeller().getUsername()) {
+            throw new InvalidUserException("You don't have the authorization to delete the item!");
+        }
+
         itemService.deleteItemById(itemId);
-        return new ResponseEntity<String>("The item has been successfully deleted!", HttpStatus.OK);
     }
 }
