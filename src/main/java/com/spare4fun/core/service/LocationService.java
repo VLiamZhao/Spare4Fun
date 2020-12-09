@@ -17,4 +17,8 @@ public class LocationService {
     public void deleteLocationById(int locationId) {
         locationDao.deleteLocationById(locationId);
     }
+
+    public Location getLocationById(int locationId) {
+        return locationDao.getLocationById(locationId);
+    }
 }
