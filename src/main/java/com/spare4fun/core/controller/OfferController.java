@@ -1,28 +1,19 @@
 package com.spare4fun.core.controller;
 
-import com.spare4fun.core.dto.ItemDto;
 import com.spare4fun.core.dto.OfferDto;
-import com.spare4fun.core.dto.UserDto;
-import com.spare4fun.core.entity.Item;
 import com.spare4fun.core.entity.Offer;
-import com.spare4fun.core.entity.User;
 import com.spare4fun.core.exception.InvalidUserException;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.OfferService;
 import com.spare4fun.core.service.UserAuthService;
 import com.spare4fun.core.service.UserService;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/offer")
@@ -78,12 +69,15 @@ public class OfferController {
             offerDtos.add(
                     OfferDto
                             .builder()
+                            .OfferId(offer.getId())
+                            .price(offer.getPrice())
+                            .quantity(offer.getQuantity())
+                            .message(offer.getMessage())
                             .itemId(offer.getItem().getId())
-                            .buyerName(offer.getBuyer().getUsername())
                             .sellerName(offer.getSeller().getUsername())
-//                            .message(offer.getMessage())
-//                            .price(offer.getPrice())
-//                            .quantity(offer.getQuantity())
+                            .sellerId(offer.getSeller().getId())
+                            .buyerName(offer.getBuyer().getUsername())
+                            .buyerId(offer.getBuyer().getId())
                             .build()
             );
         }
@@ -99,18 +93,21 @@ public class OfferController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        int currentId = userAuthService.loadUserByUsername(username).get().getId();
-        if (currentId != offer.getSeller().getId() && currentId != offer.getBuyer().getId()) {
+
+        if (username != offer.getSeller().getUsername() && username != offer.getBuyer().getUsername()) {
             throw new InvalidUserException("You don't have the authorization to get the offer");
         }
         return OfferDto
                 .builder()
+                .OfferId(offer.getId())
+                .price(offer.getPrice())
+                .quantity(offer.getQuantity())
+                .message(offer.getMessage())
                 .itemId(offer.getItem().getId())
-                .buyerName(offer.getBuyer().getUsername())
                 .sellerName(offer.getSeller().getUsername())
-//                            .message(offer.getMessage())
-//                            .price(offer.getPrice())
-//                            .quantity(offer.getQuantity())
+                .sellerId(offer.getSeller().getId())
+                .buyerName(offer.getBuyer().getUsername())
+                .buyerId(offer.getBuyer().getId())
                 .build();
     }
 
@@ -121,10 +118,10 @@ public class OfferController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        int currentId = userAuthService.loadUserByUsername(username).get().getId();
+
         //only buyer can delete the offer
-        if (currentId != offer.getBuyer().getId()) {
-            throw new InvalidUserException("You don't have the authorization to delete the offer");
+        if (username != offer.getBuyer().getUsername()) {
+            throw new InvalidUserException("You don't have the authorization to get the offer");
         }
         offerService.deleteOfferById(offerId);
     }

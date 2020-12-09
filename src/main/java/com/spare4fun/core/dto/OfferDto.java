@@ -17,4 +17,6 @@ public class OfferDto {
     private Integer itemId;
     private String sellerName;
     private Integer sellerId;
+    private String buyerName;
+    private Integer buyerId; 
 }
