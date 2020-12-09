@@ -69,9 +69,7 @@ public class LocationDaoImpl implements LocationDao {
 
     @Override
     public List<Location> getAllLocations() {
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Location> criteriaQuery = builder.createQuery(Location.class);
             Root<Location> root = criteriaQuery.from(Location.class);
@@ -80,10 +78,6 @@ public class LocationDaoImpl implements LocationDao {
         } catch(Exception e) {
             e.printStackTrace();
             throw e;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 }
