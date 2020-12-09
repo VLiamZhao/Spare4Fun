@@ -2,7 +2,6 @@ package com.spare4fun.core.controller;
 
 import com.spare4fun.core.dto.ItemDto;
 import com.spare4fun.core.entity.Item;
-import com.spare4fun.core.exception.InvalidActionException;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import com.spare4fun.core.dto.LocationDto;
 import com.spare4fun.core.entity.Location;
 import com.spare4fun.core.entity.User;
-import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.UserService;
 import org.modelmapper.TypeMap;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/item")
 public class ItemController {
@@ -149,5 +146,24 @@ public class ItemController {
         }
 
         return itemDto;
+    }
+
+    @GetMapping("/{itemId}")
+    @ResponseBody
+    public ItemDto getItemById(@PathVariable(value = "itemId") int itemId) {
+
+        Item item = itemService.getItemById(itemId);
+        ItemDto itemDto = ItemDto
+                .builder()
+                .sellerId(item.getSeller().getId())
+                .locationId(item.getLocation().getId())
+                .build();
+        return itemDto;
+    }
+
+    @PostMapping("/deleteItem/{itemId}")
+    public ResponseEntity<String> deleteItemById(@PathVariable(value = "itemId") int itemId){
+        itemService.deleteItemById(itemId);
+        return new ResponseEntity<String>("The item has been successfully deleted!", HttpStatus.OK);
     }
 }
