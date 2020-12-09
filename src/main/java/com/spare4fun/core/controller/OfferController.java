@@ -121,7 +121,7 @@ public class OfferController {
 
         //only buyer can delete the offer
         if (username != offer.getBuyer().getUsername()) {
-            throw new InvalidUserException("You don't have the authorization to get the offer");
+            throw new InvalidUserException("You don't have the authorization to delete the offer");
         }
         offerService.deleteOfferById(offerId);
     }
