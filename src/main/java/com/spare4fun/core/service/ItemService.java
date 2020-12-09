@@ -22,9 +22,14 @@ public class ItemService {
      * TODO 7: set availabilityTime default = "TBD"
      *
      * @param item
-     * @return
+     * @return item that is saved
+     * @throws
+     *    InvalidPriceException
+     *       - if price <= 0
+     *    InvalidQuantityException
+     *       - if quantity <= 0
      */
-    public Item saveItem(Item item){
+    public Item saveItem(Item item) {
         if (item.getListingPrice() <= 0) {
             throw new InvalidPriceException("Price is invalid");
         }

@@ -4,6 +4,7 @@ import com.spare4fun.core.dto.ItemDto;
 import com.spare4fun.core.entity.Item;
 import com.spare4fun.core.exception.InvalidActionException;
 import com.spare4fun.core.service.ItemService;
+import com.spare4fun.core.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class ItemController {
     private UserService userService;
 
     @Autowired
-    private ItemService itemService;
+    private LocationService locationService;
 
     @Autowired
     private TypeMap<Item, ItemDto> itemDtoMapper;
@@ -102,7 +103,7 @@ public class ItemController {
 
         Location location = null;
         if (itemDto.getLocationId() == null) {
-            location = locationServcie.saveLocation(
+            location = locationService.saveLocation(
                     Location
                             .builder()
                             .line1(itemDto.getLocationDto().getLine1())
@@ -118,14 +119,6 @@ public class ItemController {
             location = locationService.getLocationById(itemDto.getLocationId());
         }
 
-        if (itemDto.getHideLocation() == null) {
-            throw new InvalidActionException("Please set the Hide_Location");
-        }
-
-        if (itemDto.getFixedPrice() == null) {
-            throw new InvalidActionException("Please set a Fixed_Price");
-        }
-
         Item item = Item
                 .builder()
                 .title(itemDto.getTitle())
@@ -135,7 +128,10 @@ public class ItemController {
                 //.condition(itemDto.getCondition())
                 .availabilityTime(itemDto.getAvailabilityTime())
                 .listingPrice(itemDto.getListingPrice())
-                .fixedPrice(itemDto.getFixedPrice())
+                .fixedPrice(
+                        itemDto.getFixedPrice() != null && itemDto.getFixedPrice())
+                .hideLocation(
+                        itemDto.getHideLocation() != null && itemDto.getHideLocation())
                 .location(location)
                 .seller(seller)
                 .build();
@@ -147,10 +143,9 @@ public class ItemController {
         // 4. item
         // TODO 1: hide lcoation or not
         // TODO 2: sellerId set to current userId
-        itemDto.setSellerId(seller.getId());
-        if (item.isHideLocation() == true) {
-            itemDto.setLocationId(location.getId());
-            itemDto.setLocationDto(null);
+        itemDto = itemDtoMapper.map(item);
+        if (!item.isHideLocation()) {
+            itemDto.setLocationDto(locationDtoMapper.map(item.getLocation()));
         }
 
         return itemDto;
