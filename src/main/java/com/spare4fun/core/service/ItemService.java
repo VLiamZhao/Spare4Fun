@@ -46,4 +46,8 @@ public class ItemService {
     public void deleteItemById(int itemId) {
         itemDao.deleteItemById(itemId);
     }
+
+    public Item updateItem(Item item){
+        return itemDao.updateItem(item);
+    }
 }

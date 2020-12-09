@@ -5,6 +5,9 @@ import com.spare4fun.core.dto.LocationDto;
 import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.dto.UserDto;
 import com.spare4fun.core.entity.*;
+import com.spare4fun.core.service.ItemService;
+import com.spare4fun.core.service.UserAuthService;
+import com.spare4fun.core.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,12 @@ import org.springframework.context.annotation.Configuration;
 public class ConverterConfig {
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ItemService itemService;
 
     @Bean
     public ModelMapper getModelMapper() {
@@ -30,14 +39,22 @@ public class ConverterConfig {
         });
     }
 
-    @Bean
-    public TypeMap<OfferDto, Offer> convertOfferDtoToOffer() {
-        return modelMapper.typeMap(OfferDto.class, Offer.class).addMappings(mapper -> {
-            mapper.map(src -> src.getMessage(), Offer::setMessage);
-            mapper.map(src -> src.getPrice(), Offer::setPrice);
-            mapper.map(src -> src.getQuantity(), Offer::setQuantity);
-        });
-    }
+//    @Bean
+//    public TypeMap<OfferDto, Offer> convertOfferDtoToOffer() {
+//        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//        return modelMapper.typeMap(OfferDto.class, Offer.class).addMappings(mapper -> {
+//            mapper.map(OfferDto::getMessage, Offer::setMessage);
+//        });
+//    }
+//
+//    @Bean
+//    public TypeMap<Offer, OfferDto> convertOfferToOfferDto() {
+////        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//        return modelMapper.typeMap(Offer.class, OfferDto.class).addMappings(mapper -> {
+//            mapper.map(src -> src.getSeller().getEmail(), OfferDto::setSellerName);
+//            mapper.map(Offer::getMessage, OfferDto::setMessage);
+//        });
+//    }
 
     @Bean
     public TypeMap<Item, ItemDto> convertItemToItemDto() {
