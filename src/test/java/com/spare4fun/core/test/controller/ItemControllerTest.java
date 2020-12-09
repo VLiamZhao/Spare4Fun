@@ -87,6 +87,8 @@ public class ItemControllerTest {
                 .title("CLRS")
                 .seller(seller)
                 .location(location)
+                .listingPrice(1)
+                .quantity(1)
                 .build();
         res.add(item1);
         itemService.saveItem(item1);
@@ -96,6 +98,8 @@ public class ItemControllerTest {
                 .title("Computer Architecture")
                 .seller(seller)
                 .location(location)
+                .listingPrice(1)
+                .quantity(1)
                 .build();
         res.add(item2);
         itemService.saveItem(item2);
