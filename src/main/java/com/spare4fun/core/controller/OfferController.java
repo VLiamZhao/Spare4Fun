@@ -31,59 +31,35 @@ public class OfferController {
     private OfferService offerService;
 
     @Autowired
-    private UserService userAuthService;
+    private UserService userService;
 
     @Autowired
     ItemService itemService;
 
-    @Autowired
-    private TypeMap<OfferDto, Offer> offerMapper;
-
     //********
     //Can Zhao
     @PostMapping("/creation")
-    public ResponseEntity<String> saveOffer(@RequestBody OfferDto offerDto){
+    @ResponseBody
+    public OfferDto saveOffer(@RequestBody OfferDto offerDto){
         // get current user (buyer)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User currentUser = null;
-        Optional<User> currentUserOpt = userAuthService.loadUserByUsername(username);
-        if (currentUserOpt.isPresent()) {
-            currentUser = currentUserOpt.get();
-        }
-        // check if the buyer exists
-        if(currentUser == null){
-            throw new RuntimeException("Cannot get buyer information!");
-        }
+        String buyerName = authentication.getName();
 
         // create the Offer object we are about to save
-        Offer offer = offerMapper.map(offerDto);
-        // check if the item is valid
-        Item item = itemService.getItemById(offerDto.getItemId());
-        if (item == null) {
-            throw new RuntimeException("Cannot get item information!");
-        }
-        Optional<User> sellerOpt = userAuthService.loadUserByUsername(offerDto.getSellerName());
-        User seller = null;
-        //check if the seller is valid
-        if (sellerOpt.isPresent()) {
-            seller = sellerOpt.get();
-            if(seller.getEmail().equals(currentUser.getEmail())) {
-                throw new RuntimeException("Buyer and seller cannot be the same person!");
-            }
-        }else {
-            throw new RuntimeException("Cannot get seller information!");
-        }
-        offer.setSeller(seller);
-        offer.setBuyer(currentUser);
-        offer.setItem(item);
-        offer.setEnabled(true);
+        Offer offer = Offer
+                .builder()
+                .item(itemService.getItemById(offerDto.getItemId()))
+                .seller(userService.loadUserByUsername(offerDto.getSellerName()).orElse(null))
+                .buyer(userService.loadUserByUsername(buyerName).orElse(null))
+                .price(offerDto.getPrice())
+                .quantity(offerDto.getQuantity())
+                .message(offerDto.getMessage())
+                .enabled(true)
+                .build();
 
         Offer offerToBeSaved = offerService.saveOffer(offer);
-        if (offerToBeSaved.getId() == 0) {
-            return new ResponseEntity<String>("Saving offer failed!", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<String>("The offer has been successfully placed!", HttpStatus.OK);
+        offerDto.setOfferId(offerToBeSaved.getId());
+        return offerDto;
     }
 
     //********

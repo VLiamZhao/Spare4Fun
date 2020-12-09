@@ -72,6 +72,7 @@ public class OfferDaoTest {
         item = Item
                 .builder()
                 .seller(seller)
+                .quantity(1000)
                 .location(location)
                 .build();
         itemDao.saveItem(item);
@@ -80,6 +81,8 @@ public class OfferDaoTest {
                 .builder()
                 .item(item)
                 .buyer(buyer)
+                .price(300)
+                .quantity(3)
                 .seller(seller)
                 .message("123")
                 .build();
@@ -89,7 +92,10 @@ public class OfferDaoTest {
                 .builder()
                 .item(item)
                 .buyer(buyer)
+                .price(300)
+                .quantity(3)
                 .seller(seller)
+                .message("123")
                 .build();
         offerDao.saveOffer(dummyOffer);
     }
@@ -112,7 +118,7 @@ public class OfferDaoTest {
     @Test
     public void saveOfferTest(){
         Assert.assertNotNull(dummyOffer);
-        Assert.assertNotEquals(0, dummyOffer.getId());
+        Assert.assertTrue(dummyOffer.getId() != 0);
     }
 
     @Test

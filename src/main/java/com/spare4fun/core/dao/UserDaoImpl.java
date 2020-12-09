@@ -1,20 +1,16 @@
 package com.spare4fun.core.dao;
 
-import com.spare4fun.core.entity.Offer;
 import com.spare4fun.core.entity.User;
 import com.spare4fun.core.exception.DuplicateUserException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +21,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> selectUserByUsername(String username) {
-        User user = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        User user;
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
             Root<User> root = criteriaQuery.from(User.class);
@@ -43,15 +37,9 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return Optional.ofNullable(user);
     }
-
-    ;
 
     @Override
     public User saveUser(User user) {
@@ -111,9 +99,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
             Root<User> root = criteriaQuery.from(User.class);
@@ -122,10 +108,6 @@ public class UserDaoImpl implements UserDao {
         } catch(Exception e) {
             e.printStackTrace();
             throw e;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 }

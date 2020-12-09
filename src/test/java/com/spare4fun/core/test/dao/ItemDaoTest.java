@@ -123,4 +123,14 @@ public class ItemDaoTest {
         List<Item> itemsFromTable = itemDao.getAllItems();
         assertThat(itemsFromTable.size()).isEqualTo(items.size());
     }
+
+    @Test
+    public void testUpdateItem() {
+        Item item = itemDao.getItemById(items.get(0).getId());
+        assertThat(item.getQuantity()).isEqualTo(0);
+        item.setQuantity(10);
+        itemDao.updateItem(item);
+        item = itemDao.getItemById(items.get(0).getId());
+        assertThat(item.getQuantity()).isEqualTo(10);
+    }
 }

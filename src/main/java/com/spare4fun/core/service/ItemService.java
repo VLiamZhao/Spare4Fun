@@ -23,4 +23,8 @@ public class ItemService {
 
         itemDao.deleteItemById(itemId);
     }
+
+    public Item updateItem(Item item){
+        return itemDao.updateItem(item);
+    }
 }
