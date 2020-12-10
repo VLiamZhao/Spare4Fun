@@ -2,7 +2,7 @@ package com.spare4fun.core.controller;
 
 import com.spare4fun.core.dto.ItemDto;
 import com.spare4fun.core.entity.Item;
-import com.spare4fun.core.exception.InvalidActionException;
+import com.spare4fun.core.exception.InvalidUserException;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import com.spare4fun.core.dto.LocationDto;
 import com.spare4fun.core.entity.Location;
 import com.spare4fun.core.entity.User;
-import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.UserService;
 import org.modelmapper.TypeMap;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/item")
 public class ItemController {
@@ -149,5 +147,49 @@ public class ItemController {
         }
 
         return itemDto;
+    }
+
+    @GetMapping("/{itemId}")
+    @ResponseBody
+    public ItemDto getItemById(@PathVariable(value = "itemId") int itemId) {
+
+        Item item = itemService.getItemById(itemId);
+
+        ItemDto itemDto = ItemDto
+                .builder()
+                .itemId(item.getId())
+                .title(item.getTitle())
+//                .description(item.getDescription())
+                .sellerId(item.getSeller().getId())
+                .sellerName(item.getSeller().getUsername())
+                .locationId(item.getLocation().getId())
+                .hideLocation(item.isHideLocation())
+                .quantity(item.getQuantity())
+                .listingPrice(item.getListingPrice())
+                .fixedPrice(item.isFixedPrice())
+//                .availabilityTime(item.getAvailabilityTime())
+//                .category(item.getCategory().getCategory())
+//                .condition(item.getCondition().getLabel())
+                .build();
+        if (!item.isHideLocation())
+            itemDto.setLocationDto(locationDtoMapper.map(item.getLocation()));
+        return itemDto;
+    }
+
+    @PostMapping("/deleteItem/{itemId}")
+    public void deleteItemById(@PathVariable(value = "itemId") int itemId){
+
+        Item item = itemService.getItemById(itemId);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        int currentUserId = userService.loadUserByUsername(username).get().getId();
+
+        //only seller can delete the item
+        if (currentUserId != item.getSeller().getId()) {
+            throw new InvalidUserException("You don't have the authorization to delete the item!");
+        }
+
+        itemService.deleteItemById(itemId);
     }
 }
