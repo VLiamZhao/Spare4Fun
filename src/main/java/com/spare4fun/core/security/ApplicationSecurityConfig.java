@@ -88,7 +88,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
             // TODO 1: requires to change
             @Override
             public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                 httpServletResponse.setContentType("application/json");
                 PrintWriter writer = httpServletResponse.getWriter();
                 ObjectMapper mapper = new ObjectMapper();
