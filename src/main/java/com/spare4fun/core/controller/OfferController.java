@@ -2,10 +2,10 @@ package com.spare4fun.core.controller;
 
 import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.entity.Offer;
+import com.spare4fun.core.entity.User;
 import com.spare4fun.core.exception.InvalidUserException;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.OfferService;
-import com.spare4fun.core.service.UserAuthService;
 import com.spare4fun.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -93,8 +93,9 @@ public class OfferController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        int currentUserId = userService.loadUserByUsername(username).get().getId();
 
-        if (username != offer.getSeller().getUsername() && username != offer.getBuyer().getUsername()) {
+        if (currentUserId != offer.getSeller().getId() && currentUserId != offer.getBuyer().getId()) {
             throw new InvalidUserException("You don't have the authorization to get the offer");
         }
         return OfferDto
@@ -118,9 +119,10 @@ public class OfferController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        int currentUserId = userService.loadUserByUsername(username).get().getId();
 
         //only buyer can delete the offer
-        if (username != offer.getBuyer().getUsername()) {
+        if (currentUserId != offer.getBuyer().getId()) {
             throw new InvalidUserException("You don't have the authorization to delete the offer");
         }
         offerService.deleteOfferById(offerId);
