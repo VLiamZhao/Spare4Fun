@@ -181,9 +181,10 @@ public class ItemController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        int currentUserId = userService.loadUserByUsername(username).get().getId();
 
         //only seller can delete the item
-        if (username != item.getSeller().getUsername()) {
+        if (currentUserId != item.getSeller().getId()) {
             throw new InvalidUserException("You don't have the authorization to delete the item!");
         }
 
