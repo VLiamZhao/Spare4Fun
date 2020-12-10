@@ -171,6 +171,8 @@ public class ItemController {
 //                .category(item.getCategory().getCategory())
 //                .condition(item.getCondition().getLabel())
                 .build();
+        if (!item.isHideLocation())
+            itemDto.setLocationDto(locationDtoMapper.map(item.getLocation()));
         return itemDto;
     }
 
