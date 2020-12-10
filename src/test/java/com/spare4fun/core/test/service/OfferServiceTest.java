@@ -76,6 +76,7 @@ public class OfferServiceTest {
                 .builder()
                 .seller(seller)
                 .location(location)
+                .listingPrice(1)
                 .quantity(1000)
                 .build();
         itemService.saveItem(item);
@@ -165,6 +166,7 @@ public class OfferServiceTest {
         Assert.assertNotNull(offers);
         Assert.assertFalse(offers.isEmpty());
     }
+
     @Test(expected = RuntimeException.class)
     public void saveOfferWrongPriceTest(){
         offerService.saveOffer(offerWrongPrice);
