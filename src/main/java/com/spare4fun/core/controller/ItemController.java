@@ -159,7 +159,7 @@ public class ItemController {
                 .builder()
                 .itemId(item.getId())
                 .title(item.getTitle())
-                .description(item.getDescription())
+//                .description(item.getDescription())
                 .sellerId(item.getSeller().getId())
                 .sellerName(item.getSeller().getUsername())
                 .locationId(item.getLocation().getId())
@@ -167,9 +167,9 @@ public class ItemController {
                 .quantity(item.getQuantity())
                 .listingPrice(item.getListingPrice())
                 .fixedPrice(item.isFixedPrice())
-                .availabilityTime(item.getAvailabilityTime())
-                .category(item.getCategory().getCategory())
-                .condition(item.getCondition().getLabel())
+//                .availabilityTime(item.getAvailabilityTime())
+//                .category(item.getCategory().getCategory())
+//                .condition(item.getCondition().getLabel())
                 .build();
         return itemDto;
     }
