@@ -2,7 +2,6 @@ package com.spare4fun.core.controller;
 
 import com.spare4fun.core.dto.OfferDto;
 import com.spare4fun.core.entity.Offer;
-import com.spare4fun.core.entity.User;
 import com.spare4fun.core.exception.InvalidUserException;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.OfferService;
@@ -69,14 +68,12 @@ public class OfferController {
             offerDtos.add(
                     OfferDto
                             .builder()
-                            .OfferId(offer.getId())
+                            .offerId(offer.getId())
                             .price(offer.getPrice())
                             .quantity(offer.getQuantity())
                             .message(offer.getMessage())
                             .itemId(offer.getItem().getId())
-                            .sellerName(offer.getSeller().getUsername())
                             .sellerId(offer.getSeller().getId())
-                            .buyerName(offer.getBuyer().getUsername())
                             .buyerId(offer.getBuyer().getId())
                             .build()
             );
@@ -100,7 +97,7 @@ public class OfferController {
         }
         return OfferDto
                 .builder()
-                .OfferId(offer.getId())
+                .offerId(offer.getId())
                 .price(offer.getPrice())
                 .quantity(offer.getQuantity())
                 .message(offer.getMessage())

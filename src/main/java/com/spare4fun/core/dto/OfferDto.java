@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OfferDto {
-    private Integer OfferId;
+    private Integer offerId;
     private Integer price;
     private Integer quantity;
     private String message;
