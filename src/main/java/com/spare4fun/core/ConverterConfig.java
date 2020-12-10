@@ -15,6 +15,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+/**
+ * Don't use this class. Will be deprecated in next version.
+ */
 @Configuration
 public class ConverterConfig {
     @Autowired

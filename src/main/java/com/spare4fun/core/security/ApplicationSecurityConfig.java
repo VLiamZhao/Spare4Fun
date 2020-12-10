@@ -1,7 +1,10 @@
 package com.spare4fun.core.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.spare4fun.core.dto.MessageDto;
+import com.spare4fun.core.dto.UserDto;
 import com.spare4fun.core.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -66,7 +70,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                     .logoutUrl("/user/logout")
-                    .deleteCookies("JSESSIONID");
+                    .deleteCookies("JSESSIONID")
+                    .logoutSuccessHandler(logoutSuccessHandler());
     }
 
     @Override
@@ -123,7 +128,29 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                                 MessageDto
                                         .builder()
                                         .status(MessageDto.Status.SUCCESS)
-                                        .message("Successful login")
+                                        .message(authentication.getName())
+                                        .build())
+                );
+                writer.close();
+            }
+        };
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new LogoutSuccessHandler() {
+            @Override
+            public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json");
+                PrintWriter writer = httpServletResponse.getWriter();
+                ObjectMapper mapper = new ObjectMapper();
+                writer.write(
+                        mapper.writeValueAsString(
+                                MessageDto
+                                        .builder()
+                                        .status(MessageDto.Status.SUCCESS)
+                                        .message(authentication.getName())
                                         .build())
                 );
                 writer.close();
