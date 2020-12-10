@@ -112,7 +112,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
             public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
                 // TODO 1: will replace it by forcing idle time in react frontend
                 HttpSession session = httpServletRequest.getSession();
-                session.setMaxInactiveInterval(5); // set session interval at server side, in seconds
+                session.setMaxInactiveInterval(15 * 60); // set session interval at server side, in seconds
                 // TODO 2: will return informative response
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                 httpServletResponse.setContentType("application/json");
