@@ -147,8 +147,8 @@ public class AppointmentDaoTest {
             appointmentDao.deleteAppointmentById(appointment1.getId());
         }
         appointmentDao.deleteAppointmentById(appointment2.getId());
-        //offerDao.deleteOfferById(offer1.getId());
-        //offerDao.deleteOfferById(offer2.getId());
+        offerDao.deleteOfferById(offer1.getId());
+        offerDao.deleteOfferById(offer2.getId());
         itemDao.deleteItemById(item.getId());
         userDao.deleteUserById(seller.getId());
         userDao.deleteUserById(buyer1.getId());

@@ -29,7 +29,7 @@ public class Appointment implements Serializable {
 
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "offer_id", referencedColumnName = "id", nullable = false)
     private Offer offer;
 
