@@ -1,34 +1,47 @@
 package com.spare4fun.core.dao;
 
+
 import com.spare4fun.core.entity.User;
 import com.spare4fun.core.exception.DuplicateUserException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
     /**
-     * Get the user by username
+     * select User with username from user table
+     * used by Spring Security
      * @param username
-     * @return user optional
+     * @return Optional.empty() if user with username / email doesn't exist
+     *  otherwise return Optional of the user
      */
     Optional<User> selectUserByUsername(String username);
 
     /**
-     * save a new user to DB
-     * @author Xinrong Zhao
+     * save a new user to user table
      * @param user
      * @throws
-     *    DuplicateUserException - if duplicate user is found
+     *  DuplicateUserException - iff user with same username / email already exist
      */
-    void addUser(User user) throws DuplicateUserException;
+    User saveUser(User user);
 
     /**
-     * delete a user from DB
-     * @author Xinrong Zhao
-     * @param user
-     * @throws
-     *    UsernameNotFoundException - if no user is found
+     * delete user from the user table
+     * do nothing if user is not found
+     * @param userId
      */
-    void deleteUserByUsername(String username) throws UsernameNotFoundException;
+    void deleteUserById(int userId);
+
+    /**
+     * select User with userId from user table
+     * @param userId
+     * @return null iff the user with userId doesn't exists
+     */
+    User getUserById(int userId);
+
+    /**
+     * @return list of all users from user table
+     */
+    List<User> getAllUsers();
 }
