@@ -67,7 +67,7 @@ public class Location implements Serializable {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
     private List<Item> items;
 
     @Getter
