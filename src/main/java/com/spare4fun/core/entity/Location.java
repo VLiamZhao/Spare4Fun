@@ -2,6 +2,8 @@ package com.spare4fun.core.entity;
 
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -68,6 +70,7 @@ public class Location implements Serializable {
     @Getter
     @Setter
     @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Item> items;
 
     @Getter
