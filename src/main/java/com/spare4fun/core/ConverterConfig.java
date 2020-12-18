@@ -1,9 +1,6 @@
 package com.spare4fun.core;
 
-import com.spare4fun.core.dto.ItemDto;
-import com.spare4fun.core.dto.LocationDto;
-import com.spare4fun.core.dto.OfferDto;
-import com.spare4fun.core.dto.UserDto;
+import com.spare4fun.core.dto.*;
 import com.spare4fun.core.entity.*;
 import com.spare4fun.core.service.ItemService;
 import com.spare4fun.core.service.UserAuthService;
@@ -95,6 +92,14 @@ public class ConverterConfig {
             mapper.map(Location::getState, LocationDto::setState);
             mapper.map(Location::getZipcode, LocationDto::setZipcode);
             mapper.map(Location::getCountry, LocationDto::setCountry);
+        });
+    }
+
+    @Bean
+    public TypeMap<Category, CategoryDto> convertCatogoryToCategoryDto() {
+        return modelMapper.typeMap(Category.class, CategoryDto.class).addMappings(mapper -> {
+            mapper.map(src -> src.getId(), CategoryDto::setCategoryId);
+            mapper.map(src -> src.getCategory(), CategoryDto::setCategory);
         });
     }
 }
