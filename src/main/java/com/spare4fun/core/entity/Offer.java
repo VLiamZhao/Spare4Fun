@@ -60,10 +60,6 @@ public class Offer implements Serializable {
 
     @Getter
     @Setter
-    private boolean enabled;
-
-    @Getter
-    @Setter
     @OneToOne(mappedBy = "offer")
     private Appointment appointment;
 

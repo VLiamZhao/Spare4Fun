@@ -51,7 +51,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     // TODO: change <url> patten match
                     .authorizeRequests()
-                    .antMatchers("/user/register", "/search**").permitAll()
+                    .antMatchers("/user/register", "/search/**", "/itemCondition/**", "/category/**").permitAll()
                     .anyRequest()
                     .authenticated()
                 .and()

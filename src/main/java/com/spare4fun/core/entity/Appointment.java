@@ -63,12 +63,8 @@ public class Appointment implements Serializable {
 
     @Getter
     @Setter
-    private boolean canceled;
-
-    @Getter
-    @Setter
     @OneToOne
-    @JoinColumn(name = "confirmed_time", referencedColumnName = "id")
+    @JoinColumn(name = "confirmed_time_id", referencedColumnName = "id")
     private TimeSlot confirmedTime;
 
     @Getter

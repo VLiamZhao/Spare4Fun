@@ -1,10 +1,10 @@
 package com.spare4fun.core.dao;
 
-import com.spare4fun.core.entity.TimeSlot;
+import com.spare4fun.core.entity.Offer;
+import com.spare4fun.core.entity.PaymentOrder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -16,19 +16,19 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class TimeSlotDaoImpl implements TimeSlotDao {
+public class PaymentOrderDaoImpl implements PaymentOrderDao {
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public TimeSlot saveTimeSlot(TimeSlot timeSlot) {
+    public PaymentOrder savePaymentOrder(PaymentOrder paymentOrder) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(timeSlot);
+            session.save(paymentOrder);
             session.getTransaction().commit();
-            return timeSlot;
+            return paymentOrder;
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
@@ -41,26 +41,26 @@ public class TimeSlotDaoImpl implements TimeSlotDao {
     }
 
     @Override
-    public TimeSlot getTimeSlotById(int timeSlotId) {
-        TimeSlot timeSlot = null;
+    public PaymentOrder getPaymentOrderById(int paymentOrderId) {
+        PaymentOrder po = null;
         try (Session session = sessionFactory.openSession()) {
-            timeSlot = session.get(TimeSlot.class, timeSlotId);
+            po = session.get(PaymentOrder.class, paymentOrderId);
         }catch (NoResultException e) {
             return null;
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return timeSlot;
+        return po;
     }
 
     @Override
-    public void deleteTimeSlotById(int timeSlotId) {
+    public void deletePaymentOrderById(int paymentOrderId) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            TimeSlot timeSlot = session.get(TimeSlot.class, timeSlotId);
+            PaymentOrder po = session.get(PaymentOrder.class, paymentOrderId);
             session.beginTransaction();
-            session.delete(timeSlot);
+            session.delete(po);
             session.getTransaction().commit();
         }
         catch (Exception e){
@@ -74,17 +74,17 @@ public class TimeSlotDaoImpl implements TimeSlotDao {
     }
 
     @Override
-    public List<TimeSlot> getAllTimeSlot(int appointmentId) {
-        List<TimeSlot> timeSlots = new ArrayList<>();
+    public List<PaymentOrder> getAllPaymentOrdersBuyer(int userId) {
+        List<PaymentOrder> pos = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<TimeSlot> criteriaQuery = builder.createQuery(TimeSlot.class);
-            Root<TimeSlot> root = criteriaQuery.from(TimeSlot.class);
+            CriteriaQuery<PaymentOrder> criteriaQuery = builder.createQuery(PaymentOrder.class);
+            Root<PaymentOrder> root = criteriaQuery.from(PaymentOrder.class);
             criteriaQuery
                     .select(root)
-                    .where(builder.equal(root.get("appointment"), appointmentId));
-            timeSlots = session
+                    .where(builder.equal(root.get("buyer"), userId));
+            pos = session
                     .createQuery(criteriaQuery)
                     .getResultList();
             session.getTransaction().commit();
@@ -93,6 +93,32 @@ public class TimeSlotDaoImpl implements TimeSlotDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return timeSlots;
+        return pos;
+    }
+
+    @Override
+    public List<PaymentOrder> getAllPaymentOrdersSeller(int userId, int itemId) {
+        List<PaymentOrder> pos = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<PaymentOrder> criteriaQuery = builder.createQuery(PaymentOrder.class);
+            Root<PaymentOrder> root = criteriaQuery.from(PaymentOrder.class);
+            criteriaQuery
+                    .select(root)
+                    .where(builder.and(
+                            builder.equal(root.get("seller"), userId),
+                            builder.equal(root.get("item"), itemId)
+                    ));
+            pos = session
+                    .createQuery(criteriaQuery)
+                    .getResultList();
+            session.getTransaction().commit();
+        } catch (NoResultException e) {
+            return Collections.emptyList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pos;
     }
 }

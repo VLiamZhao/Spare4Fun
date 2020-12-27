@@ -9,6 +9,7 @@ import com.spare4fun.core.exception.InvalidUserException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -170,12 +171,6 @@ public class AppointmentDaoImpl implements AppointmentDao {
         if (appointment.isConfirmed()) {
             throw new InvalidAppointmentException(
                     String.format("Appointment %d is already confirmed", appointmentId)
-            );
-        }
-
-        if (appointment.isCanceled()) {
-            throw new InvalidAppointmentException(
-                    String.format("Appointment %d is already cancelled", appointmentId)
             );
         }
 

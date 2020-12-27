@@ -102,4 +102,12 @@ public class ConverterConfig {
             mapper.map(src -> src.getCategory(), CategoryDto::setCategory);
         });
     }
+
+    @Bean
+    public TypeMap<ItemCondition, ItemConditionDto> convertItemConditionToItemConditionDto() {
+        return modelMapper.typeMap(ItemCondition.class, ItemConditionDto.class).addMappings(mapper -> {
+            mapper.map(src -> src.getId(), ItemConditionDto::setItemConditionId);
+            mapper.map(src -> src.getLabel(), ItemConditionDto::setLabel);
+        });
+    }
 }

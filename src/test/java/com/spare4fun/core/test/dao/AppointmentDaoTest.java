@@ -9,6 +9,7 @@ import com.spare4fun.core.exception.InvalidUserException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
+@Profile("test")
 public class AppointmentDaoTest {
     @Autowired
     private TimeSlotDao timeSlotDao;
@@ -51,142 +53,142 @@ public class AppointmentDaoTest {
     private Appointment appointment2;
     private List<TimeSlot> timeSlots;
 
-    @BeforeEach
-    public void setup() {
-        location = Location
-                .builder()
-                .line1("1")
-                .city("A")
-                .state("WA")
-                .build();
-        locationDao.saveLocation(location);
-
-        seller = User
-                .builder()
-                .email("dummy1")
-                .password("pass")
-                .build();
-        buyer1 = User
-                .builder()
-                .email("dummy2")
-                .password("pass")
-                .build();
-        buyer2 = User
-                .builder()
-                .email("dummy3")
-                .password("pass")
-                .build();
-        try {
-            userDao.saveUser(seller);
-            userDao.saveUser(buyer1);
-            userDao.saveUser(buyer2);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-        item = Item
-                .builder()
-                .seller(seller)
-                .location(location)
-                .title("CLRS")
-                .quantity(4)
-                .build();
-        itemDao.saveItem(item);
-
-        offer1 = Offer
-                .builder()
-                .item(item)
-                .buyer(buyer1)
-                .seller(seller)
-                .price(10)
-                .quantity(1)
-                .message("123")
-                .build();
-        offerDao.saveOffer(offer1);
-
-        offer2 = Offer
-                .builder()
-                .item(item)
-                .buyer(buyer2)
-                .seller(seller)
-                .price(12)
-                .quantity(2)
-                .message("123")
-                .build();
-        offerDao.saveOffer(offer2);
-
-        appointment1 = Appointment
-                .builder()
-                .item(item)
-                .offer(offer1)
-                .buyer(buyer1)
-                .seller(seller)
-                .location(location)
-                .build();
-        appointmentDao.saveAppointment(appointment1);
-
-        appointment2 = Appointment
-                .builder()
-                .item(item)
-                .offer(offer2)
-                .buyer(buyer2)
-                .seller(seller)
-                .location(location)
-                .build();
-        appointmentDao.saveAppointment(appointment2);
-
-        timeSlots = dummyTimeSlots();
-        timeSlots.forEach(timeSlot -> {
-            timeSlotDao.saveTimeSlot(timeSlot);
-        });
-    }
-
-    @AfterEach
-    public void clean() {
-        if (appointmentDao.getAppointmentById(appointment1.getId()) != null) {
-            appointmentDao.deleteAppointmentById(appointment1.getId());
-        }
-        appointmentDao.deleteAppointmentById(appointment2.getId());
-        offerDao.deleteOfferById(offer1.getId());
-        offerDao.deleteOfferById(offer2.getId());
-        itemDao.deleteItemById(item.getId());
-        userDao.deleteUserById(seller.getId());
-        userDao.deleteUserById(buyer1.getId());
-        userDao.deleteUserById(buyer2.getId());
-        locationDao.deleteLocationById(location.getId());
-    }
-
-    private List<TimeSlot> dummyTimeSlots() {
-        List<TimeSlot> res = new ArrayList<>();
-
-        Instant startTime = Instant.now();
-        String start = startTime.plus(1, DAYS).toString();
-        String end = startTime.plus(2, DAYS).toString();
-
-        res.add(
-                TimeSlot
-                        .builder()
-                        .appointment(appointment1)
-                        // js: new Date().toISOString()
-                        .startTime(start)
-                        // js: new Date(d1.getTime() + minutes * 60000)
-                        .endTime(end)
-                        .build()
-        );
-
-        res.add(
-                TimeSlot
-                        .builder()
-                        .appointment(appointment2)
-                        // js: new Date().toISOString()
-                        .startTime(start)
-                        // js: new Date(d1.getTime() + minutes * 60000)
-                        .endTime(end)
-                        .build()
-        );
-
-        return res;
-    }
+//    @BeforeEach
+//    public void setup() {
+//        location = Location
+//                .builder()
+//                .line1("1")
+//                .city("A")
+//                .state("WA")
+//                .build();
+//        locationDao.saveLocation(location);
+//
+//        seller = User
+//                .builder()
+//                .email("dummy1")
+//                .password("pass")
+//                .build();
+//        buyer1 = User
+//                .builder()
+//                .email("dummy2")
+//                .password("pass")
+//                .build();
+//        buyer2 = User
+//                .builder()
+//                .email("dummy3")
+//                .password("pass")
+//                .build();
+//        try {
+//            userDao.saveUser(seller);
+//            userDao.saveUser(buyer1);
+//            userDao.saveUser(buyer2);
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        item = Item
+//                .builder()
+//                .seller(seller)
+//                .location(location)
+//                .title("CLRS")
+//                .quantity(4)
+//                .build();
+//        itemDao.saveItem(item);
+//
+//        offer1 = Offer
+//                .builder()
+//                .item(item)
+//                .buyer(buyer1)
+//                .seller(seller)
+//                .price(10)
+//                .quantity(1)
+//                .message("123")
+//                .build();
+//        offerDao.saveOffer(offer1);
+//
+//        offer2 = Offer
+//                .builder()
+//                .item(item)
+//                .buyer(buyer2)
+//                .seller(seller)
+//                .price(12)
+//                .quantity(2)
+//                .message("123")
+//                .build();
+//        offerDao.saveOffer(offer2);
+//
+//        appointment1 = Appointment
+//                .builder()
+//                .item(item)
+//                .offer(offer1)
+//                .buyer(buyer1)
+//                .seller(seller)
+//                .location(location)
+//                .build();
+//        appointmentDao.saveAppointment(appointment1);
+//
+//        appointment2 = Appointment
+//                .builder()
+//                .item(item)
+//                .offer(offer2)
+//                .buyer(buyer2)
+//                .seller(seller)
+//                .location(location)
+//                .build();
+//        appointmentDao.saveAppointment(appointment2);
+//
+//        timeSlots = dummyTimeSlots();
+//        timeSlots.forEach(timeSlot -> {
+//            timeSlotDao.saveTimeSlot(timeSlot);
+//        });
+//    }
+//
+//    @AfterEach
+//    public void clean() {
+//        if (appointmentDao.getAppointmentById(appointment1.getId()) != null) {
+//            appointmentDao.deleteAppointmentById(appointment1.getId());
+//        }
+//        appointmentDao.deleteAppointmentById(appointment2.getId());
+//        offerDao.deleteOfferById(offer1.getId());
+//        offerDao.deleteOfferById(offer2.getId());
+//        itemDao.deleteItemById(item.getId());
+//        userDao.deleteUserById(seller.getId());
+//        userDao.deleteUserById(buyer1.getId());
+//        userDao.deleteUserById(buyer2.getId());
+//        locationDao.deleteLocationById(location.getId());
+//    }
+//
+//    private List<TimeSlot> dummyTimeSlots() {
+//        List<TimeSlot> res = new ArrayList<>();
+//
+//        Instant startTime = Instant.now();
+//        String start = startTime.plus(1, DAYS).toString();
+//        String end = startTime.plus(2, DAYS).toString();
+//
+//        res.add(
+//                TimeSlot
+//                        .builder()
+//                        .appointment(appointment1)
+//                        // js: new Date().toISOString()
+//                        .startTime(start)
+//                        // js: new Date(d1.getTime() + minutes * 60000)
+//                        .endTime(end)
+//                        .build()
+//        );
+//
+//        res.add(
+//                TimeSlot
+//                        .builder()
+//                        .appointment(appointment2)
+//                        // js: new Date().toISOString()
+//                        .startTime(start)
+//                        // js: new Date(d1.getTime() + minutes * 60000)
+//                        .endTime(end)
+//                        .build()
+//        );
+//
+//        return res;
+//    }
 
     @Test
     public void testSaveAppointment() {

@@ -7,6 +7,7 @@ import java.util.List;
 public interface PaymentOrderDao {
     /**
      * save a new paymentOrder to paymentOrder table
+     * TODO in service ? dao
      * TODO 0: check paymentOrder, offer, seller, buyer, item exist
      * TODO 1: check paymentOrder is confirmed
      * TODO 2: check current timestamp is within valid time for this appointment

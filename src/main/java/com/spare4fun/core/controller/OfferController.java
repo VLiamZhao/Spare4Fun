@@ -44,7 +44,6 @@ public class OfferController {
                 .price(offerDto.getPrice())
                 .quantity(offerDto.getQuantity())
                 .message(offerDto.getMessage())
-                .enabled(true)
                 .build();
 
         Offer offerToBeSaved = offerService.saveOffer(offer);
